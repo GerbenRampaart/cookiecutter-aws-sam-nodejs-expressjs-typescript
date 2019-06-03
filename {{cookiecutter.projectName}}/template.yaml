@@ -1,9 +1,8 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  {{ cookiecutter.project_name }}
-
-  Sample SAM Template for {{ cookiecutter.project_name }}
+  {{ cookiecutter.projectName }}
+  {{ cookiecutter.projectDescription }}
   
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -11,16 +10,13 @@ Globals:
     Timeout: 3
 
 Resources:
-  HelloWorldFunction:
+  ExpressJsProxyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: hello-world/
-      Handler: app.lambdaHandler
-      {%- if cookiecutter.runtime == 'nodejs8.10' %}
-      Runtime: {{ cookiecutter.runtime }}
-      {%- else %}
+      CodeUri: ./
+      Handler: lambda.handler
       Runtime: nodejs10.x
-      {%- endif %}
+      MemorySize: 512
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api

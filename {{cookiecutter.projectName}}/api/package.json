@@ -1,0 +1,20 @@
+{
+  "name": "{{cookiecutter.projectName}}",
+  "version": "{{cookiecutter.projectInitialVersion}}",
+  "description": "{{cookiecutter.projectDescription}}",
+  "main": "app.js",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "scripts": {
+    "test": "mocha tests/unit/"
+  },
+  "devDependencies": {
+    "@types/node": "10.14.8",
+    "@types/jest":"^24.0.13",
+    "jest":"^24.8.0",
+    "typescript": "^3.5.1"
+  }
+}

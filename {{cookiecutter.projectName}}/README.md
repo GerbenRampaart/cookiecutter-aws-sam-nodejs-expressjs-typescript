@@ -1,19 +1,8 @@
-# {{ cookiecutter.project_name }}
+# {{ cookiecutter.projectName }}
 
-This is a sample template for {{ cookiecutter.project_name }} - Below is a brief explanation of what we have generated for you:
+## Description
+{{ cookiecutter.projectDescription }}
 
-```bash
-.
-├── README.MD                   <-- This instructions file
-├── event.json                  <-- API Gateway Proxy Integration event payload
-├── hello-world                 <-- Source code for a lambda function
-│   └── app.js                  <-- Lambda function code
-│   └── package.json            <-- NodeJS dependencies and scripts
-│   └── tests                   <-- Unit tests
-│       └── unit
-│           └── test-handler.js
-├── template.yaml               <-- SAM template
-```
 
 ## Requirements
 
@@ -88,7 +77,7 @@ Next, the following command will create a Cloudformation Stack and deploy your S
 ```bash
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
     --capabilities CAPABILITY_IAM
 ```
 
@@ -98,7 +87,7 @@ After deployment is complete you can run the following command to retrieve the A
 
 ```bash
 aws cloudformation describe-stacks \
-    --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
     --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
     --output table
 ``` 
@@ -110,7 +99,7 @@ To simplify troubleshooting, SAM CLI has a command called sam logs. sam logs let
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} --tail
+sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
@@ -130,7 +119,7 @@ npm run test
 In order to delete our Serverless Application recently deployed you can use the following AWS CLI Command:
 
 ```bash
-aws cloudformation delete-stack --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }}
+aws cloudformation delete-stack --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }}
 ```
 
 ## Bringing to the next level
@@ -195,17 +184,17 @@ sam package \
 # Deploy SAM template as a CloudFormation stack
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
     --capabilities CAPABILITY_IAM
 
 # Describe Output section of CloudFormation stack previously created
 aws cloudformation describe-stacks \
-    --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
     --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
     --output table
 
 # Tail Lambda function Logs using Logical name defined in SAM Template
-sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.project_name.lower().replace(' ', '-') }} --tail
+sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} --tail
 ```
 
 **NOTE**: Alternatively this could be part of package.json scripts section.
