@@ -27,14 +27,22 @@ It focusses on implementing best practices when generating, developing, building
 
 ## Start kit 
 These is the example code I wish to include in the starter kit (all in Typescript and expressjs):
-* A graphql api controller in expressjs
+* An example graphql api controller in expressjs
+* An example controller which does some client communication over websockets
+* An example controller doing IO to and from dynamodb
 
 # Development
 
 ## Requirements
-* AWS CLI already configured with Administrator permission
 * [NodeJS 10.10+ installed](https://nodejs.org/en/download/releases/)
 * [AWS SAM CLI](https://github.com/awslabs/aws-sam-cli)
+
+## Testing
+* Clone/fork this repo
+* npm install
+* "npm run build" will run the cookiecutter template with defaults and place the result in "./test"
+* "npm run start:api" will start the api using sam in the "./test"
+
 
 # Usage
 

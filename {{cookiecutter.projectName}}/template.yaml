@@ -15,7 +15,7 @@ Resources:
     Properties:
       CodeUri: ./
       Handler: lambda.handler
-      Runtime: nodejs10.x
+      Runtime: nodejs8.10
       MemorySize: 512
       Events:
         HelloWorld:

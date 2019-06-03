@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "description": "This project provides a comprehensive template for nodejs 10.x which can be used with the AWS SAM cli",
   "scripts": {
-    "test": "node ./scripts/test.js"
+    "build": "node ./scripts/build.js",
+    "start:api": "node ./scripts/startApi.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +26,8 @@
   },
   "homepage": "https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript#readme",
   "dependencies": {
-    "shelljs": "^0.8.3",
-    "find-up": "^4.0.0"
+    "find": "^0.3.0",
+    "find-up": "^4.0.0",
+    "shelljs": "^0.8.3"
   }
 }

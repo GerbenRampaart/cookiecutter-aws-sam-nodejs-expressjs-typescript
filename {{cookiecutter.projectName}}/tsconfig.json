@@ -4,15 +4,11 @@
       "module": "commonjs",
       "target": "es2018",
       "outDir": "build",
-      "rootDir": "src",
       "sourceMap": true
     },
     "exclude": [
       "node_modules",
       "**/*.spec.ts"
-    ],
-    "include": [
-      "src"
     ]
   }
   
