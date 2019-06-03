@@ -1,5 +1,5 @@
 # Introduction
-This project provide a comprehensive template which can be used with the AWS SAM cli.
+This project provides a comprehensive template for nodejs 10.x which can be used with the AWS SAM cli.
 
 It focusses on implementing best practices when generating, developing, building and deploying complete apia and/or web applications to AWS Lambda.
 
@@ -29,15 +29,18 @@ It focusses on implementing best practices when generating, developing, building
 These is the example code I wish to include in the starter kit (all in Typescript and expressjs):
 * A graphql api controller in expressjs
 
-# Requirements
+# Development
 
+## Requirements
+* AWS CLI already configured with Administrator permission
+* [NodeJS 10.10+ installed](https://nodejs.org/en/download/releases/)
 * [AWS SAM CLI](https://github.com/awslabs/aws-sam-cli)
 
 # Usage
 
 Generate a boilerplate template in your current project directory using the following syntax:
 
-* **NodeJS 10**: `sam init --runtime nodejs10.x`
+* **NodeJS 10**: `sam init --runtime nodejs10.x -l https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript.git`
 
 > **NOTE**: ``--name`` allows you to specify a different project folder name (`sam-app` is the default)
 

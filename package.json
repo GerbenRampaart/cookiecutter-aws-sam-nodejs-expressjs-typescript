@@ -1,0 +1,31 @@
+{
+  "name": "cookiecutter-aws-sam-nodejs-expressjs-typescript",
+  "version": "0.0.2",
+  "description": "This project provides a comprehensive template for nodejs 10.x which can be used with the AWS SAM cli",
+  "scripts": {
+    "test": "node ./scripts/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript.git"
+  },
+  "keywords": [
+    "sam",
+    "cli",
+    "nodejs",
+    "expressjs",
+    "typescript",
+    "aws",
+    "cookiecutter"
+  ],
+  "author": "Gerben Rampaart",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript/issues"
+  },
+  "homepage": "https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript#readme",
+  "dependencies": {
+    "shelljs": "^0.8.3",
+    "find-up": "^4.0.0"
+  }
+}

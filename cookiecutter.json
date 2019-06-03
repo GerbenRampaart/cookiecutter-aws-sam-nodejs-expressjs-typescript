@@ -1,13 +1,5 @@
 {
     "projectName": "project-name",
     "projectDescription": "This is a new project called: {{cookiecutter.projectName}}",
-    "runtime": [
-        "nodejs10.x",
-        "nodejs8.10"
-    ],
-    "projectInitialVersion": "0.0.1",
-    "user": {
-        "bla1": "1",
-        "bla2": "2"
-    }
+    "projectInitialVersion": "0.0.1"
 }

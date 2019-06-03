@@ -7,12 +7,7 @@
 ## Requirements
 
 * AWS CLI already configured with Administrator permission
-{%- if cookiecutter.runtime == 'nodejs8.10' %}
-* [NodeJS 8.10+ installed](https://nodejs.org/en/download/releases/)
-{%- else %}
 * [NodeJS 10.10+ installed](https://nodejs.org/en/download/releases/)
-{%- endif %}
-
 * [Docker installed](https://www.docker.com/community-edition)
 
 ## Setup process
