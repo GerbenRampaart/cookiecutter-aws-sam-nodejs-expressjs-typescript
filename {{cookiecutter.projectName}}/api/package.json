@@ -1,7 +1,7 @@
 {
-  "name": "{{cookiecutter.projectName}}",
+  "name": "{{cookiecutter.projectName}}-api",
   "version": "{{cookiecutter.projectInitialVersion}}",
-  "description": "{{cookiecutter.projectDescription}}",
+  "description": "{{cookiecutter.projectDescription}} api",
   "main": "app.js",
   "author": "SAM CLI",
   "license": "MIT",

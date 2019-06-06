@@ -1,0 +1,16 @@
+{
+  "name": "{{cookiecutter.projectName}}",
+  "version": "{{cookiecutter.projectInitialVersion}}",
+  "description": "{{cookiecutter.projectDescription}}",
+  "author": "SAM CLI",
+  "license": "MIT",
+  "dependencies": {
+
+  },
+  "scripts": {
+    "prepack": "node ./scripts/build.js"
+  },
+  "devDependencies": {
+    "@types/node": "10.14.8"
+  }
+}

@@ -16,9 +16,11 @@ module.exports.startApi = async () => {
     }
 
     const templateDir = path.dirname(templates[0]);
-    sh.cd(templateDir);
-    sh.exec("tsc -p .");
-    sh.exec("sam local start-api");
+    const templateApiDir = path.join(templateDir, "api");
+    
+    utils.execInDir(templateApiDir, "tsc -p .");
+    utils.execInDir(templateDir, "sam local start-api");
+
     sh.cd(ctx.rootDir);
 };
 

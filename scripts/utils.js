@@ -1,5 +1,6 @@
 const path = require("path");
 const findUp = require("find-up");
+const sh = require("shelljs");
 
 module.exports.context = async () => {
     const projectRoot = await findUp("package.json");
@@ -23,5 +24,14 @@ class buildContext {
     get testDir() {
         return path.join(this.rootDir, "test");
     }
+
+    get templateApipiDir() {
+        return path.join(this.projectDir, "api");
+    }
 };
 
+module.exports.execInDir = (dir, cmd) => {
+    console.log(`"${cmd}" => ${dir}`);
+    sh.cd(dir);
+    sh.exec(cmd);
+}

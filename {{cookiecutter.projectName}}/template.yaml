@@ -1,3 +1,5 @@
+# https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md
+# https://aws.amazon.com/blogs/compute/introducing-simplified-serverless-application-deplyoment-and-management/
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
@@ -7,16 +9,39 @@ Description: >
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
+    # Properties of AWS::Serverless::Function
+    Handler: lambda.handler
+    Runtime: nodejs10.x
+    CodeUri: ./
+    #DeadLetterQueue:
+    #Description:
+    MemorySize: 256
+    Timeout: 180
+    # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-lambda-function-vpcconfig.html
+    #VpcConfig:
+    Environment:
+      Variables:
+        MyProp: MyVal
+    #Tags:
+    #Tracing:
+    #KmsKeyArn:
+    #Layers:
+    #AutoPublishAlias:
+    #DeploymentPreference:
+    #PermissionsBoundary:
+    #ReservedConcurrentExecutions:
 
 Resources:
+
+  ApiResource:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: prod
+
   ExpressJsProxyFunction:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
-      CodeUri: ./
-      Handler: lambda.handler
-      Runtime: nodejs8.10
-      MemorySize: 512
+      Policies: AmazonDynamoDBFullAccess
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
@@ -30,7 +55,7 @@ Outputs:
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   HelloWorldApi:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/hello/"
   HelloWorldFunction:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn

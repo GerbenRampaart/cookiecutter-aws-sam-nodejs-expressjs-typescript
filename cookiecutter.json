@@ -1,5 +1,8 @@
 {
     "projectName": "project-name",
     "projectDescription": "This is a new project called: {{cookiecutter.projectName}}",
-    "projectInitialVersion": "0.0.1"
+    "projectInitialVersion": "0.0.1",
+    "functionName": "ProjectNameFunction",
+    "apiName": "{{cookiecutter.functionName}}Api",
+    "roleName": "{{cookiecutter.functionName}}Role"
 }
