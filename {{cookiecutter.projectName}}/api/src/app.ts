@@ -1,33 +1,40 @@
-// const axios = require('axios')
-// const url = 'http://checkip.amazonaws.com/';
-let response;
+'use strict'
 
-/**
- *
- * Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
- * @param {Object} event - API Gateway Lambda Proxy Input Format
- *
- * Context doc: https://docs.aws.amazon.com/lambda/latest/dg/nodejs-prog-model-context.html 
- * @param {Object} context
- *
- * Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
- * @returns {Object} object - API Gateway Lambda Proxy Output Format
- * 
- */
-export const lambdaHandler = async (event, context) => {
-    try {
-        // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'body': JSON.stringify({
-                message: 'hello world',
-                // location: ret.data.trim()
-            })
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
+import { ApiSpecificationConverter } from './convert';
+import { Request, Response } from "express";
+import express from "express";
+import { eventContext } from "aws-serverless-express/middleware";
+import { join } from "path";
+import bodyParser from "body-parser";
+import { APIGatewayEvent, Context } from 'aws-lambda';
+import { NextFunction } from 'connect';
+
+interface IApiGateWayRequest extends Request {
+    apiGateWay: {
+        event: APIGatewayEvent, 
+        context: Context
     }
+}
 
-    return response
-};
+const expressApp = express();
+
+const jsonParser = bodyParser.json();
+const urlencodedParser = bodyParser.urlencoded({ extended: false });
+const textParser = bodyParser.text();
+
+expressApp.use(eventContext());
+
+expressApp.get('/gateway', (req: Request, res: Response) => {
+    let gatewayRequest: IApiGateWayRequest = req as any;
+    console.log(gatewayRequest);
+    res.json(gatewayRequest.apiGateWay);
+  }
+)
+
+expressApp.post('/convert', textParser, (req: Request, res: Response) => {
+    ApiSpecificationConverter.raml10ToOAS30(req.body).then((val: any) => {
+        res.json(val);
+    });
+});
+
+export const app = expressApp;
