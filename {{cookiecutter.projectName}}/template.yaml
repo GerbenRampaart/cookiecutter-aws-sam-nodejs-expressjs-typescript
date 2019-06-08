@@ -10,9 +10,9 @@ Description: >
 Globals:
   Function:
     # Properties of AWS::Serverless::Function
-    Handler: lambda.handler
+    Handler: build/lambda.handler
     Runtime: nodejs10.x
-    CodeUri: ./
+    CodeUri: ./api
     #DeadLetterQueue:
     #Description:
     MemorySize: 256
@@ -34,33 +34,46 @@ Globals:
 Resources:
 
   ApiResource:
-    Type: AWS::Serverless::Api
-    Properties:
-      StageName: prod
+    Type: AWS::Serverless::RestApi
+    Name : {{cookiecutter.apiName}}
+    Properties :
+      Body :
+          swagger : 2.0
+          info :
+              version : 0.0.1
+              title : test
+          basePath : /pete
+          schemes :
+              - https
+          definitions:
+              Empty :
+                  type : object      
+      Parameters:
+          endpointConfigurationTypes: REGIONAL
 
   {{cookiecutter.functionName}}:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
-    Name: {{cookiecutter.functionName}}
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction    
     Properties:
+      Name: {{cookiecutter.functionName}}
       Policies: AmazonDynamoDBFullAccess
       Events:
-        HelloWorld:
+        ExpressJsProxy:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /{+proxy}
             Method: any
-            RestApi
+            RestApiId: 
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
+  {{cookiecutter.apiName}}:
     Description: "API Gateway endpoint URL for Prod stage for Hello World function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/hello/"
-  HelloWorldFunction:
+  {{cookiecutter.functionName}}:
     Description: "Hello World Lambda Function ARN"
     Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: "Implicit IAM Role created for Hello World function"
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  {{cookiecutter.roleName}}:
+    Description: "Implicit IAM Role created for {{cookiecutter.functionName}} function"
+    Value: !GetAtt {{cookiecutter.roleName}}.Arn
