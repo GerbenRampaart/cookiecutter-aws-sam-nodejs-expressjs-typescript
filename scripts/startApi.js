@@ -18,6 +18,7 @@ module.exports.startApi = async () => {
     const templateDir = path.dirname(templates[0]);
     const templateApiDir = path.join(templateDir, "api");
     
+    utils.execInDir(templateApiDir, "npm install")
     utils.execInDir(templateApiDir, "tsc -p .");
     utils.execInDir(templateDir, "sam local start-api");
 

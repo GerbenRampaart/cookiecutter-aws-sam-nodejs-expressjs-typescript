@@ -1,13 +1,10 @@
 'use strict'
 
-import { ApiSpecificationConverter } from './convert';
 import { Request, Response } from "express";
 import express from "express";
 import { eventContext } from "aws-serverless-express/middleware";
-import { join } from "path";
 import bodyParser from "body-parser";
 import { APIGatewayEvent, Context } from 'aws-lambda';
-import { NextFunction } from 'connect';
 
 interface IApiGateWayRequest extends Request {
     apiGateWay: {
@@ -31,9 +28,9 @@ expressApp.get('/gateway', (req: Request, res: Response) => {
   }
 )
 
-expressApp.post('/convert', textParser, (req: Request, res: Response) => {
-    ApiSpecificationConverter.raml10ToOAS30(req.body).then((val: any) => {
-        res.json(val);
+expressApp.post('/test-post', jsonParser, (req: Request, res: Response) => {
+    res.json({
+        "this-is-what-you-posted": req
     });
 });
 

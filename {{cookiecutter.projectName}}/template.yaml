@@ -33,36 +33,23 @@ Globals:
 
 Resources:
 
-  ApiResource:
-    Type: AWS::Serverless::RestApi
-    Name : {{cookiecutter.apiName}}
-    Properties :
-      Body :
-          swagger : 2.0
-          info :
-              version : 0.0.1
-              title : test
-          basePath : /pete
-          schemes :
-              - https
-          definitions:
-              Empty :
-                  type : object      
-      Parameters:
-          endpointConfigurationTypes: REGIONAL
+  {{cookiecutter.apiName}}:
+    Type: AWS::Serverless::Api
+    Properties:
+      DefinitionUri: ./petstore.yaml
+      StageName: prod
 
   {{cookiecutter.functionName}}:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction    
     Properties:
-      Name: {{cookiecutter.functionName}}
       Policies: AmazonDynamoDBFullAccess
       Events:
         ExpressJsProxy:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /{+proxy}
+            Path: /{proxy+}
             Method: any
-            RestApiId: 
+            RestApiId: !Ref {{cookiecutter.apiName}}
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
