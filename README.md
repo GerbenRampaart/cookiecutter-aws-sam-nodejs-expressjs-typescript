@@ -1,7 +1,15 @@
 # Introduction
 This project provides a comprehensive template for nodejs 10.x which can be used with the AWS SAM cli.
 
-It focusses on implementing best practices when generating, developing, building and deploying complete apia and/or web applications to AWS Lambda.
+It focusses on implementing best practices when generating, developing, building and deploying complete apis and/or web applications to AWS Lambda.
+
+## Requirements
+* [NodeJS 10.10+ installed](https://nodejs.org/en/download/releases/)
+* [AWS SAM CLI](https://github.com/awslabs/aws-sam-cli)
+
+## Usage
+Generate a boilerplate template in your current project directory using the following syntax:
+* `sam init -l https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript.git`
 
 # Goals
 * This project will look at other nodejs/expressjs/typescript templates (like from Yeoman) to create a project layout that is rich enough to get started with, is intuitive and uses npm packages which are mature and well-supported.
@@ -33,26 +41,12 @@ These is the example code I wish to include in the starter kit (all in Typescrip
 
 # Development
 
-## Requirements
-* [NodeJS 10.10+ installed](https://nodejs.org/en/download/releases/)
-* [AWS SAM CLI](https://github.com/awslabs/aws-sam-cli)
-
 ## Testing
 * Clone/fork this repo
 * npm install
 * "npm run build" will run the cookiecutter template with defaults and place the result in "./test"
 * "npm run start:api" will start the api using sam in the "./test"
 
-
-# Usage
-
-Generate a boilerplate template in your current project directory using the following syntax:
-
-* **NodeJS 10**: `sam init --runtime nodejs10.x -l https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript.git`
-
-> **NOTE**: ``--name`` allows you to specify a different project folder name (`sam-app` is the default)
-
 # Credits
-
 * This project has been generated with [Cookiecutter](https://github.com/audreyr/cookiecutter)
 

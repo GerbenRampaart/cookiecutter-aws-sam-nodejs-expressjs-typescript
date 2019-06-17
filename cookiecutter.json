@@ -4,5 +4,6 @@
     "projectInitialVersion": "0.0.1",
     "functionName": "ProjectNameFunction",
     "apiName": "{{cookiecutter.functionName}}Api",
-    "roleName": "{{cookiecutter.functionName}}Role"
+    "roleName": "{{cookiecutter.functionName}}Role",
+    "stackName": "{{cookiecutter.functionName}}Stack"
 }

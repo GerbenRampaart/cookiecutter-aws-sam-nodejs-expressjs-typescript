@@ -1,3 +1,7 @@
+NOTE: The 0.0.x versions are pre-beta. They might not work yet.
+
+# v0.0.3
+
 # v0.0.2
 * Added package.json for using npm scripting so we can run 'npm t' to test the template
     - Output will be place in the ./test directory (will be cleared before every test)
