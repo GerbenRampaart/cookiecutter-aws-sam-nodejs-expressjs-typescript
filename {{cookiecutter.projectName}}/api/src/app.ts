@@ -2,16 +2,7 @@
 
 import { Request, Response } from "express";
 import express from "express";
-import { eventContext } from "aws-serverless-express/middleware";
 import bodyParser from "body-parser";
-import { APIGatewayEvent, Context } from 'aws-lambda';
-
-interface IApiGateWayRequest extends Request {
-    apiGateWay: {
-        event: APIGatewayEvent, 
-        context: Context
-    }
-}
 
 const expressApp = express();
 
@@ -19,19 +10,25 @@ const jsonParser = bodyParser.json();
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 const textParser = bodyParser.text();
 
-expressApp.use(eventContext());
+const pets = [
+    {
+        id: 1,
+        name: "dog"
+    },
+    {
+        id: 2,
+        name: "cat"
+    }
+];
 
-expressApp.get('/gateway', (req: Request, res: Response) => {
-    let gatewayRequest: IApiGateWayRequest = req as any;
-    console.log(gatewayRequest);
-    res.json(gatewayRequest.apiGateWay);
-  }
-)
+expressApp.get('/pets', jsonParser, (req: Request, res: Response) => {
+    res.json(pets);
+});
 
-expressApp.post('/test-post', jsonParser, (req: Request, res: Response) => {
-    res.json({
-        "this-is-what-you-posted": req
-    });
+expressApp.get('/pets/:petId', jsonParser, (req: Request, res: Response) => {
+    res.json(pets.filter((pet) => {
+        pet.id === req.params.petId
+    }));
 });
 
 export const app = expressApp;

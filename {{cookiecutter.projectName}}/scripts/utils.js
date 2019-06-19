@@ -17,8 +17,12 @@ class buildContext {
         return this._rootDir;
     }
 
-    get templateApipiDir() {
+    get apiDir() {
         return path.join(this.projectDir, "api");
+    }
+
+    get apiBuildDir() {
+        return path.join(this.templateApiDir, "build");
     }
 };
 
@@ -27,3 +31,8 @@ module.exports.execInDir = (dir, cmd) => {
     sh.cd(dir);
     sh.exec(cmd);
 }
+
+module.exports.copy = (from, to) => {
+    sh.cp("-r", from, to);
+    console.log(`Copied ${from} to ${to}`);
+};

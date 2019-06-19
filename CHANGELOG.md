@@ -1,6 +1,9 @@
 NOTE: The 0.0.x versions are pre-beta. They might not work yet.
 
 # v0.0.3
+* Added tslint for the api
+* Moved scripting to the proper directory
+* Replaced some variables in the 'Output' of the template.yaml
 
 # v0.0.2
 * Added package.json for using npm scripting so we can run 'npm t' to test the template

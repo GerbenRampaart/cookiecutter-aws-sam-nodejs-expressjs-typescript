@@ -1,6 +1,6 @@
 'use strict'
 import { createServer, proxy, Response } from "aws-serverless-express";
-import lambda from 'aws-lambda';
+import lambda from "aws-lambda";
 import { app } from "./app";
 
 const server = createServer(app);
