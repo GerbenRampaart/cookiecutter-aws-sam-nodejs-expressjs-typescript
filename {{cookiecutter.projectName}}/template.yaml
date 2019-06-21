@@ -10,9 +10,9 @@ Description: >
 Globals:
   Function:
     # Properties of AWS::Serverless::Function
-    Handler: dist/lambda.handler
+    Handler: lambda.handler
     Runtime: nodejs10.x
-    CodeUri: ./
+    CodeUri: ./dist
     #DeadLetterQueue:
     #Description:
     MemorySize: 256
