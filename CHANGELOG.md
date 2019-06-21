@@ -1,5 +1,9 @@
 NOTE: The 0.0.x versions are pre-beta. They might not work yet.
 
+# v0.0.4
+* Added the react web project
+* Updated the build scripting to support web project
+
 # v0.0.3
 * Added tslint for the api
 * Moved scripting to the proper directory

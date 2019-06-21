@@ -17,13 +17,29 @@ class buildContext {
         return this._rootDir;
     }
 
+    get distDir() {
+        return path.join(this.rootDir, "dist");
+    }
+
     get apiDir() {
-        return path.join(this.projectDir, "api");
+        return path.join(this.rootDir, "api");
     }
 
     get apiBuildDir() {
-        return path.join(this.templateApiDir, "build");
+        return path.join(this.apiDir, "build");
     }
+
+    get webDir() {
+        return path.join(this.rootDir, "web");
+    }
+
+    get webBuildDir() {
+        return path.join(this.webDir, "build");
+    }
+
+    get webTargetDir() {
+        return path.join(this.distDir, "web");
+    }    
 };
 
 module.exports.execInDir = (dir, cmd) => {
