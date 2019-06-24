@@ -1,9 +1,10 @@
 {
-    "projectName": "project-name",
-    "projectDescription": "This is a new project called: {{cookiecutter.projectName}}",
-    "projectInitialVersion": "0.0.1",
-    "functionName": "ProjectNameFunction",
-    "apiName": "{{cookiecutter.functionName}}Api",
-    "roleName": "{{cookiecutter.functionName}}Role",
-    "stackName": "{{cookiecutter.functionName}}Stack"
+    "name": "project-name",
+    "description": "This is a new project called: {{cookiecutter.name}}",
+    "version": "1.0.0",
+    "function": "{{cookiecutter.name}}-function",
+    "api": "{{cookiecutter.name}}-api",
+    "role": "{{cookiecutter.name}}-role",
+    "stack": "{{cookiecutter.name}}-stack",
+    "bucket": "{{cookiecutter.name}}-bucket"
 }

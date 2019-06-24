@@ -56,7 +56,7 @@ AWS Lambda NodeJS runtime requires a flat folder with all dependencies including
 Firstly, we need a `S3 bucket` where we can upload our Lambda functions packaged as ZIP before we deploy anything - If you don't have a S3 bucket to store code artifacts then this is a good time to create one:
 
 ```bash
-aws s3 mb s3://BUCKET_NAME
+aws s3 mb s3://{{cookiecutter.bucket}}
 ```
 
 Next, run the following command to package our Lambda function to S3:
@@ -64,7 +64,7 @@ Next, run the following command to package our Lambda function to S3:
 ```bash
 sam package \
     --output-template-file packaged.yaml \
-    --s3-bucket REPLACE_THIS_WITH_YOUR_S3_BUCKET_NAME
+    --s3-bucket {{cookiecutter.bucket}}
 ```
 
 Next, the following command will create a Cloudformation Stack and deploy your SAM resources.
@@ -72,7 +72,7 @@ Next, the following command will create a Cloudformation Stack and deploy your S
 ```bash
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.stack }} \
     --capabilities CAPABILITY_IAM
 ```
 
@@ -82,7 +82,7 @@ After deployment is complete you can run the following command to retrieve the A
 
 ```bash
 aws cloudformation describe-stacks \
-    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.stack }} \
     --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
     --output table
 ``` 
@@ -94,7 +94,7 @@ To simplify troubleshooting, SAM CLI has a command called sam logs. sam logs let
 `NOTE`: This command works for all AWS Lambda functions; not just the ones you deploy using SAM.
 
 ```bash
-sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} --tail
+sam logs -n {{cookiecutter.function}} --stack-name {{ cookiecutter.stack }} --tail
 ```
 
 You can find more information and examples about filtering Lambda function logs in the [SAM CLI Documentation](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-logging.html).
@@ -114,7 +114,7 @@ npm run test
 In order to delete our Serverless Application recently deployed you can use the following AWS CLI Command:
 
 ```bash
-aws cloudformation delete-stack --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }}
+aws cloudformation delete-stack --stack-name {{ cookiecutter.stack }}
 ```
 
 ## Bringing to the next level

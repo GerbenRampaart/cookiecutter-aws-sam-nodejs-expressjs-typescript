@@ -6,7 +6,7 @@ const fs = require("fs");
 module.exports.startApi = async () => {
     const ctx = await utils.context();
 
-    utils.execInDir(ctx.apiDir, "npm install --loglevel=error");
+    utils.execInDir(ctx.apiDir, "npm ci --loglevel=error");
     utils.execInDir(ctx.apiDir, "npm run build");
 
     utils.copy(ctx.apiBuildDir, ctx.distDir);
@@ -14,7 +14,7 @@ module.exports.startApi = async () => {
     utils.copy(path.join(ctx.apiDir, "package.json"), ctx.distDir);
     utils.copy(path.join(ctx.apiDir, "package-lock.json"), ctx.distDir);
 
-    utils.execInDir(ctx.webDir, "npm install --loglevel=error");
+    utils.execInDir(ctx.webDir, "npm ci --loglevel=error");
     utils.execInDir(ctx.webDir, "npm run build");
 
     if (fs.existsSync(ctx.webTargetDir)) {

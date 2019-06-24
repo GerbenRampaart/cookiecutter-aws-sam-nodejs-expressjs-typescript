@@ -28,7 +28,8 @@ module.exports.build = async () => {
 
     const templateDir = path.dirname(templates[0]);    
 
-    sh.cd(templateDir);
+    // sh.cd won't work because it's not the current shell you execute this on.
+    console.log(`Project generated: ${templateDir}`);
 };
 
 this.build().then(() => {

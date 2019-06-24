@@ -18,7 +18,7 @@ class buildContext {
     }
 
     get projectDir() {
-        return path.join(this.rootDir, "{{cookiecutter.projectName}}");
+        return path.join(this.rootDir, "{{cookiecutter.name}}");
     }
 
     get testDir() {

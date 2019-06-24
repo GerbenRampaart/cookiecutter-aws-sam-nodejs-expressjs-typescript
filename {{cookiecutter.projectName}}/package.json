@@ -1,7 +1,7 @@
 {
-  "name": "{{cookiecutter.projectName}}",
-  "version": "{{cookiecutter.projectInitialVersion}}",
-  "description": "{{cookiecutter.projectDescription}}",
+  "name": "{{cookiecutter.name}}",
+  "version": "{{cookiecutter.version}}",
+  "description": "{{cookiecutter.description}}",
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
