@@ -1,6 +1,6 @@
 {
-  "name": "tmp",
-  "version": "0.1.0",
+  "name": "{{cookiecutter.name}}-web",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.15",

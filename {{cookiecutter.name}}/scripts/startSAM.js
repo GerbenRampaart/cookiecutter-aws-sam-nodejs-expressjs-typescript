@@ -6,11 +6,15 @@ const sh = require("shelljs");
 module.exports.startApi = async () => {
     const ctx = await utils.context();
 
+    utils.execInDir(ctx.rootDir, "sam build");
     utils.execInDir(ctx.rootDir, "sam local start-api");
-
-    sh.cd(ctx.rootDir);
 };
 
-this.startApi().then(() => {
-    console.log("Done");
-});
+this.startApi()
+    .then(() => {
+        console.log("SUCCESS");
+    }
+    ).catch((err) => {
+        console.error("FAILURE");
+        console.error(err); 
+    });

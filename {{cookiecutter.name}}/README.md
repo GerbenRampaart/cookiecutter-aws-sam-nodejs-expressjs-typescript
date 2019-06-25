@@ -1,7 +1,7 @@
-# {{ cookiecutter.projectName }}
+# {{ cookiecutter.name }}
 
 ## Description
-{{ cookiecutter.projectDescription }}
+{{ cookiecutter.description }}
 
 
 ## Requirements
@@ -179,17 +179,17 @@ sam package \
 # Deploy SAM template as a CloudFormation stack
 sam deploy \
     --template-file packaged.yaml \
-    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
+    --stack-name {{ cookiecutter.name }} \
     --capabilities CAPABILITY_IAM
 
 # Describe Output section of CloudFormation stack previously created
 aws cloudformation describe-stacks \
-    --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} \
-    --query 'Stacks[].Outputs[?OutputKey==`HelloWorldApi`]' \
+    --stack-name {{ cookiecutter.name }} \
+    --query 'Stacks[].Outputs[?OutputKey==`{{ cookiecutter.api }}`]' \
     --output table
 
 # Tail Lambda function Logs using Logical name defined in SAM Template
-sam logs -n HelloWorldFunction --stack-name {{ cookiecutter.projectName.lower().replace(' ', '-') }} --tail
+sam logs -n {{ cookiecutter.function }} --stack-name {{ cookiecutter.name }} --tail
 ```
 
 **NOTE**: Alternatively this could be part of package.json scripts section.

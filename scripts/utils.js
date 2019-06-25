@@ -33,5 +33,10 @@ class buildContext {
 module.exports.execInDir = (dir, cmd) => {
     console.log(`"${cmd}" => ${dir}`);
     sh.cd(dir);
-    sh.exec(cmd);
+    
+    const code = sh.exec(cmd).code;
+    
+    if (code !== 0) {
+        throw new TypeError(`Exited with code ${code}`);
+    };
 }

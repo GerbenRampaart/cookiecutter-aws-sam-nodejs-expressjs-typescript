@@ -1,5 +1,11 @@
 NOTE: The 0.0.x versions are pre-beta. They might not work yet.
 
+# v0.0.5
+* Simplified the cookiecutter variables
+* Used cookiecutter variables in the README
+* Added static hosting the 'web' directory
+* The 'test' directory for testing the cookiecutter template is now no longer removed during build but checked in, this prevented access violations
+
 # v0.0.4
 * Added the react web project
 * Updated the build scripting to support web project

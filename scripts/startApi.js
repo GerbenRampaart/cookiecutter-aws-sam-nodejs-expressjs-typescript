@@ -11,8 +11,7 @@ module.exports.startApi = async () => {
     const templates = find.fileSync("template.yaml", ctx.testDir);
 
     if (templates.length !== 1) {
-        console.error("No deployed templates found. Run 'npm run build'");
-        return;
+        throw new TypeError("No deployed templates found. Run 'npm run build'");
     }
 
     const templateDir = path.dirname(templates[0]);
@@ -23,6 +22,11 @@ module.exports.startApi = async () => {
     sh.cd(ctx.rootDir);
 };
 
-this.startApi().then(() => {
-    console.log("Done");
-});
+this.startApi()
+    .then(() => {
+        console.log("SUCCESS");
+    }
+    ).catch((err) => {
+        console.error("FAILURE");
+        console.error(err); 
+    });

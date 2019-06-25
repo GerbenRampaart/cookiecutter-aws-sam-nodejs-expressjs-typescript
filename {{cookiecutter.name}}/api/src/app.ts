@@ -1,8 +1,8 @@
-'use strict'
+"use strict";
 
+import bodyParser from "body-parser";
 import { Request, Response } from "express";
 import express from "express";
-import bodyParser from "body-parser";
 
 const expressApp = express();
 
@@ -13,22 +13,24 @@ const textParser = bodyParser.text();
 const pets = [
     {
         id: 1,
-        name: "dog"
+        name: "dog",
     },
     {
         id: 2,
-        name: "cat"
-    }
+        name: "cat",
+    },
 ];
 
-expressApp.get('/pets', jsonParser, (req: Request, res: Response) => {
+expressApp.get("/api/pets", jsonParser, (req: Request, res: Response) => {
     res.json(pets);
 });
 
-expressApp.get('/pets/:petId', jsonParser, (req: Request, res: Response) => {
+expressApp.get("/api/pets/:petId", jsonParser, (req: Request, res: Response) => {
     res.json(pets.filter((pet) => {
-        pet.id === req.params.petId
+        return pet.id === req.params.petId;
     }));
 });
+
+expressApp.use(express.static("web"));
 
 export const app = expressApp;

@@ -5,17 +5,16 @@
   "author": "SAM CLI",
   "license": "MIT",
   "dependencies": {
-
-  },
-  "scripts": {
-    "prepack": "npm run build",    
-    "build": "node ./scripts/build.js",
-    "start": "node ./scripts/start.js"
-  },
-  "devDependencies": {
-    "@types/node": "10.14.8",
     "find": "^0.3.0",
     "find-up": "^4.0.0",
     "shelljs": "^0.8.3"
+  },
+  "scripts": {
+    "build": "node ./scripts/build.js",
+    "startSAM": "node ./scripts/startSAM.js",
+    "startExpress": "node ./scripts/startExpress.js"
+  },
+  "devDependencies": {
+    "@types/node": "10.14.8"
   }
 }
