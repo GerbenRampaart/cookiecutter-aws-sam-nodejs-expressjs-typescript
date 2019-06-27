@@ -13,6 +13,7 @@ module.exports.startApi = async () => {
 
     utils.copy(path.join(ctx.apiDir, "package.json"), ctx.distDir);
     utils.copy(path.join(ctx.apiDir, "package-lock.json"), ctx.distDir);
+    utils.execInDir(ctx.distDir, "npm install --production");
 
     utils.execInDir(ctx.webDir, "npm install --loglevel=error");
     utils.execInDir(ctx.webDir, "npm run build");
