@@ -1,8 +1,7 @@
 "use strict";
 
-import bodyParser from "body-parser";
-import { Request, Response } from "express";
-import express from "express";
+import * as bodyParser from "body-parser";
+import * as express from "express";
 
 const expressApp = express();
 
@@ -21,15 +20,20 @@ const pets = [
     },
 ];
 
-expressApp.get("/api/pets", jsonParser, (req: Request, res: Response) => {
+expressApp.get("/pets", jsonParser, (req: express.Request, res: express.Response) => {
     res.json(pets);
 });
 
-expressApp.get("/api/pets/:petId", jsonParser, (req: Request, res: Response) => {
+expressApp.get("/pets/:petId", jsonParser, (req: express.Request, res: express.Response) => {
     res.json(pets.filter((pet) => {
         return pet.id === req.params.petId;
     }));
 });
+
+app.get('/', (req, res) => {
+    res.sendFile(`web/index.html`)
+})
+
 
 expressApp.use(express.static("web"));
 
