@@ -30,8 +30,8 @@ expressApp.get("/pets/:petId", jsonParser, (req: express.Request, res: express.R
     }));
 });
 
-app.get('/', (req, res) => {
-    res.sendFile(`web/index.html`)
+expressApp.get("/", (req: express.Request, res: express.Response) => {
+    res.sendFile(`web/index.html`);
 })
 
 

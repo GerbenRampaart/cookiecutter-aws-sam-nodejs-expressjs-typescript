@@ -6,6 +6,14 @@ const fs = require("fs");
 module.exports.startApi = async () => {
     const ctx = await utils.context();
 
+    console.log(`Clearing dist dir: ${ctx.distDir}`);
+
+    if (!fs.existsSync(ctx.distDir)) {
+        throw new TypeError(`Expected directory ${ctx.distDir}`);
+    }
+
+    sh.rm("-r", path.join(ctx.distDir, "*"));
+
     utils.execInDir(ctx.apiDir, "npm install --loglevel=error");
     utils.execInDir(ctx.apiDir, "npm run build");
 

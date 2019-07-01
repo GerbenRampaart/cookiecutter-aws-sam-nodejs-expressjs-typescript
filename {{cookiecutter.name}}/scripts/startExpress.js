@@ -6,7 +6,7 @@ const sh = require("shelljs");
 module.exports.startApi = async () => {
     const ctx = await utils.context();
 
-    utils.execInDir(ctx.rootDir, "node ./dist/app.local.js");
+    utils.execInDir(ctx.distDir, "node app.local.js");
 };
 
 this.startApi()
