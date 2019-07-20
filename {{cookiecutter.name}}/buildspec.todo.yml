@@ -1,0 +1,25 @@
+version: 0.2
+
+# Run this locally:
+# https://aws.amazon.com/blogs/devops/announcing-local-build-support-for-aws-codebuild/
+
+phases:
+  install:
+    commands:
+      # Install dependencies needed for running tests
+      - npm install
+
+      # Upgrade AWS CLI to the latest version
+      #- sudo apt update -qq
+      #- sudo apt install python-dev -y -qq
+      #- sudo apt install python-pip -y -qq
+      #- pip -q install --upgrade awscli
+  pre_build:
+    commands:
+      # Discover and run unit tests
+      # - npm test
+  build:
+    commands:
+      # https://adrian.tengamnuay.me/programming/2018/07/01/continuous-deployment-with-aws-lambda/
+      - npm run build
+      - npm run deploy

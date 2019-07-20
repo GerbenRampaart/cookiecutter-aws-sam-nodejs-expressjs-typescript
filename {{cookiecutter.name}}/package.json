@@ -11,8 +11,8 @@
   },
   "scripts": {
     "build": "node ./scripts/build.js",
-    "startSAM": "node ./scripts/startSAM.js",
-    "startExpress": "node ./scripts/startExpress.js"
+    "start:sam": "node ./scripts/startSAM.js",
+    "start:express": "node ./scripts/startExpress.js"
   },
   "devDependencies": {
     "@types/node": "10.14.8"

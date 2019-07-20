@@ -34,8 +34,8 @@ module.exports.build = async () => {
     console.info(`- cd ${templateDir}`);
     console.info("- npm install");
     console.info("- npm run build");
-    console.info("- npm run startSAM (for the AWS SAM api)");
-    console.info("- npm run startExpress (for the standalone express app)");
+    console.info("- npm run start:sam (for the AWS SAM api)");
+    console.info("- npm run start:express (for the standalone express app)");
 };
 
 this.build()
