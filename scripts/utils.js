@@ -37,6 +37,13 @@ module.exports.execInDir = (dir, cmd) => {
     const code = sh.exec(cmd).code;
     
     if (code !== 0) {
-        throw new TypeError(`Exited with code ${code}`);
+        sh.exit(code);
     };
+}
+
+module.exports.clearDir = (dir) => {
+    if (sh.cd(dir).) {
+        
+    }
+    sh.rm("-rf", "*");
 }

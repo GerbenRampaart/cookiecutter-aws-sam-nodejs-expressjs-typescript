@@ -39,9 +39,27 @@ class buildContext {
 
     get webTargetDir() {
         return path.join(this.distDir, "web");
-    }    
-};
+    }
 
+    get apiTargetDir() {
+        return path.join(this.distDir, "api");
+    }
+
+    get samBuildDir() {
+        return path.join(".aws-sam");
+    }
+
+    get samBuildTargetDir() {
+        const samBuilds = find.fileSync("template.yaml", this.samBuildDir);
+
+        if (samBuilds.length !== 1) {
+            console.error("No sam builds found");
+            return;
+        }
+
+        return path.dirname(samBuilds[0]);    
+    }
+};
 module.exports.execInDir = (dir, cmd) => {
     console.log(`"${cmd}" => ${dir}`);
     sh.cd(dir);

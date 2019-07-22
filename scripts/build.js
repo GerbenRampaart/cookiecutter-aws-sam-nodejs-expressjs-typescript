@@ -13,7 +13,7 @@ module.exports.build = async () => {
         throw new TypeError(`Expected directory ${ctx.testDir}`);
     }
 
-    sh.rm("-r", path.join(ctx.testDir, "*"));
+    sh.rm("-rf", path.join(ctx.testDir, "*"));
 
     console.log(`Deploying template to ${ctx.testDir}`);
     sh.cd(ctx.testDir);

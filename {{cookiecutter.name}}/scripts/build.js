@@ -17,7 +17,7 @@ module.exports.startApi = async () => {
     utils.execInDir(ctx.apiDir, "npm install --loglevel=error");
     utils.execInDir(ctx.apiDir, "npm run build");
 
-    utils.copy(ctx.apiBuildDir, ctx.distDir);
+    utils.copy(path.join(ctx.apiBuildDir, "/."), ctx.apiTargetDir);
 
     utils.copy(path.join(ctx.apiDir, "package.json"), ctx.distDir);
     utils.copy(path.join(ctx.apiDir, "package-lock.json"), ctx.distDir);

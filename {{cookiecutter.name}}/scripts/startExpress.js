@@ -1,12 +1,9 @@
 const utils = require("./utils");
-const find = require("find");
-const path = require("path");
-const sh = require("shelljs");
 
 module.exports.startApi = async () => {
     const ctx = await utils.context();
 
-    utils.execInDir(ctx.distDir, "node app.local.js");
+    utils.execInDir(ctx.apiTargetDir, "node app.local.js");
 };
 
 this.startApi()
