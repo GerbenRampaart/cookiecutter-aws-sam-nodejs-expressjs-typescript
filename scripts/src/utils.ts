@@ -45,7 +45,14 @@ export class Utils {
     }
 
     private static invoke(func: (...params: any[]) => sh.ShellReturnValue): sh.ShellReturnValue {
-        sh.echo(func.toString());
+        let name = func.toString();
+        name = name.replace("() => ", "");
+        //func.arguments
+        //log = `${log}`;
+
+        sh.echo(name);
+        sh.echo();
+
         const result = func();
 
         this.failIfNot0(result);
