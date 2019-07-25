@@ -9,17 +9,13 @@ module.exports.build = async () => {
     const ctx = await context();
 
     // sh.echo(`Clearing template dir: ${ctx.testDir}`);
+    Utils.exists(ctx.testDir, true);
 
-    if (!(ctx.testDir)) {
-        throw new TypeError(`Expected directory ${ctx.testDir}`);
-    }
+    Utils.clearDir(ctx.testDir);
 
-    sh.rm("-rf", path.join(ctx.testDir, "*"));
-
-    console.log(`Deploying template to ${ctx.testDir}`);
-    sh.cd(ctx.testDir);
-    sh.exec("sam init --location ../ --no-input");
-
+    sh.echo(`Deploying template to ${ctx.testDir}`);
+    Utils.execInDir(ctx.testDir, "sam init --location ../ --no-input");
+sh.find(ctx.testDir)
     // Right now we assume that we have one deployed test application in './test'
     const templates = find.fileSync("template.yaml", ctx.testDir);
 
