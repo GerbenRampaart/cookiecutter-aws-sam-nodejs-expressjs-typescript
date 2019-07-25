@@ -1,14 +1,14 @@
-const path = require("path");
-const findUp = require("find-up");
-const sh = require("shelljs");
+import findUp = require("find-up");
+import * as path from "path";
 
-module.exports.context = async () => {
+export const context = async () => {
     const projectRoot = await findUp("package.json");
     const projectRootDir = path.dirname(projectRoot);
     return new buildContext(projectRootDir);
 }
 
 class buildContext {
+    _rootDir: any;
     constructor(rootDir) {
         this._rootDir = rootDir;
     }
@@ -29,21 +29,3 @@ class buildContext {
         return path.join(this.projectDir, "api");
     }
 };
-
-module.exports.execInDir = (dir, cmd) => {
-    console.log(`"${cmd}" => ${dir}`);
-    sh.cd(dir);
-    
-    const code = sh.exec(cmd).code;
-    
-    if (code !== 0) {
-        sh.exit(code);
-    };
-}
-
-module.exports.clearDir = (dir) => {
-    if (sh.cd(dir).) {
-        
-    }
-    sh.rm("-rf", "*");
-}

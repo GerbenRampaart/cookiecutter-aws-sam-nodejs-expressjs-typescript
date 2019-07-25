@@ -1,15 +1,16 @@
-const utils = require("./utils");
-const path = require("path");
-const fs = require("fs");
-const sh = require("shelljs");
-const find = require("find");
+import { Utils } from "./utils";
+import * as path from "path";
+import * as fs from "fs";
+import * as sh from "shelljs";
+import * as find from "find";
+import { context } from "./context";
 
 module.exports.build = async () => {
-    const ctx = await utils.context();
+    const ctx = await context();
 
-    console.log(`Clearing template dir: ${ctx.testDir}`);
+    // sh.echo(`Clearing template dir: ${ctx.testDir}`);
 
-    if (!fs.existsSync(ctx.testDir)) {
+    if (!(ctx.testDir)) {
         throw new TypeError(`Expected directory ${ctx.testDir}`);
     }
 
