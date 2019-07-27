@@ -21,8 +21,6 @@ export class Utils {
         failIfNotSingleResult: number): sh.ShellArray {
         this.invoke(() => sh.cd(dir));
         const result = this.invoke(() => sh.find()) as sh.ShellArray;
-        
-        this.failIfNot0(result);
 
         if (result.length !== 1 && failIfNotSingleResult) {
             this.fail(1, `Expected a single result`);
@@ -51,7 +49,7 @@ export class Utils {
         //log = `${log}`;
 
         sh.echo(name);
-        sh.echo();
+        sh.echo(func.arguments)
 
         const result = func();
 
