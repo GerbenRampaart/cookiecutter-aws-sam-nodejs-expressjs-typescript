@@ -1,10 +1,7 @@
-const utils = require("./utils");
-const find = require("find");
-const path = require("path");
-const sh = require("shelljs");
+import { Context } from "./context";
 
-module.exports.startApi = async () => {
-    const ctx = await utils.context();
+const startApi = async () => {
+    const ctx = await Context.instance();
     sh.cd(ctx.testDir);
 
     // Right now we assume that we have one deployed test application in './test'

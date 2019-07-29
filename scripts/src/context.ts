@@ -1,13 +1,14 @@
 import findUp = require("find-up");
 import * as path from "path";
 
-export const context = async () => {
-    const projectRoot = await findUp("package.json");
-    const projectRootDir = path.dirname(projectRoot);
-    return new buildContext(projectRootDir);
-}
+export class Context {
 
-class buildContext {
+    public static async instance() {
+        const projectRoot = await findUp("package.json");
+        const projectRootDir = path.dirname(projectRoot);
+        return new Context(projectRootDir);
+    }
+
     _rootDir: any;
     constructor(rootDir) {
         this._rootDir = rootDir;
@@ -25,7 +26,7 @@ class buildContext {
         return path.join(this.rootDir, "test");
     }
 
-    get templateApipiDir() {
+    get templateApiDir() {
         return path.join(this.projectDir, "api");
     }
 };

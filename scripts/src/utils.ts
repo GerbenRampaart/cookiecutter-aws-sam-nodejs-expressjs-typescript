@@ -18,9 +18,11 @@ export class Utils {
 
     public static findInDir(
         dir: string,
-        failIfNotSingleResult: number): sh.ShellArray {
+        fileNameToFind: string,
+        failIfNotSingleResult: boolean): sh.ShellArray {
+
         this.invoke(() => sh.cd(dir));
-        const result = this.invoke(() => sh.find()) as sh.ShellArray;
+        const result = this.invoke(() => sh.find(fileNameToFind)) as sh.ShellArray;
 
         if (result.length !== 1 && failIfNotSingleResult) {
             this.fail(1, `Expected a single result`);
