@@ -6,92 +6,91 @@ import * as chalk from "chalk";
 */
 export class Utils {
 
-    public static execInDir(dir: string, cmd: string): sh.ShellString {
+    public static execInDir(dir: string, cmd: string): void {
+        this.cd(dir);
 
-        this.exists(dir, true);
+        const options: sh.ExecOptions = {
+            silent: true
+        };
 
-        this.invoke(() => sh.cd(dir), dir);
-        const result = this.invoke(() => sh.exec(cmd, { silent: true }), cmd, { silent: true });
-        return result as sh.ShellString;
+        this.log(`shelljs.exec("${cmd}", ${JSON.stringify(options)})`, LogLevel.INFO, 2);
+        const result = sh.exec(cmd, { silent: true });
+        this.processResult(result);
     }
 
-    public static clearDir(dir: string) {
+    public static clearDir(dir: string): void {
+        this.cd(dir);
 
-        this.exists(dir, true);
-
-        this.invoke(() => sh.cd(dir), dir);
-        this.invoke(() => sh.rm("-rf", "*"), "-rf", "*");
+        this.log(`shelljs.rm("-rf", "*"`, LogLevel.INFO, 2);
+        const result = sh.rm("-rf", "*");
+        this.processResult(result);
     }
 
     public static findInDir(
         dir: string,
         fileNameToFind: string,
-        failIfNotSingleResult: boolean): sh.ShellArray {
+        failIfNotSingleResult: boolean): string[] {
 
         const p = path.join(dir, "**", fileNameToFind);
-        // this.invoke(() => sh.cd(dir), dir);
-        const result = this.invoke(() => sh.find(p), p) as sh.ShellArray;
+
+        this.log(`shelljs.find("${p}"`, LogLevel.INFO, 2);
+        const result = sh.find(p);
 
         if (result.length !== 1 && failIfNotSingleResult) {
-            this.fail(1, `Expected a single result`);
+            this.explicitFail(1, `Expected a single result`);
         }
         
-        return result as sh.ShellArray;
+        return result;
     }
 
-    public static exists(
+    public static verifyExists(
         path: string, 
         failIfNotExists: boolean): boolean {
 
-        const result = sh.test("-e", path);
+        const result = (path !== undefined) && sh.test("-e", path);
 
         if (!result && failIfNotExists) {
-            this.fail(1, `Exiting because path did not exist`);
+            this.explicitFail(1, `Exiting because path did not exist: ${path}`);
         }
 
         return result;
     }    
 
-    private static invoke(func: (...params: any[]) => sh.ShellReturnValue, ...params: any[]): sh.ShellReturnValue {
-        let name = func.toString();
-        name = name.replace("() => ", "");
-        name = name.substring(0, name.indexOf("("));
+    private static cd(dir: string, failIfDirNotExists: boolean = true) {
+        this.verifyExists(dir, failIfDirNotExists);
+        
+        this.log(`shelljs.cd("${dir}")`, LogLevel.INFO, 2);
+        const result = sh.cd(dir);
 
-        const args = params.join(", ");
-        const cmd = `${name}(${args})`;
-
-        this.log(cmd, LogLevel.INFO, 2);
-
-        let result = null;
-
-        try {
-            result = func(params);
-            this.log(result.stdout, LogLevel.SUCCESS, 4);
-        } catch (error) {
-            this.fail(1, error);
-        }
-
-        this.failIfNot0(result);
+        this.processResult(result);
 
         return result;
     }
 
-    private static failIfNot0(result: sh.ShellReturnValue) {
-        // If any shelljs command fails,
-        // fail the whole execution.
-
-        if (!result) {
-            this.fail(1, "No result");
-        }
-
-        if (result.code !== 0) {
-            this.fail(result.code, result.stdout);
-        }
+    private static explicitFail(code: number, msg: string) {
+        this.log(msg, LogLevel.ERROR);
+        sh.exit(code);
     }
 
-    private static fail(code: number, message: string) {
-        this.log(message, LogLevel.ERROR);
-        sh.exit(code);
+    private static processResult(
+        result: sh.ShellReturnValue,
+        failIfNot0: boolean = true) {
+
+        if (!result) {
+            return;
+        }
+
+        if (result.stdout) {
+            this.log(result.stdout, LogLevel.SUCCESS, 4);
+        }
+
+        if (result.stderr) {
+            this.log(result.stderr, LogLevel.ERROR, 4);
+        }
+
+        if (result.code !== 0 && failIfNot0) {
+            sh.exit(result.code);
+        }
     }
 
     public static log(msg: string, level: LogLevel = LogLevel.INFO, indent: number = 0) {
@@ -102,6 +101,7 @@ export class Utils {
 
         const ind = " ".repeat(indent);
         let line = msg;
+        line = line.replace("\n", `\n${ind}`);
 
         if (level === LogLevel.ERROR) {
             line = chalk.default.red(line);
