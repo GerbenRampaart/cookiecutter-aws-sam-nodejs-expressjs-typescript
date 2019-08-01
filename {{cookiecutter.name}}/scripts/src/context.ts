@@ -1,6 +1,6 @@
 import { sync } from "find-up";
-import { fileSync } from "find";
 import { join, dirname} from "path";
+import { Utils } from "./utils";
 
 export class Context {
 
@@ -53,13 +53,7 @@ export class Context {
     }
 
     get samBuildTargetDir() {
-        const samBuilds = fileSync("template.yaml", this.samBuildDir);
-
-        if (samBuilds.length !== 1) {
-            console.error("No sam builds found");
-            return;
-        }
-
-        return dirname(samBuilds[0]);    
+        const files = Utils.findInDir(this.samBuildDir, "template.yaml", true);
+        return dirname(files[0]);    
     }
 };

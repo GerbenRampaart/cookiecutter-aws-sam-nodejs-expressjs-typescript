@@ -12,4 +12,4 @@ const start = async () => {
     Utils.execInDir(templateDir, "npm run start");
 };
 
-Utils.execute(this.start, "Deploying template");
+Utils.execute(start(), "Deploying template");

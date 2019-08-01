@@ -12,15 +12,17 @@ const build = async () => {
     const files = Utils.findInDir(ctx.testDir, "template.yaml", true);
     const templateDir = dirname(files[0]);    
 
+    const packageJSONString = Utils.cat(join(templateDir, "package.json"));
+    const packageJSON: IPackageJSON = JSON.parse(packageJSONString);
+    const scripts = packageJSON.scripts;
+    
+    Utils.writeSeparator();
+    
     const l = (msg: string) => { Utils.log(msg, LogLevel.SUCCESS, 4) }
     l("Execute the following:");
     l(`- cd ${templateDir}`);
     l("- npm install");
 
-    const packageJSONString = Utils.cat(join(templateDir, "package.json"));
-    const packageJSON: IPackageJSON = JSON.parse(packageJSONString);
-    const scripts = packageJSON.scripts;
-    
     if (scripts) {
         for (let key in scripts) {
             let value = scripts[key];
@@ -29,4 +31,4 @@ const build = async () => {
     }
 };
 
-Utils.execute(this.build, "Running 'sam init'");
+Utils.execute(build(), "Running 'sam init'");

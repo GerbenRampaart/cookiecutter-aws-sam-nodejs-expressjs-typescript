@@ -150,19 +150,22 @@ export class Utils {
         });
     }
 
-    public static execute(promise: Promise<void>, description: string) {
+    public static writeSeparator(): void {
         let separator = "-".repeat(process.stdout.columns);
         separator = `\n${separator}`;
-        
+        this.log(separator, LogLevel.INFO);
+    }
+
+    public static execute(promise: Promise<void>, description: string) {
         promise
             .then(() => {
-                this.log(separator, LogLevel.INFO);
+                this.writeSeparator();
                 this.log(`SUCCESS: ${description}`, LogLevel.SUCCESS);
             })
             .catch((err: any) => {
-                this.log(separator, LogLevel.INFO);
+                this.writeSeparator();
                 this.log(err, LogLevel.ERROR);
-                this.log(separator, LogLevel.INFO);
+                this.writeSeparator();
                 this.log(`FAILURE: ${description}`, LogLevel.ERROR);
             });
     }
