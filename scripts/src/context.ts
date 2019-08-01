@@ -10,6 +10,7 @@ export class Context {
     }
 
     _rootDir: any;
+
     constructor(rootDir) {
         this._rootDir = rootDir;
     }
