@@ -1,31 +1,32 @@
 import { Utils, LogLevel } from "./utils";
-import * as path from "path";
+import { dirname, join } from "path";
 import { Context } from "./context";
+import { IPackageJSON } from "./IPackageJSON";
 
 const build = async () => {
     const ctx = await Context.instance();
 
-    Utils.verifyExists(ctx.testDir, true);
     Utils.clearDir(ctx.testDir);
     Utils.execInDir(ctx.testDir, "sam init --location ../ --no-input");
 
     const files = Utils.findInDir(ctx.testDir, "template.yaml", true);
-    const templateDir = path.dirname(files[0]);    
+    const templateDir = dirname(files[0]);    
 
     const l = (msg: string) => { Utils.log(msg, LogLevel.SUCCESS, 4) }
     l("Execute the following:");
     l(`- cd ${templateDir}`);
     l("- npm install");
-    l("- npm run build");
-    l("- npm run start:sam (for the AWS SAM api)");
-    l("- npm run start:express (for the standalone express app)");
+
+    const packageJSONString = Utils.cat(join(templateDir, "package.json"));
+    const packageJSON: IPackageJSON = JSON.parse(packageJSONString);
+    const scripts = packageJSON.scripts;
+    
+    if (scripts) {
+        for (let key in scripts) {
+            let value = scripts[key];
+            l(`- npm run ${key}`);
+        }
+    }
 };
 
-build()
-    .then(() => {
-        console.log("SUCCESS");
-    }
-    ).catch((err) => {
-        console.error("FAILURE");
-        console.error(err); 
-    });
+Utils.execute(this.build, "Running 'sam init'");

@@ -1,11 +1,11 @@
 import findUp = require("find-up");
-import * as path from "path";
+import { dirname, join } from "path";
 
 export class Context {
 
     public static async instance() {
         const projectRoot = await findUp("package.json");
-        const projectRootDir = path.dirname(projectRoot);
+        const projectRootDir = dirname(projectRoot);
         return new Context(projectRootDir);
     }
 
@@ -20,14 +20,14 @@ export class Context {
     }
 
     get projectDir() {
-        return path.join(this.rootDir, "{{cookiecutter.name}}");
+        return join(this.rootDir, "{{cookiecutter.name}}");
     }
 
     get testDir() {
-        return path.join(this.rootDir, "test");
+        return join(this.rootDir, "test");
     }
 
     get templateApiDir() {
-        return path.join(this.projectDir, "api");
+        return join(this.projectDir, "api");
     }
 };
