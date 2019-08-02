@@ -5,6 +5,6 @@ import { app } from "./app";
 
 const server = createServer(app);
 
-export const handler = (event: lambda.APIGatewayEvent, context: lambda.Context) => {
-    return proxy(server, event, context);
+export const handler = async (event: lambda.APIGatewayEvent, context: lambda.Context) => {
+    await proxy(server, event, context, "PROMISE");
 };

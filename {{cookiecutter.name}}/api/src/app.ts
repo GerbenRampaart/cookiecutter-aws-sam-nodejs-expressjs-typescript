@@ -1,13 +1,14 @@
 "use strict";
 
-import * as bodyParser from "body-parser";
 import * as express from "express";
+import { join } from "path";
+import { IncomingMessage, ServerResponse } from "http";
 
 const expressApp = express();
 
-const jsonParser = bodyParser.json();
-const urlencodedParser = bodyParser.urlencoded({ extended: false });
-const textParser = bodyParser.text();
+
+
+const textParser = text({});
 
 const pets = [
     {
@@ -20,21 +21,16 @@ const pets = [
     },
 ];
 
-expressApp.get("/pets", jsonParser, (req: express.Request, res: express.Response) => {
+expressApp.get("/api/pets", json(), async (req: express.Request, res: express.Response) => {
     res.json(pets);
 });
 
-expressApp.get("/pets/:petId", jsonParser, (req: express.Request, res: express.Response) => {
+expressApp.get("/api/pets/:petId", jsonParser, async (req: express.Request, res: express.Response) => {
     res.json(pets.filter((pet) => {
         return pet.id === req.params.petId;
     }));
 });
 
-expressApp.get("/", (req: express.Request, res: express.Response) => {
-    res.sendFile(`web/index.html`);
-})
-
-
-expressApp.use(express.static("web"));
+expressApp.use("/", express.static(join(__dirname, "../", "web")));
 
 export const app = expressApp;
