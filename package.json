@@ -3,8 +3,7 @@
   "version": "0.0.5",
   "description": "This project provides a comprehensive template for nodejs 10.x which can be used with the AWS SAM cli",
   "scripts": {
-    "build": "cd scripts && tsc -p . && node ./build/build.js",
-    "start:api": "node ./scripts/startApi.js"
+    "build": "cd scripts && tsc -p . && node ./build/build.js"
   },
   "repository": {
     "type": "git",

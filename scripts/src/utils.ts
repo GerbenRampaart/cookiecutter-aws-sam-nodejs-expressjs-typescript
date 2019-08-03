@@ -1,10 +1,23 @@
-import { ExecOptions, exec, cp, cd, find, test, cat, echo, exit, rm, ShellReturnValue, ShellArray } from "shelljs";
-import { join } from "path";
-import { EOL } from "os";
+import { ExecOptions, exec, cp, cd, find, test, cat, echo, exit, rm, ShellReturnValue, mkdir } from "shelljs";
+import { join, dirname } from "path";
+import { EOL, cpus } from "os";
 import * as chalk from "chalk";
 
 /*
     https://devhints.io/shelljs
+
+    Note: This wrapper around shelljs mainly exists because:
+        -   The scripts must be really negative, if any command does not work
+            the process must exit. Even when the directory does not exist when 
+            doing "cd" the process needs to stop.
+        -   I like to use chalk to add coloring to the stderr and stdout.
+        -   It allows for for some isolated behaviour.
+    Other design goals:
+        -   Always do any IO using shelljs for consistancy. So use shelljs.echo 
+            instead of console.log and use shelljs.test instead of fs.existsSync
+            and so on.
+        -   All operations must be explicitly sync to avoid any unexpected behaviour.
+            Promises are made sync (non-blocking) by using aync/await. 
 */
 export class Utils {
 
@@ -50,7 +63,9 @@ export class Utils {
     public static verifyExists(
         path: string, 
         failIfNotExists: boolean): boolean {
-
+        
+        path = dirname(path);
+        
         this.log(`shelljs.test("-e", "${path}")`, LogLevel.INFO, 2);
         const result = (path !== undefined) && test("-e", path);
         this.log(String(result), LogLevel.SUCCESS, 4);
@@ -77,7 +92,19 @@ export class Utils {
 
         this.log(`shelljs.cp("-r", "${from}", "${to}")`, LogLevel.INFO, 2);
         const result = cp("-r", from, to);
+        this.processResult(result);
+    }
 
+    public static mkdir(dir: string) {
+        const exists = this.verifyExists(dir, false);
+
+        if (exists) {
+            // Already exists. No need to do mkdir.
+            return;
+        }
+
+        this.log(`shelljs.mkdir("${dir}")`, LogLevel.INFO, 2);
+        const result = mkdir(dir);
         this.processResult(result);
     }
 
@@ -86,7 +113,6 @@ export class Utils {
 
         this.log(`shelljs.cat("${file}")`, LogLevel.INFO, 2);
         const result = cat(file);
-
         this.processResult(result);
 
         return result.stdout;
@@ -110,17 +136,25 @@ export class Utils {
         }
 
         if (result.stderr) {
-            this.log(result.stderr, LogLevel.ERROR, 4);
+            // Display a little more if it's an error.
+            this.log(result.stderr, LogLevel.ERROR, 4, 20);
         }
 
         if (result.code !== 0 && failIfNot0) {
-            exit(result.code);
+            throw new TypeError(result.stderr);
         }
     }
 
     public static log(msg: string, level: LogLevel = LogLevel.INFO, indent: number = 0, maxLines: number = 5) {
+        if (!msg) {
+            return;
+        }
 
-        if (!msg || msg.trim().length === 0) {
+        if (typeof msg === "object") {
+            msg = JSON.stringify(msg);
+        }
+
+        if (msg.trim().length === 0) {
             return;
         }
 
@@ -164,9 +198,9 @@ export class Utils {
             })
             .catch((err: any) => {
                 this.writeSeparator();
-                this.log(err, LogLevel.ERROR);
-                this.writeSeparator();
                 this.log(`FAILURE: ${description}`, LogLevel.ERROR);
+                this.writeSeparator();
+                this.explicitFail(1, err);
             });
     }
 }
