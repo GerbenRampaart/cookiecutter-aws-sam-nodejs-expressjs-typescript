@@ -7,12 +7,15 @@
   "dependencies": {
     "find-up": "^4.1.0",
     "shelljs": "^0.8.3",
-    "chalk": "^2.4.2"
+    "chalk": "^2.4.2",
+    "typescript": "^3.5.3"
   },
   "scripts": {
-    "build": "node ./scripts/build.js",
-    "start:sam": "node ./scripts/startSAM.js",
-    "start:express": "node ./scripts/startExpress.js"
+    "start": "npm run compile && npm run build && npm run start:express",
+    "compile": "cd scripts && tsc -p .",
+    "build": "BUILD_API=true BUILD_WEB=true node ./scripts/build/build.js",
+    "start:sam": "node ./scripts/build/startSAM.js",
+    "start:express": "node ./scripts/build/startExpress.js"
   },
   "devDependencies": {
     "@types/node": "10.14.8"

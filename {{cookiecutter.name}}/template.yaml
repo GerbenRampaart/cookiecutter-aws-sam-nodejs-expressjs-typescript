@@ -53,13 +53,13 @@ Resources:
         PetsGet:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /pets
+            Path: /api/pets
             Method: get
             RestApiId: !Ref {{cookiecutter.api}}
         PetsGetById:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
-            Path: /pets/{petId}
+            Path: /api/pets/{petId}
             Method: get
             RestApiId: !Ref {{cookiecutter.api}}
 
