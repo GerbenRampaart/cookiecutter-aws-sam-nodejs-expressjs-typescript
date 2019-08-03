@@ -1,16 +1,68 @@
 import { IPet, PetType } from "../models/pet.model";
 
 export class PetsService {
-    all(): Promise<IPet[]> {
-        return Promise.resolve(pets);
+    async all(): Promise<IPet[]> {
+        return Promise.resolve<IPet[]>(pets);
     }
 
-    byId(): Promise<IPet> {
-        return this.all
+    async byId(id: number): Promise<IPet | undefined> {
+        const idx = pets.findIndex((pet: IPet) => {
+            return pet.id === id;
+        });
+
+        // findIndex will return -1 if the item is not found
+        if (idx === -1) {
+            return Promise.resolve(undefined);
+        }
+
+        return pets[idx];
+    }
+
+    async byFilter(filter: (val: IPet, idx: number) => IPet): Promise<IPet[]> {
+        return Promise.resolve(pets.filter(filter));
+    }
+
+    async create(pet: IPet): Promise<number> {
+        const newId = pets.length + 1;
+        pets.push({
+            id: newId,
+            name: pet.name,
+            type: pet.type 
+        });
+        return Promise.resolve(newId);
+    }
+
+    async update(id: number, pet: IPet): Promise<IPet | undefined> {
+        const idx = pets.findIndex((pet: IPet) => {
+            return pet.id === id;
+        });
+
+        if (!idx) {
+            return Promise.resolve(undefined);
+        }
+
+        const p = pets[idx];
+        
+        p.name = pet.name;
+        p.type = pet.type;
+        
+        return p;
+    }
+
+    async delete(id: number): Promise<void> {
+        const idx = pets.findIndex((pet: IPet) => {
+            return pet.id === id;
+        });
+
+        if (!idx) {
+            return Promise.resolve(undefined);
+        }
+
+        pets = pets.splice(idx, 1);
     }
 }
 
-const pets: IPet[] = [
+let pets: IPet[] = [
     {
         id: 1,
         name: "Max",
