@@ -28,7 +28,7 @@ export class Utils {
             silent: true
         };
 
-        this.log(`shelljs.exec("${cmd}"), ${JSON.stringify(options)})`, LogLevel.INFO, 2);
+        this.log(`shelljs.exec("${cmd}"), ${JSON.stringify(options)})`, LogLevel.INFO);
         const result = exec(cmd, { silent: true });
         this.processResult(result);
     }
@@ -36,7 +36,7 @@ export class Utils {
     public static clearDir(dir: string): void {
         this.cd(dir);
 
-        this.log(`shelljs.rm("-rf", "*")`, LogLevel.INFO, 2);
+        this.log(`shelljs.rm("-rf", "*")`, LogLevel.INFO);
         const result = rm("-rf", "*");
         this.processResult(result);
     }
@@ -48,7 +48,7 @@ export class Utils {
 
         const p = join(dir, "**", fileNameToFind);
 
-        this.log(`shelljs.find("${p}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.find("${p}")`, LogLevel.INFO);
         const result = find(p);
 
         if (result.length !== 1 && failIfNotSingleResult) {
@@ -66,9 +66,9 @@ export class Utils {
         
         path = dirname(path);
         
-        this.log(`shelljs.test("-e", "${path}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.test("-e", "${path}")`, LogLevel.INFO);
         const result = (path !== undefined) && test("-e", path);
-        this.log(String(result), LogLevel.SUCCESS, 4);
+        this.log(String(result), LogLevel.SUCCESS);
 
         if (!result && failIfNotExists) {
             this.explicitFail(1, `Exiting because path did not exist: ${path}`);
@@ -80,7 +80,7 @@ export class Utils {
     public static cd(dir: string, failIfDirNotExists: boolean = true): void {
         this.verifyExists(dir, failIfDirNotExists);
         
-        this.log(`shelljs.cd("${dir}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.cd("${dir}")`, LogLevel.INFO);
         const result = cd(dir);
 
         this.processResult(result);
@@ -90,7 +90,7 @@ export class Utils {
         this.verifyExists(from, true);
         this.verifyExists(to, true);
 
-        this.log(`shelljs.cp("-r", "${from}", "${to}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.cp("-r", "${from}", "${to}")`, LogLevel.INFO);
         const result = cp("-r", from, to);
         this.processResult(result);
     }
@@ -103,7 +103,7 @@ export class Utils {
             return;
         }
 
-        this.log(`shelljs.mkdir("${dir}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.mkdir("${dir}")`, LogLevel.INFO);
         const result = mkdir(dir);
         this.processResult(result);
     }
@@ -111,7 +111,7 @@ export class Utils {
     public static cat(file: string): string {
         this.verifyExists(file, true);
 
-        this.log(`shelljs.cat("${file}")`, LogLevel.INFO, 2);
+        this.log(`shelljs.cat("${file}")`, LogLevel.INFO);
         const result = cat(file);
         this.processResult(result);
 
@@ -132,12 +132,12 @@ export class Utils {
         }
 
         if (result.stdout) {
-            this.log(result.stdout, LogLevel.SUCCESS, 4);
+            this.log(result.stdout, LogLevel.SUCCESS);
         }
 
         if (result.stderr) {
             // Display a little more if it's an error.
-            this.log(result.stderr, LogLevel.ERROR, 4, 20);
+            this.log(result.stderr, LogLevel.ERROR);
         }
 
         if (result.code !== 0 && failIfNot0) {
@@ -145,7 +145,7 @@ export class Utils {
         }
     }
 
-    public static log(msg: string, level: LogLevel = LogLevel.INFO, indent: number = 0, maxLines: number = 5) {
+    public static log(msg: string, level: LogLevel = LogLevel.INFO) {
         if (!msg) {
             return;
         }
@@ -158,20 +158,28 @@ export class Utils {
             return;
         }
 
-        const ind = " ".repeat(indent);
+        let maxLines = 5;
+        let indent = 0;
         let lines = msg.split(EOL);
 
         let ch: (msg: string) => string = null;
 
         if (level === LogLevel.ERROR) {
             ch = (msg: string) => chalk.default.red(msg);
+            indent = 0;
+            maxLines = 20; // Show a bit more of the error.
         } else if (level === LogLevel.SUCCESS) {
             ch = (msg: string) => chalk.default.green(msg);
+            indent = 4;
         } else if (level === LogLevel.WARNING) {
             ch = (msg: string) => chalk.default.yellow(msg);
+            indent = 4;
         } else { // Either INFO or something else
             ch = (msg: string) => chalk.default.blue(msg);
+            indent = 2;
         }
+
+        const ind = " ".repeat(indent);
 
         if (lines.length > maxLines) {
             const summary = `... showing ${maxLines} of ${lines.length} lines ...`;

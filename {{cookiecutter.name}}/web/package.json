@@ -1,6 +1,5 @@
 {
-  "name": "{{cookiecutter.name}}-web",
-  "version": "1.0.0",
+  "name": "web",
   "private": true,
   "dependencies": {
     "@types/jest": "24.0.15",

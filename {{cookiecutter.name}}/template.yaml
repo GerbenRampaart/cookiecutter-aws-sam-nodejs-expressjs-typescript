@@ -33,7 +33,7 @@ Globals:
 
 Resources:
 
-  {{cookiecutter.function}}:
+  {{cookiecutter.name}}Function:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction    
     Properties:
       Policies: AmazonDynamoDBFullAccess
@@ -42,28 +42,28 @@ Resources:
           Properties:
             Method: any
             Path: /
-            RestApiId: !Ref {{cookiecutter.api}}
+            RestApiId: !Ref {{cookiecutter.name}}Api
           Type: Api
         WebProxy:
           Properties:
             Method: any
             Path: /{web+}
-            RestApiId: !Ref {{cookiecutter.api}}
+            RestApiId: !Ref {{cookiecutter.name}}Api
           Type: Api   
         PetsGet:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /api/pets
             Method: get
-            RestApiId: !Ref {{cookiecutter.api}}
+            RestApiId: !Ref {{cookiecutter.name}}Api
         PetsGetById:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
           Properties:
             Path: /api/pets/{petId}
             Method: get
-            RestApiId: !Ref {{cookiecutter.api}}
+            RestApiId: !Ref {{cookiecutter.name}}Api
 
-  {{cookiecutter.api}}:
+  {{cookiecutter.name}}Api:
     Type: AWS::Serverless::Api
     Properties:
       StageName: prod
@@ -72,12 +72,12 @@ Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
   # Find out more about other implicit resources you can reference within SAM
   # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  {{cookiecutter.api}}:
-    Description: "API Gateway endpoint URL for Prod stage for {{cookiecutter.api}}"
+  {{cookiecutter.name}}Api:
+    Description: "API Gateway endpoint URL for Prod stage for {{cookiecutter.name}}Api"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/prod/"
-  {{cookiecutter.function}}:
-    Description: "{{cookiecutter.function}} ARN"
-    Value: !GetAtt {{cookiecutter.function}}.Arn
-  {{cookiecutter.role}}:
-    Description: "Implicit IAM Role created for {{cookiecutter.function}} function"
-    Value: !GetAtt {{cookiecutter.role}}.Arn
+  {{cookiecutter.name}}Function:
+    Description: "{{cookiecutter.name}}Function ARN"
+    Value: !GetAtt {{cookiecutter.name}}Function.Arn
+  {{cookiecutter.name}}Role:
+    Description: "Implicit IAM Role created for {{cookiecutter.name}}Function function"
+    Value: !GetAtt {{cookiecutter.name}}Role.Arn

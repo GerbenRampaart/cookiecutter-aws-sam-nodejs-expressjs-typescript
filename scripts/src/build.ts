@@ -18,7 +18,7 @@ const build = async () => {
     
     Utils.writeSeparator();
     
-    const l = (msg: string) => { Utils.log(msg, LogLevel.SUCCESS, 4) }
+    const l = (msg: string) => { Utils.log(msg, LogLevel.SUCCESS) }
     l("Execute the following:");
     l(`- cd ${templateDir}`);
     l("- npm install");

@@ -2,24 +2,12 @@
 
 import * as express from "express";
 import { join } from "path";
+
+
 import { IncomingMessage, ServerResponse } from "http";
 
 const expressApp = express();
-
-
-
 const textParser = text({});
-
-const pets = [
-    {
-        id: 1,
-        name: "dog",
-    },
-    {
-        id: 2,
-        name: "cat",
-    },
-];
 
 expressApp.get("/api/pets", json(), async (req: express.Request, res: express.Response) => {
     res.json(pets);

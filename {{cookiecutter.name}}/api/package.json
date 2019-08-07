@@ -1,11 +1,9 @@
 {
-  "name": "{{cookiecutter.name}}-api",
-  "version": "{{cookiecutter.version}}",
-  "description": "{{cookiecutter.description}} api",
-  "author": "SAM CLI",
-  "license": "MIT",
+  "name": "api",
+  "private": true,
   "scripts": {
     "build": "tsc -p .",
+    "lint": "eslint",
     "test": "mocha tests/unit/"
   },
   "dependencies": {
@@ -28,6 +26,7 @@
     "@typescript-eslint/parser": "^1.13.0",
     "@typescript-eslint/eslint-plugin": "^1.13.0",
     "prettier":"^1.18.2",
+    
     "eslint-config-prettier": "^6.0.0",
     "eslint-plugin-prettier": "^3.1.0"
   }

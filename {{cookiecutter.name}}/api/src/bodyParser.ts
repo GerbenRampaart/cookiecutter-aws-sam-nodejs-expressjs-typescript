@@ -1,7 +1,19 @@
 
-import { json, raw, text, OptionsJson, OptionsText, OptionsUrlencoded, urlencoded, Options } from "body-parser";
+import { json, Options, OptionsJson, OptionsText, OptionsUrlencoded, raw, text, urlencoded } from "body-parser";
 
 export class BodyParser {
+
+    public get optionsJson(): OptionsJson {
+        return this._optionsJson;
+    }
+
+    public get parserJson() {
+        return json(this.optionsJson);
+    }
+
+    private _optionsJson: OptionsJson = null;
+
+    private _parserJson: OptionsJson = null;
     constructor() {
         // https://www.npmjs.com/package/body-parser
         const options: Options = {
@@ -19,17 +31,5 @@ export class BodyParser {
         optionsUrlEncoded.extended = false; // https://www.npmjs.com/package/body-parser#extended
 
         const urlencodedParser = urlencoded(optionsUrlEncoded);
-    }
-
-    private _optionsJson: OptionsJson = null;
-
-    public get optionsJson(): OptionsJson {
-        return this._optionsJson;
-    }
-
-    private _parserJson: OptionsJson = null;
-
-    public get parserJson() {
-        return json(this.optionsJson);
     }
 }

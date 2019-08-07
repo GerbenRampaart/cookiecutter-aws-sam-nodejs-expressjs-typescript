@@ -7,8 +7,8 @@ import { join } from "path";
 
 const env = (envVar: string) => {
     let result = process.env[envVar] === "true";
-    Utils.log(envVar, LogLevel.INFO, 2);
-    Utils.log(String(result), LogLevel.SUCCESS, 4);
+    Utils.log(envVar, LogLevel.INFO);
+    Utils.log(String(result), LogLevel.SUCCESS);
     return result;
 };
 

@@ -2,9 +2,7 @@
     "name": "ProjectName",
     "description": "This is a new project called: {{cookiecutter.name}}",
     "version": "1.0.0",
-    "function": "{{cookiecutter.name}}Function",
-    "api": "{{cookiecutter.name}}Api",
-    "role": "{{cookiecutter.name}}Role",
-    "stack": "{{cookiecutter.name}}Stack",
-    "bucket": "{{cookiecutter.name}}Bucket"
+    "_copy_without_render": [
+        "*/node_modules"
+    ]
 }
