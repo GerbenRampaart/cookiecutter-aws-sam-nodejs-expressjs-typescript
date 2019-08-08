@@ -1,3 +1,4 @@
 export enum PetType {
-    DOG, CAT
+    DOG,
+    CAT,
 }

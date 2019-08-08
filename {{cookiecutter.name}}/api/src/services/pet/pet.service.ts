@@ -31,7 +31,7 @@ export class PetsService {
         const newObj = {
             id: newId,
             name: pet.name,
-            type: pet.type 
+            type: pet.type,
         };
 
         this.pets.push(newObj);
@@ -46,10 +46,10 @@ export class PetsService {
         }
 
         const p = this.pets[idx];
-        
+
         p.name = pet.name;
         p.type = pet.type;
-        
+
         return p;
     }
 
