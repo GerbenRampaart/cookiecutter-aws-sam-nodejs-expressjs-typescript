@@ -1,56 +1,27 @@
 import { json, Options, OptionsJson, OptionsText, OptionsUrlencoded, raw, text, urlencoded } from "body-parser";
-import { NextHandleFunction } from "connect";
+import { Application } from "express";
 
-export class BodyParser {
+export const bodyParser = (app: Application) => {
+    // https://www.npmjs.com/package/body-parser
+    const options: Options = {
+        //verify: (req: IncomingMessage, res: ServerResponse, buf: Buffer, encoding: string) => { },
+        inflate: true,
+        limit: "10mb"
+    };
 
-    public static parsers
-    public get parserJson(): NextHandleFunction {
-        return this._parserJson;
-    }
+    app.use(raw(options));
 
-    public get parserText(): NextHandleFunction {
-        return this._parserText;
-    }
+    const optionsJson: OptionsJson = options;
+    optionsJson.strict = true; // 'true' means only object and arrays, no strings or bools.
+    app.use(json(this.optionsJson));
 
-    public get parserUrlEncoded(): NextHandleFunction {
-        return this._parserUrlEncoded;
-    }
+    const optionsUrlEncoded: OptionsUrlencoded = options;
+    optionsUrlEncoded.extended = false; // https://www.npmjs.com/package/body-parser#extended
+    app.use(urlencoded(this._optionsUrlEncoded));
 
-    public get parserRaw(): NextHandleFunction {
-        return this._parserRaw;
-    }
+    const optionsText: OptionsText = options;
+    optionsText.defaultCharset = "utf-8";
+    app.use(text(this._optionsText));
+};
 
-    private _optionsJson: OptionsJson = null;
-    private _parserJson: NextHandleFunction = null;
-
-    private _optionsUrlEncoded: OptionsUrlencoded = null;
-    private _parserUrlEncoded: NextHandleFunction = null;
-
-    private _optionsText: OptionsText = null;
-    private _parserText: NextHandleFunction = null;
-
-    private _parserRaw: NextHandleFunction = null;
-
-    constructor() {
-        // https://www.npmjs.com/package/body-parser
-        const options: Options = {
-            //verify: (req: IncomingMessage, res: ServerResponse, buf: Buffer, encoding: string) => { },
-            inflate: true,
-            limit: "10mb",
-        };
-
-        this._parserRaw = raw(options);
-
-        this._optionsJson = options;
-        this._optionsJson.strict = true; // 'true' means only object and arrays, no strings or bools.
-        this._parserJson = json(this._optionsJson);
-
-        this._optionsUrlEncoded = options;
-        this._optionsUrlEncoded.extended = false; // https://www.npmjs.com/package/body-parser#extended
-        this._parserUrlEncoded = urlencoded(this._optionsUrlEncoded);
-
-        this._optionsText = options;
-        this._optionsText.defaultCharset = "utf-8";
-        this._parserText = text(this._optionsText);
-    }
-}
+export default bodyParser;

@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "tsc -p .",
-    "prettier": "prettier --config ./.prettierrc.js --write 'src/**/*.ts'",
+    "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint . --fix",
     "test": "mocha tests/unit/"
   },

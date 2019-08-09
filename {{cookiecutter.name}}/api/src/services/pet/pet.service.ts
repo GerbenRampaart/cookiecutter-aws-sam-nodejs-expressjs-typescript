@@ -31,7 +31,7 @@ export class PetsService {
         const newObj = {
             id: newId,
             name: pet.name,
-            type: pet.type,
+            type: pet.type
         };
 
         this.pets.push(newObj);

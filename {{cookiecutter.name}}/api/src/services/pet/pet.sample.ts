@@ -5,21 +5,23 @@ export const petsSample: IPet[] = [
     {
         id: 1,
         name: "Max",
-        type: PetType.DOG,
+        type: PetType.DOG
     },
     {
         id: 2,
         name: "Napoleon",
-        type: PetType.CAT,
+        type: PetType.CAT
     },
     {
         id: 3,
         name: "Lassy",
-        type: PetType.DOG,
+        type: PetType.DOG
     },
     {
         id: 4,
         name: "Cleo",
-        type: PetType.CAT,
-    },
+        type: PetType.CAT
+    }
 ];
+
+export default petsSample;
