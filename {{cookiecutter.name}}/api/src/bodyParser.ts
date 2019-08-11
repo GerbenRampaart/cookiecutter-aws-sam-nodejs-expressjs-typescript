@@ -13,15 +13,15 @@ export const bodyParser = (app: Application) => {
 
     const optionsJson: OptionsJson = options;
     optionsJson.strict = true; // 'true' means only object and arrays, no strings or bools.
-    app.use(json(this.optionsJson));
+    app.use(json(optionsJson));
 
     const optionsUrlEncoded: OptionsUrlencoded = options;
     optionsUrlEncoded.extended = false; // https://www.npmjs.com/package/body-parser#extended
-    app.use(urlencoded(this._optionsUrlEncoded));
+    app.use(urlencoded(optionsUrlEncoded));
 
     const optionsText: OptionsText = options;
     optionsText.defaultCharset = "utf-8";
-    app.use(text(this._optionsText));
+    app.use(text(optionsText));
 };
 
 export default bodyParser;

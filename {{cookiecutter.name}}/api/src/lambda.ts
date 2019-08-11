@@ -1,10 +1,23 @@
 "use strict";
 import lambda from "aws-lambda";
-import { createServer, proxy, Response } from "aws-serverless-express";
+import { createServer, proxy } from "aws-serverless-express";
 import { app } from "./app";
-
-const server = createServer(app);
+import { Server } from "http";
 
 export const handler = async (event: lambda.APIGatewayEvent, context: lambda.Context) => {
-    await proxy(server, event, context, "PROMISE");
+    const server = getServer();
+    const proxyResult = proxy(server, event, context, "PROMISE");
+    const response = await proxyResult.promise;
+    
+    console.log(response.statusCode);
+};
+
+let server: Server = null;
+
+const getServer = () => {
+    if (!server) {
+        server = createServer(app);
+    }
+
+    return server;
 };
