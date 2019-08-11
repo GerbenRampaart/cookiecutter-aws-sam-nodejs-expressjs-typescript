@@ -2,7 +2,9 @@
   "name": "api",
   "private": true,
   "scripts": {
-    "build": "tsc -p .",
+    "compile": "tsc -p .",
+    "start:express": "cd build && node app.local.js",
+    "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint . --fix",
     "test": "mocha tests/unit/"

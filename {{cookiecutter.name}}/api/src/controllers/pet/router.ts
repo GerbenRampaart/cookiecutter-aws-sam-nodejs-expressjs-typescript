@@ -26,7 +26,9 @@ export class Controller {
 
     async update(req: Request, res: Response): Promise<void> {
         const id = req.params.id;
-        const newPet = await PetsService.update({
+        const newPet = await PetsService.update(
+            id,
+        {
             name: req.body.name,
             type: req.body.type
         });
