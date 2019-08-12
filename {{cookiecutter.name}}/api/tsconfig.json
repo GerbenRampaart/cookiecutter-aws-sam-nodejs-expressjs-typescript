@@ -5,7 +5,12 @@
       "target": "es2018",
       "outDir": "build",
       "sourceMap": true,
-      "allowSyntheticDefaultImports": true
+      "forceConsistentCasingInFileNames": true,
+      "noImplicitReturns": true,
+      "strict": true,
+      "noUnusedLocals": true,
+      "strictNullChecks": true,
+      "noImplicitAny": true
     },
     "exclude": [
       "node_modules",

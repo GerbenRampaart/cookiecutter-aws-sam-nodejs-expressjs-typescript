@@ -6,30 +6,27 @@
     "start:express": "cd build && node app.local.js",
     "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
-    "lint": "eslint . --fix",
+    "lint": "eslint --fix . --ext .ts src",
     "test": "mocha tests/unit/"
   },
   "dependencies": {
-    "express": "^4.17.1",
-    "aws-serverless-express": "^3.3.6",
-    "body-parser": "^1.19.0",
-    "morgan": "^1.9.1"
+    "express": "*",
+    "aws-serverless-express": "*",
+    "body-parser": "*",
+    "morgan": "*"
   },
   "devDependencies": {
-    "@types/node": "10.14.8",
-    "@types/jest": "^24.0.13",
-    "@types/express": "^4.17.0",
-    "@types/body-parser": "1.17.0",
-    "@types/aws-serverless-express": "^3.3.1",
-    "@types/aws-lambda": "^8.10.27",
-    "@types/morgan": "^1.7.36",
-    "jest": "^24.8.0",
-    "typescript": "^3.5.1",
-    "eslint": "^6.1.0",
-    "@typescript-eslint/parser": "^1.13.0",
-    "@typescript-eslint/eslint-plugin": "^1.13.0",
-    "prettier": "^1.18.2",
-    "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0"
+    "@types/node": "*",
+    "@types/jest": "*",
+    "@types/express": "*",
+    "@types/body-parser": "*",
+    "@types/aws-serverless-express": "*",
+    "@types/aws-lambda": "*",
+    "@types/morgan": "*",
+    "jest": "*",
+    "typescript": "*",
+    "eslint": "*",
+    "prettier": "*",
+    "eslint-config-airbnb-typescript-prettier": "*"
   }
 }

@@ -1,27 +1,42 @@
-"use strict";
-
 import * as express from "express";
 import { join } from "path";
-import bodyParser from "./bodyParser";
-import PetsService from "./services/pet/pet.service";
+import bp from "./bodyParser";
+import ps from "./services/pet/pet.service";
 
 const expressApp = express();
-bodyParser(expressApp);
+bp(expressApp);
 
-expressApp.get("/api/pets", async (req: express.Request, res: express.Response) => {
-    const all = await PetsService.all();
-    res.json(all.filter((pet) => 
-    pet.id === req.params.petId));
-});
+expressApp.get(
+  "/api/pets",
+  async (req: express.Request, res: express.Response) => {
+    const all = await ps.all();
+    res.json(all);
+  }
+);
 
-expressApp.get("/api/pets/:petId", async (req: express.Request, res: express.Response) => {
+interface GetById {
+  petId: number;
+}
+
+expressApp.get(
+  "/api/pets/:petId",
+  async (req: express.Request, res: express.Response) => {
+    const params = req.params as GetById;
+
+    if (!params) {
+      res.status(400).end("id undefined");
+    }
+    console.log(params);
+
     res.json(
-        PetsService.byFilter((pet) => 
-            pet.id === req.params.petId;
-        )
+      await ps.byFilter(pet => {
+        console.log(pet.id, params.petId);
+        return pet.id === params.petId;
+      })
     );
-});
+  }
+);
 
 expressApp.use("/", express.static(join(__dirname, "../", "web")));
 
-export const app = expressApp;
+export default expressApp;

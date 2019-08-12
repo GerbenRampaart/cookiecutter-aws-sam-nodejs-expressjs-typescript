@@ -1,6 +1,9 @@
-import { Request, Response, NextFunction } from "express";
+import { Request, Response,  } from "express";
 
-export default function errorHandler(err, req: Request, res: Response, next: NextFunction) {
-    const errors = err.errors || [{ message: err.message }];
-    res.status(err.status || 500).json({ errors });
-}
+// https://wanago.io/2018/12/17/typescript-express-error-handling-validation/
+const errorHandler = (err: ErrorRequestHandler, req: Request, res: Response) => {
+  const errors = err.errors || [{ message: err.message }];
+  res.status(err.status || 500).json({ errors });
+};
+
+export default errorHandler;

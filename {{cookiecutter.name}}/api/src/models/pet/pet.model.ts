@@ -1,7 +1,9 @@
-import { PetType } from "./petType.enum";
+import petType from "./petType.enum";
 
-export interface IPet {
-    id?: number;
-    name: string;
-    type: PetType;
+// https://wanago.io/2018/12/17/typescript-express-error-handling-validation/
+
+export interface Pet {
+  id?: number;
+  name: string;
+  type: petType;
 }

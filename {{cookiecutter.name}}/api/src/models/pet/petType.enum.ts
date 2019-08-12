@@ -1,4 +1,6 @@
 export enum PetType {
-    DOG,
-    CAT
+  DOG,
+  CAT
 }
+
+export default PetType;

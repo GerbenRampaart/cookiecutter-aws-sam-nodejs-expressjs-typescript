@@ -1,5 +1,6 @@
-import { app } from "./app";
+import expressApp from "./app";
+
 const port = 3000;
 
-app.listen(port);
+expressApp.listen(port);
 console.log(`listening on http://localhost:${port}`);
