@@ -1,18 +1,19 @@
-import { Pet } from "../../models/pet/pet.model";
-import { petsSample } from "./pet.sample";
+import sample from "./sample";
+import { Entity } from "./entity";
+import { v1 } from "uuid";
 
-export class PetsService {
-  pets: Pet[];
+export class Service {
+  pets: Entity[];
 
   constructor() {
-    this.pets = petsSample;
+    this.pets = sample;
   }
 
-  async all(): Promise<Pet[]> {
-    return Promise.resolve<Pet[]>(this.pets);
+  async all(): Promise<Entity[]> {
+    return Promise.resolve<Entity[]>(this.pets);
   }
 
-  async byId(id: number): Promise<Pet | undefined> {
+  async byId(id: string): Promise<Entity | undefined> {
     const idx = await this.findIndex(id);
 
     if (!idx) {
@@ -22,12 +23,12 @@ export class PetsService {
     return this.pets[idx];
   }
 
-  async byFilter(filter: (val: Pet, idx: number) => unknown): Promise<Pet[]> {
+  async byFilter(filter: (val: Entity, idx: number) => unknown): Promise<Entity[]> {
     return Promise.resolve(this.pets.filter(filter));
   }
 
-  async create(pet: Pet): Promise<Pet> {
-    const newId = this.pets.length + 1;
+  async create(pet: Entity): Promise<Entity> {
+    const newId = v1();
     const newObj = {
       id: newId,
       name: pet.name,
@@ -38,7 +39,7 @@ export class PetsService {
     return Promise.resolve(newObj);
   }
 
-  async update(id: number, pet: Pet): Promise<Pet | undefined> {
+  async update(id: string, pet: Entity): Promise<Entity | undefined> {
     const idx = await this.findIndex(id);
 
     if (!idx) {
@@ -53,7 +54,7 @@ export class PetsService {
     return p;
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     const idx = await this.findIndex(id);
 
     if (idx) {
@@ -61,8 +62,8 @@ export class PetsService {
     }
   }
 
-  private findIndex(id: number): Promise<number | undefined> {
-    const idx = this.pets.findIndex((pet: Pet) => {
+  private findIndex(id: string): Promise<number | undefined> {
+    const idx = this.pets.findIndex((pet: Entity) => {
       return pet.id === id;
     });
 
@@ -73,4 +74,4 @@ export class PetsService {
   }
 }
 
-export default new PetsService();
+export default new Service();
