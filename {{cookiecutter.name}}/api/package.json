@@ -13,7 +13,8 @@
     "express": "*",
     "aws-serverless-express": "*",
     "body-parser": "*",
-    "morgan": "*"
+    "morgan": "*",
+    "joi": "*"
   },
   "devDependencies": {
     "@types/node": "*",
@@ -23,6 +24,7 @@
     "@types/aws-serverless-express": "*",
     "@types/aws-lambda": "*",
     "@types/morgan": "*",
+    "@types/joi": "*",
     "jest": "*",
     "typescript": "*",
     "eslint": "*",
