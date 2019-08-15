@@ -15,7 +15,7 @@
     "body-parser": "*",
     "morgan": "*",
     "@hapi/joi": "*",
-    "uuid": "^3.3.2"
+    "uuid": "*"
   },
   "devDependencies": {
     "@types/node": "*",
@@ -26,7 +26,7 @@
     "@types/aws-lambda": "*",
     "@types/morgan": "*",
     "@types/hapi__joi": "*",
-    "@types/uuid": "^3.4.5",
+    "@types/uuid": "*",
     "jest": "*",
     "typescript": "*",
     "eslint": "*",

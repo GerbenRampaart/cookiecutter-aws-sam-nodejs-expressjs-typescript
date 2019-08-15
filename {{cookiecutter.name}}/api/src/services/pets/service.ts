@@ -1,6 +1,5 @@
 import sample from "./sample";
 import { Entity } from "./entity";
-import { v1 } from "uuid";
 
 export class Service {
   pets: Entity[];
@@ -28,15 +27,8 @@ export class Service {
   }
 
   async create(pet: Entity): Promise<Entity> {
-    const newId = v1();
-    const newObj = {
-      id: newId,
-      name: pet.name,
-      type: pet.type
-    };
-
-    this.pets.push(newObj);
-    return Promise.resolve(newObj);
+    this.pets.push(pet);
+    return Promise.resolve(pet);
   }
 
   async update(id: string, pet: Entity): Promise<Entity | undefined> {
