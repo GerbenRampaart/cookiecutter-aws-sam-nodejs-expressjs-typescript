@@ -24,7 +24,6 @@ const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
         // });
         next(new BadRequest(err));
       } else {
-        req.body = value;
         next();
       }
     });

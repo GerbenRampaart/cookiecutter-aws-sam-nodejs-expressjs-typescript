@@ -1,5 +1,4 @@
-
-export interface IResponseModel {
+export interface IPetEntity {
   id: string;
   name: string;
   type: PetType;

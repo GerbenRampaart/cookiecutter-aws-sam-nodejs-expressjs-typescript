@@ -1,18 +1,18 @@
 import sample from "./sample";
-import { Entity } from "./entity";
+import { IPetEntity } from "./petEntity";
 
-export class Service {
-  pets: Entity[];
+export class PetsService {
+  pets: IPetEntity[];
 
   constructor() {
     this.pets = sample;
   }
 
-  async all(): Promise<Entity[]> {
-    return Promise.resolve<Entity[]>(this.pets);
+  async all(): Promise<IPetEntity[]> {
+    return Promise.resolve<IPetEntity[]>(this.pets);
   }
 
-  async byId(id: string): Promise<Entity | undefined> {
+  async byId(id: string): Promise<IPetEntity | undefined> {
     const idx = await this.findIndex(id);
 
     if (!idx) {
@@ -22,16 +22,16 @@ export class Service {
     return this.pets[idx];
   }
 
-  async byFilter(filter: (val: Entity, idx: number) => unknown): Promise<Entity[]> {
+  async byFilter(filter: (val: IPetEntity, idx: number) => unknown): Promise<IPetEntity[]> {
     return Promise.resolve(this.pets.filter(filter));
   }
 
-  async create(pet: Entity): Promise<Entity> {
+  async create(pet: IPetEntity): Promise<IPetEntity> {
     this.pets.push(pet);
     return Promise.resolve(pet);
   }
 
-  async update(id: string, pet: Entity): Promise<Entity | undefined> {
+  async update(id: string, pet: IPetEntity): Promise<IPetEntity | undefined> {
     const idx = await this.findIndex(id);
 
     if (!idx) {
@@ -55,7 +55,7 @@ export class Service {
   }
 
   private findIndex(id: string): Promise<number | undefined> {
-    const idx = this.pets.findIndex((pet: Entity) => {
+    const idx = this.pets.findIndex((pet: IPetEntity) => {
       return pet.id === id;
     });
 
@@ -66,4 +66,4 @@ export class Service {
   }
 }
 
-export default new Service();
+export default new PetsService();

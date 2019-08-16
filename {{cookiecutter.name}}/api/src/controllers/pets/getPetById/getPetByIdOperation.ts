@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction} from "express";
 import petsService from "../../../services/pets/service";
 import requestParamsParser from "./requestParamsParser";
-import NotFound from "../exceptions/notFound";
+import NotFound from '../../../exceptions/notFound';
 
-const getPetById = async (req: Request, res: Response, next: NextFunction) => {
+const getPetByIdOperation = async (req: Request, res: Response, next: NextFunction) => {
   const params = await requestParamsParser(req.params);
 
   if (!params) {
@@ -20,4 +20,4 @@ const getPetById = async (req: Request, res: Response, next: NextFunction) => {
   res.send(existingPet);
 };
 
-export default getPetById;
+export default getPetByIdOperation;

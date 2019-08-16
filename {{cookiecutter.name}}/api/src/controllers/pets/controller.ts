@@ -1,6 +1,9 @@
 import { Router, Request, Response } from "express";
 import petsService from "../../services/pets/service";
 import getPetById from "./getPetById/operation";
+import createPetValidator from './createPet/createPetValidator';
+import createPetOperation from "./createPet/createPetOperation";
+import getAllPetsOperation from "./getAllPets/getAllPetsOperation";
 
 class PetsController {
   public path = '/pets';
@@ -11,9 +14,9 @@ class PetsController {
   }
 
   public initializeRoutes() {
-    this.router.get(this.path, this.getAllPets);
+    this.router.get(this.path, getAllPetsOperation);
     this.router.get(`${this.path}/:id`, getPetById);
-    this.router.post(this.path, this.createPet);
+    this.router.post(this.path, createPetValidator, createPetOperation);
     this.router.put(this.path, this.updatePet);
   }
 
