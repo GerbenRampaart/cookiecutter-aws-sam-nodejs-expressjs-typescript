@@ -1,42 +1,45 @@
 import * as express from "express";
 import { join } from "path";
-import bp from "./bodyParser";
-import ps from "./services/pet/pet.service";
+import initializeBodyParser from "./bodyParser";
+import ps from "./services/pets/service";
+import errorMiddleware from "./middleware/error";
 
-const expressApp = express();
-bp(expressApp);
+class ExpressApp {
+  public app: express.Application;
+  public port: number;
 
-expressApp.get(
-  "/api/pets",
-  async (req: express.Request, res: express.Response) => {
-    const all = await ps.all();
-    res.json(all);
+  constructor(controllers, port) {
+    this.app = express();
+    this.port = port;
+
+    this.initializeMiddlewares();
+    this.initializeControllers(controllers);
+    this.initializeErrorHandling(); // last
   }
-);
 
-interface GetById {
-  petId: number;
+  private initializeMiddlewares() {
+    initializeBodyParser(this.app);
+  }
+
+  private initializeErrorHandling() {
+    this.app.use(errorMiddleware);
+  }
+  
+  private initializeControllers(controllers) {
+    controllers.forEach(c => {
+      this.app.use('/', c.router)
+    });
+  }
+
+  public listen() {
+    this.app.listen(this.port, () => {
+      console.log(`App listening on port ${this.port}`);
+    });
+  }
 }
 
-expressApp.get(
-  "/api/pets/:petId",
-  async (req: express.Request, res: express.Response) => {
-    const params = req.params as GetById;
-
-    if (!params) {
-      res.status(400).end("id undefined");
-    }
-    console.log(params);
-
-    res.json(
-      await ps.byFilter(pet => {
-        console.log(pet.id, params.petId);
-        return pet.id === params.petId;
-      })
-    );
-  }
-);
+export default ExpressApp;
 
 expressApp.use("/", express.static(join(__dirname, "../", "web")));
 
-export default expressApp;
+//export default expressApp;

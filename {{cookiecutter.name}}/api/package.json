@@ -13,7 +13,9 @@
     "express": "*",
     "aws-serverless-express": "*",
     "body-parser": "*",
-    "morgan": "*"
+    "morgan": "*",
+    "@hapi/joi": "*",
+    "uuid": "*"
   },
   "devDependencies": {
     "@types/node": "*",
@@ -23,10 +25,13 @@
     "@types/aws-serverless-express": "*",
     "@types/aws-lambda": "*",
     "@types/morgan": "*",
+    "@types/hapi__joi": "*",
+    "@types/uuid": "*",
     "jest": "*",
     "typescript": "*",
     "eslint": "*",
     "prettier": "*",
+    "@typescript-eslint/eslint-plugin": "*",
     "eslint-config-airbnb-typescript-prettier": "*"
   }
 }

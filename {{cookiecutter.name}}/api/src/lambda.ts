@@ -2,6 +2,7 @@ import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { createServer, proxy } from "aws-serverless-express";
 import { Server } from "http";
 import expressApp from "./app";
+import lambda from 'aws-lambda';
 
 let server: Server | undefined;
 
@@ -22,3 +23,8 @@ const handler = async (event: APIGatewayProxyEvent, context: Context) => {
 };
 
 export default handler;
+
+
+kubernetes 
+lambda
+etag
