@@ -1,4 +1,4 @@
-import * as Joi from "@hapi/joi";
+import * as Joi from "./node_modules/@hapi/joi";
 import { IRequestParams } from "./requestParams";
 
 const requestParamsParser = async (params: any) => {

@@ -1,6 +1,6 @@
 import * as Joi from "@hapi/joi";
 import schemaValidator from "../../../middleware/schemaValidator";
-import { PetType } from "../../../services/pets/entity";
+import { PetType } from "../../../services/pets/petEntity";
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),

@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import petsService from "../../services/pets/service";
-import getPetById from "./getPetById/operation";
+import getPetById from "./getPetById/getPetByIdOperation";
 import createPetValidator from './createPet/createPetValidator';
 import createPetOperation from "./createPet/createPetOperation";
 import getAllPetsOperation from "./getAllPets/getAllPetsOperation";
