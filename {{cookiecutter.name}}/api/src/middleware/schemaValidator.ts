@@ -1,4 +1,4 @@
-import { ObjectSchema, validate, ValidationOptions, ValidationError  } from "@hapi/joi";
+import { ObjectSchema, validate, ValidationOptions, ValidationError } from "@hapi/joi";
 import { Request, Response, NextFunction } from "express";
 import BadRequest from "../exceptions/badRequest";
 
@@ -24,6 +24,7 @@ const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
         // });
         next(new BadRequest(err));
       } else {
+        req.body = value;
         next();
       }
     });

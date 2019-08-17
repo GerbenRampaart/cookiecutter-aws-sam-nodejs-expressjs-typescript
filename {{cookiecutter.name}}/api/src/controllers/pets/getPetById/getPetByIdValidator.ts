@@ -5,6 +5,6 @@ const schema = Joi.object().keys({
   id: Joi.string().required()
 });
 
-const createPetValidator = schemaValidator(schema, "params");
+const getPetByIdValidator = schemaValidator(schema, "params");
 
-export default createPetValidator;
+export default getPetByIdValidator;
