@@ -1,6 +1,6 @@
 import { IPetEntity } from "../../../services/pets/petEntity";
 
-export const createPetMapper = (pet: IPetEntity) => {
+export const createPetResponseMapper = (pet: IPetEntity) => {
   
   return {
     id: pet.id,

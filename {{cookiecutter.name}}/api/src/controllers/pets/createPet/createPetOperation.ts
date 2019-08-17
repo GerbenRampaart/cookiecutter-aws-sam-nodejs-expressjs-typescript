@@ -3,7 +3,7 @@ import petsService from "../../../services/pets/service";
 import { v1 } from "uuid";
 import { createPetRequestBody } from "./createPetRequestBody";
 import { PetType } from "../../../services/pets/petEntity";
-import { createPetMapper } from "./createPetMapper";
+import { createPetResponseMapper } from "./createPetResponseMapper";
 
 const createPetOperation = async (req: Request, res: Response, next: NextFunction) => {
   const newId = v1();
@@ -16,7 +16,7 @@ const createPetOperation = async (req: Request, res: Response, next: NextFunctio
     type: (<any>PetType)[body.type]
   });
 
-  const responseModel = createPetMapper(newPet);
+  const responseModel = createPetResponseMapper(newPet);
 
   res
     .status(201)

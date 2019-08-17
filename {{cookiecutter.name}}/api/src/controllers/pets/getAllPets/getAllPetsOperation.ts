@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import petsService from "../../../services/pets/service";
-import { getAllPetsMapper } from "./getAllPetsMapper";
+import { getAllPetsResponseMapper } from "./getAllPetsResponseMapper";
 
 const getAllPetsOperation = async (req: Request, res: Response) => {
   const all = await petsService.all();
-  const responseModel = getAllPetsMapper(all);
+  const responseModel = getAllPetsResponseMapper(all);
   res.send(responseModel);
 };
 

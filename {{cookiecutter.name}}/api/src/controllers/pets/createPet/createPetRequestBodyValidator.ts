@@ -7,6 +7,6 @@ const schema = Joi.object().keys({
   type: Joi.string().valid(Object.values(PetType)).required()
 });
 
-const createPetValidator = schemaValidator(schema, "body");
+const createPetRequestBodyValidator = schemaValidator(schema, "body");
 
-export default createPetValidator;
+export default createPetRequestBodyValidator;
