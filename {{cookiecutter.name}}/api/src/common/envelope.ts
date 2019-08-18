@@ -3,11 +3,22 @@ import { TransformAsync, jsonAsync  } from "express-mung";
 
 
 const envelopeTransformer: TransformAsync = async (body: any, req: Request, res: Response) => {
-  res.send("mung");
-}
+  if (!body) {
+    return;
+  }
 
-onError = async (err: any, req: Request, res: Response) => {
-  res.send("mung");
+  if (!!body.isException) {
+    res.send({
+      metadata: body,
+      data: {}
+    });
+  } else {
+    res.send({
+      metadata: {
+      },
+      data: body
+    });
+  }
 }
 
 export const envelope = jsonAsync(envelopeTransformer, { mungError: true });

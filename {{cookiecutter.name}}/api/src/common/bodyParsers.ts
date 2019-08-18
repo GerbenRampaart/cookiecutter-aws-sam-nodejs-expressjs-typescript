@@ -8,9 +8,9 @@ import {
   text,
   urlencoded
 } from "body-parser";
-import { Application } from "express";
+import { RequestHandler } from "express";
 
-export const bodyParser = (app: Application) => {
+export const bodyParsers = () => {
   // https://www.npmjs.com/package/body-parser
   const options: Options = {
     // verify: (req: IncomingMessage, res: ServerResponse, buf: Buffer, encoding: string) => { },
@@ -18,19 +18,22 @@ export const bodyParser = (app: Application) => {
     limit: "10mb"
   };
 
-  app.use(raw(options));
+  const handlers: RequestHandler[] = [];
+
+  handlers.push(raw(options));
 
   const optionsJson: OptionsJson = options;
   optionsJson.strict = true; // 'true' means only object and arrays, no strings or bools.
-  app.use(json(optionsJson));
+  handlers.push(json(optionsJson));
 
   const optionsUrlEncoded: OptionsUrlencoded = options;
   optionsUrlEncoded.extended = false; // https://www.npmjs.com/package/body-parser#extended
-  app.use(urlencoded(optionsUrlEncoded));
+  handlers.push(urlencoded(optionsUrlEncoded));
 
   const optionsText: OptionsText = options;
   optionsText.defaultCharset = "utf-8";
-  app.use(text(optionsText));
+  handlers.push(text(optionsText));
+
+  return handlers;
 };
 
-export default bodyParser;

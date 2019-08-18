@@ -1,43 +1,42 @@
 import * as express from "express";
 import { join } from "path";
-import initializeBodyParser from "./bodyParser";
+import { bodyParsers } from "./bodyParsers";
 import errorMiddleware from "../middleware/error";
 import { Application } from "express";
 import IController from "./controller";
 import envelope from "./envelope";
-
-
+import * as helmet from "helmet"; // Security
+import * as compression from "compression";
+import * as morgan from "morgan";
 class App {
   public expressApplication: Application;
 
-  constructor(controllers: IController[]) {
+  constructor(controllers: IController[], NODE_ENV: string = 'development') {
+
+    process.env.NODE_ENV = process.env.NODE_ENV || NODE_ENV;
+
+
     this.expressApplication = express();
+    this.expressApplication.use(helmet());
 
+    if (NODE_ENV === "development") {
+      this.expressApplication.use(morgan('dev'));
+    } else {
+      this.expressApplication.use(morgan('combined'));
+      this.expressApplication.use(compression());
+    }
 
-    this.initializeMiddlewares();
-    this.initializeControllers(controllers);
-    this.initializeErrorHandling(); 
     this.expressApplication.use(envelope);
-    
-  }
-
-  private initializeMiddlewares() {
-    initializeBodyParser(this.expressApplication);
-    this.initializeStatic();
-  }
-
-  private initializeErrorHandling() {
-    this.expressApplication.use(errorMiddleware);
-  }
-  
-  private initializeStatic() {
+    this.expressApplication.use(bodyParsers());
     this.expressApplication.use("/", express.static(join(__dirname, "../", "web")));
-  }
-
-  private initializeControllers(controllers: IController[]) {
+    
     controllers.forEach(c => {
       this.expressApplication.use('/api', c.router);
     });
+
+    this.expressApplication.use(errorMiddleware);
+    
+    
   }
 
   public listen(port: number) {
@@ -48,7 +47,3 @@ class App {
 }
 
 export default App;
-
-
-
-//export default expressApp;

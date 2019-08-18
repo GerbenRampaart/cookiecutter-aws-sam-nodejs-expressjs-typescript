@@ -16,7 +16,9 @@
     "morgan": "*",
     "@hapi/joi": "*",
     "uuid": "*",
-    "express-mung": "*"
+    "express-mung": "*",
+    "helmet": "*",
+    "compression": "*"
   },
   "devDependencies": {
     "@types/aws-lambda": "*",
@@ -29,6 +31,8 @@
     "@types/node": "*",
     "@types/uuid": "*",
     "@types/express-mung": "*",
+    "@types/helmet": "*",
+    "@types/compression": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
