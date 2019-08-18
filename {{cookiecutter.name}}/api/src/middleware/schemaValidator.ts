@@ -1,4 +1,4 @@
-import { ObjectSchema, validate, ValidationOptions, ValidationError } from "@hapi/joi";
+import { ObjectSchema, validate, ValidationOptions, ValidationError, ValidationErrorItem } from "@hapi/joi";
 import { Request, Response, NextFunction } from "express";
 import BadRequest from "../exceptions/badRequest";
 
@@ -6,8 +6,7 @@ const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
 
   const validationOptions: ValidationOptions = {
     abortEarly: false,
-    allowUnknown: true,
-    stripUnknown: true
+    allowUnknown: false
   }
 
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -20,13 +19,16 @@ const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
 
     await validate(data, schema, validationOptions, (err: ValidationError, value: any) => {
       if (err) {
-        // err.details.forEach((errItem: ValidationErrorItem) => {
-        // });
-        next(new BadRequest(err));
-      } else {
-        req.body = value;
-        next();
+        const messages: string[] = [];
+
+        err.details.forEach((errItem: ValidationErrorItem) => {
+          messages.push(errItem.message.replace(/\\/g, "'"));
+        });
+
+        return next(new BadRequest(messages));
       }
+
+      return next();
     });
   }
 }

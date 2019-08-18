@@ -4,7 +4,7 @@ import { PetType } from "../../../services/pets/petEntity";
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),
-  type: Joi.string().valid(Object.values(PetType)).required()
+  type: Joi.string().valid(Object.keys(PetType)).required()
 });
 
 const createPetRequestBodyValidator = schemaValidator(schema, "body");

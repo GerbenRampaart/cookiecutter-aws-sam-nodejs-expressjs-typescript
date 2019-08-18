@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
-    "start:express": "cd build && node app.local.js",
+    "start:express": "cd build && node server.js",
     "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint --fix . --ext .ts src",
@@ -15,23 +15,27 @@
     "body-parser": "*",
     "morgan": "*",
     "@hapi/joi": "*",
-    "uuid": "*"
+    "uuid": "*",
+    "express-mung": "*"
   },
   "devDependencies": {
-    "@types/node": "*",
-    "@types/jest": "*",
-    "@types/express": "*",
-    "@types/body-parser": "*",
-    "@types/aws-serverless-express": "*",
     "@types/aws-lambda": "*",
-    "@types/morgan": "*",
+    "@types/aws-serverless-express": "*",
+    "@types/body-parser": "*",
+    "@types/express": "*",
     "@types/hapi__joi": "*",
+    "@types/jest": "*",
+    "@types/morgan": "*",
+    "@types/node": "*",
     "@types/uuid": "*",
-    "jest": "*",
-    "typescript": "*",
-    "eslint": "*",
-    "prettier": "*",
+    "@types/express-mung": "*",
     "@typescript-eslint/eslint-plugin": "*",
-    "eslint-config-airbnb-typescript-prettier": "*"
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
+    "jest": "*",
+    "prettier": "*",
+    "typescript": "*"
   }
 }

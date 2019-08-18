@@ -15,7 +15,7 @@ export class PetsService {
   async byId(id: string): Promise<IPetEntity | undefined> {
     const idx = await this.findIndex(id);
 
-    if (!idx) {
+    if (idx === -1) {
       return Promise.resolve(undefined);
     }
 
@@ -31,10 +31,10 @@ export class PetsService {
     return Promise.resolve(pet);
   }
 
-  async update(id: string, pet: IPetEntity): Promise<IPetEntity | undefined> {
-    const idx = await this.findIndex(id);
+  async update(pet: IPetEntity): Promise<IPetEntity | undefined> {
+    const idx = await this.findIndex(pet.id);
 
-    if (!idx) {
+    if (idx === -1) {
       return Promise.resolve(undefined);
     }
 
@@ -43,25 +43,24 @@ export class PetsService {
     p.name = pet.name;
     p.type = pet.type;
 
-    return p;
+    return Promise.resolve(p);
   }
 
   async delete(id: string): Promise<void> {
     const idx = await this.findIndex(id);
 
-    if (idx) {
-      this.pets = this.pets.splice(idx, 1);
+    if (idx > -1) {
+      this.pets.splice(idx, 1);
     }
+
+    return Promise.resolve();
   }
 
-  private findIndex(id: string): Promise<number | undefined> {
+  private findIndex(id: string): Promise<number> {
     const idx = this.pets.findIndex((pet: IPetEntity) => {
       return pet.id === id;
     });
 
-    if (idx === -1) {
-      return Promise.resolve(undefined);
-    }
     return Promise.resolve(idx);
   }
 }

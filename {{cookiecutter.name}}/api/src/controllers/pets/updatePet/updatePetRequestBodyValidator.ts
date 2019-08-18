@@ -4,9 +4,9 @@ import { PetType } from "../../../services/pets/petEntity";
 
 const schema = Joi.object().keys({
   name: Joi.string().required(),
-  type: Joi.string().valid(Object.values(PetType)).required()
+  type: Joi.string().valid(Object.keys(PetType)).required()
 });
 
-const updatePetValidator = schemaValidator(schema, "body");
+const updatePetRequestBodyValidator = schemaValidator(schema, "body");
 
-export default updatePetValidator;
+export default updatePetRequestBodyValidator;

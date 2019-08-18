@@ -1,4 +1,4 @@
-import { IPetEntity } from '../../../services/pets/petEntity';
+import { IPetEntity, PetType } from '../../../services/pets/petEntity';
 
 export const getAllPetsResponseMapper = (pets: IPetEntity[]) => {
   
@@ -6,7 +6,7 @@ export const getAllPetsResponseMapper = (pets: IPetEntity[]) => {
     return {
       id: pet.id,
       name: pet.name,
-      type: pet.type.toString()
+      type: PetType[pet.type]
     }
   });
 };

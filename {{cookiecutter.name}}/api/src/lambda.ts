@@ -1,14 +1,17 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { createServer, proxy } from "aws-serverless-express";
 import { Server } from "http";
-import expressApp from "./app";
-import lambda from 'aws-lambda';
+import App from "./common/app";
+import PetsController from "./controllers/pets/petsController";
 
 let server: Server | undefined;
 
 const getServer = () => {
   if (!server) {
-    server = createServer(expressApp);
+    const app = new App([
+      new PetsController()
+    ]);
+    server = createServer(app.expressApplication);
   }
 
   return server;
@@ -23,8 +26,3 @@ const handler = async (event: APIGatewayProxyEvent, context: Context) => {
 };
 
 export default handler;
-
-
-kubernetes 
-lambda
-etag

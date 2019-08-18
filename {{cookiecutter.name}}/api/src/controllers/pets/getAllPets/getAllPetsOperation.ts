@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import petsService from "../../../services/pets/service";
+import petsService from "../../../services/pets/petsService";
 import { getAllPetsResponseMapper } from "./getAllPetsResponseMapper";
 
 const getAllPetsOperation = async (req: Request, res: Response) => {

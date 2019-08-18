@@ -1,22 +1,38 @@
 import { Request, Response, NextFunction} from "express";
-import petsService from "../../../services/pets/service";
+import petsService from "../../../services/pets/petsService";
+import { updatePetRequestParams } from "./updatePetRequestParams";
+import NotFound from "../../../exceptions/notFound";
+import { updatePetRequestBody } from "./updatePetRequestBody";
+import BadRequest from "../../../exceptions/badRequest";
+import { PetType } from "../../../services/pets/petEntity";
+import { updatePetResponseMapper } from "./updatePetResponseMapper";
 
 const updatePetOperation = async (req: Request, res: Response, next: NextFunction) => {
-  const { id } = req.params;
-  const newPet = await petsService.update(id, {
-    name: req.body.name,
-    type: req.body.type
+  const params: updatePetRequestParams = req.params;
+  const body: updatePetRequestBody = req.body;
+
+  const existingPet = await petsService.byId(params.id);
+
+  if (!existingPet) {
+    return next(new NotFound(params.id));
+  }
+  
+  const pet = await petsService.update({
+    id: params.id,
+    name: body.name,
+    type: (<any>PetType)[body.type]
   });
 
-  if (!newPet) {
-    res.status(404).end(`${id} not found`);
-    return;
+  if (!pet) {
+    return next(new BadRequest(`pet ${params.id} not succesfully updated`));
   }
 
+  const responseModel = updatePetResponseMapper(pet!);
+
   res
-    .status(201)
-    .location(`/api/pets/${newPet.id}`)
-    .json(newPet);
+    .status(200)
+    .location(`/api/pets/${pet!.id}`)
+    .send(responseModel);
 }
 
 export default updatePetOperation;

@@ -1,4 +1,4 @@
-export interface createPetRequestBody {
+export interface updatePetRequestBody {
   name: string;
   type: string;
 }
