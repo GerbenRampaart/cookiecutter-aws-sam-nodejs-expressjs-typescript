@@ -1,16 +1,13 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { createServer, proxy } from "aws-serverless-express";
 import { Server } from "http";
-import App from "./common/app";
-import PetsController from "./controllers/pets/petsController";
+import ExpressServer from './common/expressServer';
 
 let server: Server | undefined;
 
 const getServer = () => {
   if (!server) {
-    const app = new App([
-      new PetsController()
-    ]);
+    const app = new ExpressServer();
     server = createServer(app.expressApplication);
   }
 

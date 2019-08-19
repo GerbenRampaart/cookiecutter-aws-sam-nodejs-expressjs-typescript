@@ -8,16 +8,25 @@ import envelope from "./envelope";
 import * as helmet from "helmet"; // Security
 import * as compression from "compression";
 import * as morgan from "morgan";
-class App {
-  public expressApplication: Application;
+import PetsController from '../controllers/pets/petsController';
+import * as responseTime from "response-time";
+import * as serveFavicon from "serve-favicon";
+import { existsSync } from "fs";
 
-  constructor(controllers: IController[], NODE_ENV: string = 'development') {
+class ExpressServer {
+  public expressApplication: Application;
+  public controllers: IController[] = [
+    new PetsController()
+  ];
+  
+  constructor(NODE_ENV: "development" | "production" = "development") {
 
     process.env.NODE_ENV = process.env.NODE_ENV || NODE_ENV;
 
-
     this.expressApplication = express();
     this.expressApplication.use(helmet());
+    this.expressApplication.use(responseTime());
+    
 
     if (NODE_ENV === "development") {
       this.expressApplication.use(morgan('dev'));
@@ -28,9 +37,17 @@ class App {
 
     this.expressApplication.use(envelope);
     this.expressApplication.use(bodyParsers());
-    this.expressApplication.use("/", express.static(join(__dirname, "../", "web")));
-    
-    controllers.forEach(c => {
+
+    const webDir = join(__dirname, "../", "web");
+    const favIconPath = join(webDir, "favicon.ico");
+
+    this.expressApplication.use("/", express.static(webDir));
+
+    if (existsSync(favIconPath)) {
+      this.expressApplication.use(serveFavicon(favIconPath));
+    }
+
+    this.controllers.forEach(c => {
       this.expressApplication.use('/api', c.router);
     });
 
@@ -46,4 +63,4 @@ class App {
   }
 }
 
-export default App;
+export default ExpressServer;

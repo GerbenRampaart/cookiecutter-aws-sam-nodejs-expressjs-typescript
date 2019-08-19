@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
-    "start:express": "cd build && node server.js",
+    "start:express": "cd build && node app.js",
     "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint --fix . --ext .ts src",
@@ -18,7 +18,9 @@
     "uuid": "*",
     "express-mung": "*",
     "helmet": "*",
-    "compression": "*"
+    "compression": "*",
+    "response-time": "*",
+    "serve-favicon": "*"
   },
   "devDependencies": {
     "@types/aws-lambda": "*",
@@ -33,6 +35,8 @@
     "@types/express-mung": "*",
     "@types/helmet": "*",
     "@types/compression": "*",
+    "@types/response-time": "*",
+    "@types/serve-favicon": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
