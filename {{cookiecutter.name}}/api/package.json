@@ -20,7 +20,9 @@
     "helmet": "*",
     "compression": "*",
     "response-time": "*",
-    "serve-favicon": "*"
+    "serve-favicon": "*",
+    "express-graphql": "*",
+    "graphql": "*"
   },
   "devDependencies": {
     "@types/aws-lambda": "*",
@@ -37,6 +39,8 @@
     "@types/compression": "*",
     "@types/response-time": "*",
     "@types/serve-favicon": "*",
+    "@types/graphql": "*",
+    "@types/express-graphql": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
