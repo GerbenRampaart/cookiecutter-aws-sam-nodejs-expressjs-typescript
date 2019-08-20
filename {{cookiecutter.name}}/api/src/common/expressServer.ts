@@ -12,6 +12,7 @@ import PetsController from '../controllers/pets/petsController';
 import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync } from "fs";
+import * as expressGraphQL from "express-graphql";
 
 class ExpressServer {
   public expressApplication: Application;
@@ -27,6 +28,7 @@ class ExpressServer {
     this.expressApplication.use(helmet());
     this.expressApplication.use(responseTime());
     
+    this.expressApplication.use('/graphql', expressGraphQL());
 
     if (NODE_ENV === "development") {
       this.expressApplication.use(morgan('dev'));
