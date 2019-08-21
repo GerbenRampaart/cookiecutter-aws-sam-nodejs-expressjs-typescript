@@ -5,7 +5,7 @@ export const getPetByIdResponseMapper = (pet: IPetEntity) => {
   return {
     id: pet.id,
     name: pet.name,
-    type: PetType[pet.type]
+    petType: PetType[pet.petType]
   }
 
 };

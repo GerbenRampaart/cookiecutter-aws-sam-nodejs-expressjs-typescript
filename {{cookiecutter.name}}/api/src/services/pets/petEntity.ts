@@ -1,7 +1,7 @@
 export interface IPetEntity {
   id: string;
   name: string;
-  type: PetType;
+  petType: PetType;
 }
 
 export enum PetType {

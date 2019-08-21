@@ -20,11 +20,11 @@ const updatePetOperation = async (req: Request, res: Response, next: NextFunctio
   const pet = await petsService.update({
     id: params.id,
     name: body.name,
-    type: (<any>PetType)[body.type]
+    petType: (<any>PetType)[body.type]
   });
 
   if (!pet) {
-    return next(new BadRequest(`pet ${params.id} not succesfully updated`));
+    return next(new BadRequest(`pet ${params.id} not successfully updated`));
   }
 
   const responseModel = updatePetResponseMapper(pet!);

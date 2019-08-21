@@ -41,7 +41,7 @@ export class PetsService {
     const p = this.pets[idx];
 
     p.name = pet.name;
-    p.type = pet.type;
+    p.petType = pet.petType;
 
     return Promise.resolve(p);
   }

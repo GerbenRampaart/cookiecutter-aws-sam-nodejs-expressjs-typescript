@@ -12,7 +12,7 @@ const createPetOperation = async (req: Request, res: Response, next: NextFunctio
     id: newId,
     name: body.name,
     // https://blog.oio.de/2014/02/28/typescript-accessing-enum-values-via-a-string/
-    type: (<any>PetType)[body.type]
+    petType: (<any>PetType)[body.type]
   });
 
   res
