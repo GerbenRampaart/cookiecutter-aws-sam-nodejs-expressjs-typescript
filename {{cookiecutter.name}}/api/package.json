@@ -37,6 +37,7 @@
     "@types/compression": "*",
     "@types/response-time": "*",
     "@types/serve-favicon": "*",
+    "@types/ws": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",

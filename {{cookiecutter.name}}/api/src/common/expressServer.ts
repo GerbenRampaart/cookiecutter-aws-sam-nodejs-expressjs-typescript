@@ -4,34 +4,71 @@ import { bodyParsers } from "./bodyParsers";
 import errorHandler from "../middleware/errorHandler";
 import { Application } from "express";
 import IController from "./controller";
-// import envelope from "./envelope";
-import * as helmet from "helmet"; // Security
+import * as helmet from "helmet";
 import * as compression from "compression";
 import * as morgan from "morgan";
 import PetsController from '../controllers/pets/petsController';
 import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync } from "fs";
-//import { petsSchema } from "../controllers/graphQL/petsSchema";
+import { GraphQLServer } from "graphql-yoga";
+import { GraphQLSchema } from "graphql";
 
+export enum Mode {
+  DEV, PRD
+}
 
 class ExpressServer {
-  public expressApplication: Application;
+  public get expressApplication(): Application {
+    return this.graphQLApplication.express;
+  }
+  
+  private graphQLApplication: GraphQLServer;
+
   public controllers: IController[] = [
     new PetsController()
   ];
 
-  constructor(NODE_ENV: "development" | "production" = "development") {
+  constructor(public mode: Mode = Mode.DEV) {
+    const sampleItems = [
+      {name: 'Apple'},
+      {name: 'Banana'},
+      {name: 'Orange'},
+      {name: 'Melon'},
+    ]
+    
+    const typeDefs = `
+      type Query {
+        items: [Item!]!
+      }
+      type Item {
+        name: String!
+      }
+    `
+    
+    const resolvers = {
+      Query: {
+        items: () => sampleItems,
+      },
+    }
+    // https://github.com/prisma/graphql-yoga/blob/master/examples/prisma-ts/prisma.ts
+    new GraphQLSchema({
+      ""
+    })
 
-    process.env.NODE_ENV = process.env.NODE_ENV || NODE_ENV;
+    // https://github.com/prisma/graphql-yoga
+    this.graphQLApplication = new GraphQLServer(
+      {
+        schema: 
+        typeDefs, 
+        resolvers 
+      });
 
-    this.expressApplication = express();
     this.expressApplication.use(responseTime());
-    //this.expressApplication.use(envelope);    
     this.expressApplication.use(bodyParsers());
     this.expressApplication.use(helmet());
 
-    if (NODE_ENV === "development") {
+    if (mode === Mode.DEV) {
       this.expressApplication.use(morgan('dev'));
     } else {
       this.expressApplication.use(morgan('combined'));
@@ -65,32 +102,22 @@ class ExpressServer {
   }
 
   public listen(port: number) {
-    this.expressApplication.listen(port, () => {
+    const basePath = "/graphql";
+    this.graphQLApplication.start({
+      port: port,
+      endpoint: basePath,
+      playground: `${basePath}/pg`,
+      subscriptions: {
+        path: `${basePath}/ws`
+      },
+      tracing: {
+        mode: (this.mode === Mode.DEV) ? "enabled" : "http-header"
+      },
+      debug: (this.mode === Mode.DEV)
+    }, () => {
       console.log(`App listening on port ${port}`);
     });
   }
 }
 
-//export default ExpressServer;
-
-
-import { GraphQLServerLambda } from 'graphql-yoga'
-
-const typeDefs = `
-  type Query {
-    hello(name: String): String
-  }
-`
-
-const resolvers = {
-  Query: {
-    hello: (_, { name }) => `Hello ${name || 'world'}`,
-  },
-}
-
-const lambda = new GraphQLServerLambda({
-  typeDefs,
-  resolvers,
-})
-
-export const server = lambda.graphqlHandler
+export default ExpressServer;

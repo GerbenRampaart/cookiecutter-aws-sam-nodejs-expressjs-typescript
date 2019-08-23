@@ -1,4 +1,4 @@
-import { IPetEntity } from '../../../services/pets/petEntity';
+import { IPetEntity } from '../../services/pets/petEntity';
 import { GraphQLObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
 
 class Pet {

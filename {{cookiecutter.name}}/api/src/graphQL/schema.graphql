@@ -1,0 +1,35 @@
+# Cheatsheet
+# https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png
+
+interface Entity {
+  id: ID!
+}
+
+enum PetType {
+  DOG, CAT
+}
+
+type Pet implements Entity {
+  id: ID!
+  name: String!,
+  petType: PetType!
+}
+
+type Owner implements Entity {
+  id: ID!
+  name: String!
+  pets: [Pet!]!
+}
+
+type Query {
+  pets: [Pet!]!
+  owners: [Owner!]!
+}
+
+type Mutations {
+  
+}
+
+schema {
+  query: Query
+}

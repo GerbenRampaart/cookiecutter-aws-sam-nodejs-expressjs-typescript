@@ -1,8 +1,8 @@
 import { GraphQLType, GraphQLNonNull, GraphQLString, GraphQLEnumType, GraphQLEnumValueConfigMap } from 'graphql';
 import { PetGraphQLType } from '../types/petType';
-import PetsService from '../../../services/pets/petsService';
+import PetsService from '../../services/pets/petsService';
 import { v1 } from 'uuid';
-import { PetType } from '../../../services/pets/petEntity';
+import { PetType } from '../../services/pets/petEntity';
 
 export interface GraphQLMutation {
   type: GraphQLType;
