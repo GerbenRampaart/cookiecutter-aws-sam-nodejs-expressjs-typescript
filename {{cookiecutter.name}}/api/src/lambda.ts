@@ -14,6 +14,8 @@ const getServer = () => {
   return server;
 };
 
+// TODO https://github.com/prisma/graphql-yoga/blob/master/src/lambda.ts
+
 const handler = async (event: APIGatewayProxyEvent, context: Context) => {
   const s = getServer();
   const proxyResult = proxy(s, event, context, "PROMISE");

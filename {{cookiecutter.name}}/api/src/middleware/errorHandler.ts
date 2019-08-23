@@ -10,9 +10,7 @@ const errorHandler = (err: HttpException, req: Request, res: Response, next: Nex
     return next(err);
   }
 
-  res.locals.exception = err;
-  //res.status(err.status || 500);
-  return next();
+  res.status(err.status || 500).send(err);
 };
 
 export default errorHandler;

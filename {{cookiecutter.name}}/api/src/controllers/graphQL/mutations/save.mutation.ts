@@ -1,8 +1,8 @@
 import { GraphQLType, GraphQLNonNull, GraphQLString, GraphQLEnumType, GraphQLEnumValueConfigMap } from 'graphql';
-import { PetGraphQLType } from '../types/pet.type';
-import PetsService from '../../../../services/pets/petsService';
+import { PetGraphQLType } from '../types/petType';
+import PetsService from '../../../services/pets/petsService';
 import { v1 } from 'uuid';
-import { PetType } from '../../../../services/pets/petEntity';
+import { PetType } from '../../../services/pets/petEntity';
 
 export interface GraphQLMutation {
   type: GraphQLType;
@@ -49,7 +49,7 @@ export class SavePetMutation implements GraphQLMutation {
     }
   };
 
-  public resolve = async (root: any, args: ISavePetMutationArguments) => {
+  public resolve = async (args: ISavePetMutationArguments) => {
     const existingPet = await PetsService.byId(args.id);
 
     if (existingPet) {

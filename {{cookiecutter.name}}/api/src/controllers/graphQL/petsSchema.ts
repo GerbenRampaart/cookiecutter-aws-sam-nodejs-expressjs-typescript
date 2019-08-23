@@ -1,14 +1,14 @@
-import { AllPetsQuery } from './queries/allPets.query';
+import { AllPetsQuery } from './queries/allPetQuery';
 //import { SavePetMutation, ISavePetMutationArguments } from './mutations/save.mutation';
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { PetGraphQLType } from './types/pet.type';
+import { PetGraphQLType } from './types/petType';
 
 // https://github.com/mateusconstanzo/express-graphql-typescript/
 
 class Query {
 
   public name = "AllPets";
-  public description = "Blog Application Schema Query Root";
+  public description = "Get all of the pets";
 
   public fields = () => {
     return {

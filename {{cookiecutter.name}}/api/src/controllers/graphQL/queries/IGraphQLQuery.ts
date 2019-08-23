@@ -3,7 +3,7 @@ import {
 } from 'graphql';
 
 
-export interface GraphQLQuery {
+export interface IGraphQLQuery {
   type: GraphQLType;
   description: string;
   resolve: Function;
