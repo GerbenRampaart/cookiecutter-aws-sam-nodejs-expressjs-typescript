@@ -12,7 +12,7 @@ import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync } from "fs";
 import { GraphQLServer } from "graphql-yoga";
-import { GraphQLSchema } from "graphql";
+import { petsSchema } from "../graphQL/schema";
 
 export enum Mode {
   DEV, PRD
@@ -30,6 +30,7 @@ class ExpressServer {
   ];
 
   constructor(public mode: Mode = Mode.DEV) {
+    /*
     const sampleItems = [
       {name: 'Apple'},
       {name: 'Banana'},
@@ -46,22 +47,21 @@ class ExpressServer {
       }
     `
     
-    const resolvers = {
+    const resolvers: IResolvers = {
+
       Query: {
         items: () => sampleItems,
       },
-    }
+    }*/
     // https://github.com/prisma/graphql-yoga/blob/master/examples/prisma-ts/prisma.ts
-    new GraphQLSchema({
-      ""
-    })
+    //new GraphQLSchema({
+      
+    //})
 
     // https://github.com/prisma/graphql-yoga
     this.graphQLApplication = new GraphQLServer(
       {
-        schema: 
-        typeDefs, 
-        resolvers 
+        schema: petsSchema
       });
 
     this.expressApplication.use(responseTime());
@@ -110,9 +110,7 @@ class ExpressServer {
       subscriptions: {
         path: `${basePath}/ws`
       },
-      tracing: {
-        mode: (this.mode === Mode.DEV) ? "enabled" : "http-header"
-      },
+      tracing: (this.mode === Mode.DEV),
       debug: (this.mode === Mode.DEV)
     }, () => {
       console.log(`App listening on port ${port}`);

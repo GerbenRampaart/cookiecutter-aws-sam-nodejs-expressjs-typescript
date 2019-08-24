@@ -20,16 +20,3 @@ type Owner implements Entity {
   name: String!
   pets: [Pet!]!
 }
-
-type Query {
-  pets: [Pet!]!
-  owners: [Owner!]!
-}
-
-type Mutations {
-  
-}
-
-schema {
-  query: Query
-}
