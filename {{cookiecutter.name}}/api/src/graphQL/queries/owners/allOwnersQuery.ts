@@ -2,9 +2,9 @@ import {
   GraphQLList
 } from 'graphql';
 
-import { IGraphQLQuery } from './IGraphQLQuery'
-import OwnersService from '../../services/owners/ownersService';
-import { OwnerGraphQLType } from '../types/ownerType';
+import { IGraphQLQuery } from '../IGraphQLQuery'
+import OwnersService from '../../../services/owners/ownersService';
+import { OwnerGraphQLType } from '../../types/ownerType';
 
 export class AllOwnersQuery implements IGraphQLQuery {
 

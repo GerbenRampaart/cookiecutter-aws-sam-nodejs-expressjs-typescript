@@ -1,8 +1,6 @@
 import { GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } from "graphql";
 import { PetGraphQLType } from "./petType";
-import { IOwnerEntity } from "../../services/owners/ownerEntity";
-import PetsService from "../../services/pets/petsService";
-import { IPetEntity } from "../../services/pets/petEntity";
+import getPetsByOwnerResolver from "../resolvers/getPetsByOwnerResolver";
 
 class Owner {
   public name = "Owner";
@@ -24,24 +22,7 @@ class Owner {
             )
           )
         ),
-        resolve: async (owner: IOwnerEntity, args: any) => {
-          console.log(owner);
-          console.log(args);
-          const result: IPetEntity[] = [];
-          const allPets = await PetsService.all();
-          
-          allPets.forEach((pet: IPetEntity) => {
-            const foundPetId = owner.pets.find((id: string) => {
-              return id === pet.id;
-            })
-
-            if (foundPetId) {
-              result.push(pet);
-            }
-          });
-
-          return result;
-        }
+        resolve: getPetsByOwnerResolver
       }
     }
   }

@@ -30,34 +30,6 @@ class ExpressServer {
   ];
 
   constructor(public mode: Mode = Mode.DEV) {
-    /*
-    const sampleItems = [
-      {name: 'Apple'},
-      {name: 'Banana'},
-      {name: 'Orange'},
-      {name: 'Melon'},
-    ]
-    
-    const typeDefs = `
-      type Query {
-        items: [Item!]!
-      }
-      type Item {
-        name: String!
-      }
-    `
-    
-    const resolvers: IResolvers = {
-
-      Query: {
-        items: () => sampleItems,
-      },
-    }*/
-    // https://github.com/prisma/graphql-yoga/blob/master/examples/prisma-ts/prisma.ts
-    //new GraphQLSchema({
-      
-    //})
-
     // https://github.com/prisma/graphql-yoga
     this.graphQLApplication = new GraphQLServer(
       {

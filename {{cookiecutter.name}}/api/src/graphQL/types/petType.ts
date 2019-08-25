@@ -1,6 +1,13 @@
 import { IPetEntity, PetType } from '../../services/pets/petEntity';
 import { GraphQLObjectType, GraphQLNonNull, GraphQLString } from 'graphql';
 
+export interface IPet {
+    id: string;
+    name: string;
+    fullName: string;
+    petType: string;
+}
+
 class Pet {
 
     public name = "Pet";
@@ -24,7 +31,10 @@ class Pet {
                 type: GraphQLString
             },
             petType: {
-                type: GraphQLString
+                type: GraphQLString,
+                resolver: (pet: IPetEntity) => {
+                    return PetType[pet.petType];
+                }
             }
         }
 
