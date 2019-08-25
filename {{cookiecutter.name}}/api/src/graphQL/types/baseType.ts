@@ -1,5 +1,5 @@
-export class BaseType {
+export class BaseType<T> {
   constructor(public id: string) {
-
   }
+
 } 
