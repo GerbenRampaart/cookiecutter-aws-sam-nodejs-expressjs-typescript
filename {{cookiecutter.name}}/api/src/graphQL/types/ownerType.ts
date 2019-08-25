@@ -2,7 +2,11 @@ import { GraphQLNonNull, GraphQLString, GraphQLList, GraphQLObjectType } from "g
 import { PetGraphQLType } from "./petType";
 import getPetsByOwnerResolver from "../resolvers/getPetsByOwnerResolver";
 
-export const OwnerFields = {
+export interface IOwnerModel {
+  
+}
+
+const OwnerFields = {
   id: {
     type: new GraphQLNonNull(GraphQLString)
   },
