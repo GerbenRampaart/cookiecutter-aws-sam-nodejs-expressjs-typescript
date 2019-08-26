@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
+    "graphql": "graphql-codegen --config ./src/graphql/codegen.yml",
     "start:express": "cd build && node app.js",
     "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
@@ -26,17 +27,17 @@
     "@types/aws-lambda": "*",
     "@types/aws-serverless-express": "*",
     "@types/body-parser": "*",
+    "@types/compression": "*",
     "@types/express": "*",
+    "@types/express-mung": "*",
     "@types/hapi__joi": "*",
+    "@types/helmet": "*",
     "@types/jest": "*",
     "@types/morgan": "*",
     "@types/node": "*",
-    "@types/uuid": "*",
-    "@types/express-mung": "*",
-    "@types/helmet": "*",
-    "@types/compression": "*",
     "@types/response-time": "*",
     "@types/serve-favicon": "*",
+    "@types/uuid": "*",
     "@types/ws": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
@@ -45,6 +46,10 @@
     "eslint-plugin-prettier": "*",
     "jest": "*",
     "prettier": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "@graphql-codegen/cli": "*",
+    "@graphql-codegen/typescript": "*",
+    "@graphql-codegen/typescript-resolvers": "*",
+    "@graphql-codegen/introspection": "*"
   }
 }

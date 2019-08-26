@@ -1,6 +1,6 @@
-import { IOwnerEntity } from "./ownerEntity";
+import { OwnerEntity } from "./ownerEntity";
 
-const owners: IOwnerEntity[] = [
+const owners: OwnerEntity[] = [
   {
     "id": "fbc60a27-973e-4077-9137-ec74e7aca8b5",
     "name": "Lisa",

@@ -1,6 +1,6 @@
-import { IEntity } from "../IEntity";
+import { Entity } from "../entity";
 
-export interface IPetEntity extends IEntity {
+export interface PetEntity extends Entity {
   id: string;
   name: string;
   petType: PetType;

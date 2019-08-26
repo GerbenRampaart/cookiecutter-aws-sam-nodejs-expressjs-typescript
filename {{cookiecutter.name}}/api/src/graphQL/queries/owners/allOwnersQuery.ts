@@ -4,7 +4,7 @@ import {
 
 import { IGraphQLQuery } from '../IGraphQLQuery'
 import OwnersService from '../../../services/owners/ownersService';
-import { OwnerGraphQLType } from '../../types/ownerType';
+import { OwnerGraphQLType } from '../../types/owner/ownerType';
 
 export class AllOwnersQuery implements IGraphQLQuery {
 

@@ -1,6 +1,6 @@
-import { IPetEntity, PetType } from "./petEntity";
+import { PetEntity, PetType } from "./petEntity";
 
-const pets: IPetEntity[] = [
+const pets: PetEntity[] = [
   {
     "id": "5481c892-35a5-44d6-b422-e29be9b835b8",
     "name": "Max",

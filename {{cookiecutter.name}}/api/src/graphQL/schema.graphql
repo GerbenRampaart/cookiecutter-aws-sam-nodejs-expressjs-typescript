@@ -5,18 +5,41 @@ interface Entity {
   id: ID!
 }
 
-enum PetType {
-  DOG, CAT
+enum PETTYPE {
+  DOG, 
+  CAT
 }
 
 type Pet implements Entity {
   id: ID!
   name: String!,
-  petType: PetType!
+  petType: PETTYPE!
+  owner: Owner
 }
 
 type Owner implements Entity {
   id: ID!
   name: String!
   pets: [Pet!]!
+}
+
+type Query {
+  pets: [Pet!]!
+  pet(id: String!): Pet
+  owners: [Owner!]!
+}
+
+type Mutation {
+  addPet(pet: InputPet!): Pet
+  addOwner(owner: InputOwner!): Owner
+}
+
+input InputPet {
+  name: String!
+  petType: PETTYPE!
+}
+
+input InputOwner {
+  name: String!
+  pets: [String!]
 }

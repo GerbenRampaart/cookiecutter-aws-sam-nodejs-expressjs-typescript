@@ -1,9 +1,9 @@
 import { AllPetsQuery } from './queries/pets/allPetQuery';
 //import { SavePetMutation, ISavePetMutationArguments } from './mutations/save.mutation';
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
-import { PetGraphQLType } from './types/petType';
-import { OwnerGraphQLType } from "./types/ownerType";
+import { OwnerGraphQLType } from "./types/owner/ownerType";
 import { AllOwnersQuery } from './queries/owners/allOwnersQuery';
+import { PetGraphQLType } from './types/pet/petType';
 
 // https://github.com/mateusconstanzo/express-graphql-typescript/
 

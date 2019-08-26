@@ -3,8 +3,9 @@ import {
 } from 'graphql';
 
 import { IGraphQLQuery } from '../IGraphQLQuery'
-import { PetGraphQLType, IPet } from '../../types/petType';
 import PetsService from '../../../services/pets/petsService';
+import { PetGraphQLType } from '../../types/pet/petType';
+import { PetModel } from '../../types/pet/petModel';
 
 export class AllPetsQuery implements IGraphQLQuery {
 
@@ -15,7 +16,7 @@ export class AllPetsQuery implements IGraphQLQuery {
     this.description = "List of all pets";
   }
 
-  public resolve = async (): Promise<IPet[]> => {
+  public resolve = async (): Promise<PetModel[]> => {
       return await PetsService.all();
   }    
 

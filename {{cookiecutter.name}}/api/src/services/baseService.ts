@@ -1,6 +1,6 @@
-import { IEntity } from "./IEntity";
+import { Entity } from "./entity";
 
-export class BaseService<T extends IEntity> {
+export class BaseService<T extends Entity> {
   data: T[];
 
   constructor(data: T[] = []) {
