@@ -1,8 +1,0 @@
-language: typescript
-schema: ./schema.graphql
-context: ./context.ts:Context
-output: ./generated/graphqlgen.ts
-models:
-  files:
-    - ./types/owner/ownerModel.ts
-    - ./types/pet/petModel.ts    

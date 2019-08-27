@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
-    "graphql": "graphql-codegen --config ./src/graphql/codegen.yml",
+    "graphql": "graphql-codegen --config ./src/graphql/codegen/graphqlgen.yml",
     "start:express": "cd build && node app.js",
     "start": "npm run compile && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
@@ -50,6 +50,8 @@
     "@graphql-codegen/cli": "*",
     "@graphql-codegen/typescript": "*",
     "@graphql-codegen/typescript-resolvers": "*",
+    "@graphql-codegen/typescript-operations": "*",
+    "@graphql-codegen/time": "*",
     "@graphql-codegen/introspection": "*"
   }
 }

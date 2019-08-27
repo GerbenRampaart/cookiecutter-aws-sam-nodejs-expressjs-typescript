@@ -65,11 +65,17 @@ export type Query = {
   pets: Array<Pet>,
   pet?: Maybe<Pet>,
   owners: Array<Owner>,
+  owner?: Maybe<Owner>,
 };
 
 
 export type QueryPetArgs = {
-  id: Scalars['String']
+  id: Scalars['ID']
+};
+
+
+export type QueryOwnerArgs = {
+  id: Scalars['ID']
 };
 
 
@@ -197,6 +203,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   pets?: Resolver<Array<ResolversTypes['Pet']>, ParentType, ContextType>,
   pet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<QueryPetArgs, 'id'>>,
   owners?: Resolver<Array<ResolversTypes['Owner']>, ParentType, ContextType>,
+  owner?: Resolver<Maybe<ResolversTypes['Owner']>, ParentType, ContextType, RequireFields<QueryOwnerArgs, 'id'>>,
 };
 
 export type Resolvers<ContextType = any> = {
@@ -213,3 +220,4 @@ export type Resolvers<ContextType = any> = {
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
 */
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
+// Generated in 2019-08-27T18:16:55+02:00

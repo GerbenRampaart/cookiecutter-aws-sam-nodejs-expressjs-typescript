@@ -1,8 +1,8 @@
 import sample from "./sample";
-import { IOwnerEntity } from "./ownerEntity";
+import { OwnerEntity } from "./ownerEntity";
 import BaseService from "../baseService";
 
-export class OwnersService extends BaseService<IOwnerEntity> {
+export class OwnersService extends BaseService<OwnerEntity> {
   constructor() {
     super(sample);
   }

@@ -1,8 +1,21 @@
 # Cheatsheet
 # https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png
 
+# https://formidable.com/blog/2019/strong-typing/
+
 interface Entity {
   id: ID!
+}
+
+type Owner implements Entity {
+  id: ID!
+  name: String!
+  pets: [Pet!]!
+}
+
+input InputOwner {
+  name: String!
+  pets: [String!]
 }
 
 enum PETTYPE {
@@ -17,16 +30,9 @@ type Pet implements Entity {
   owner: Owner
 }
 
-type Owner implements Entity {
-  id: ID!
+input InputPet {
   name: String!
-  pets: [Pet!]!
-}
-
-type Query {
-  pets: [Pet!]!
-  pet(id: String!): Pet
-  owners: [Owner!]!
+  petType: PETTYPE!
 }
 
 type Mutation {
@@ -34,12 +40,9 @@ type Mutation {
   addOwner(owner: InputOwner!): Owner
 }
 
-input InputPet {
-  name: String!
-  petType: PETTYPE!
-}
-
-input InputOwner {
-  name: String!
-  pets: [String!]
+type Query {
+  pets: [Pet!]!
+  pet(id: ID!): Pet
+  owners: [Owner!]!
+  owner(id: ID!): Owner
 }
