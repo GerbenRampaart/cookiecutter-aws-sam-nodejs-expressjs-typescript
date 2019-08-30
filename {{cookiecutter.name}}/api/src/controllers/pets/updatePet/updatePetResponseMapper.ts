@@ -1,6 +1,6 @@
-import { IPetEntity, PetType } from "../../../services/pets/petEntity";
+import { PetEntity, PetType } from "../../../services/pets/petEntity";
 
-export const updatePetResponseMapper = (pet: IPetEntity) => {
+export const updatePetResponseMapper = (pet: PetEntity) => {
   
   return {
     id: pet.id,

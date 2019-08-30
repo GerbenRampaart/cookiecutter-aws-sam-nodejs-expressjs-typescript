@@ -1,5 +1,4 @@
 import { IGraphQLQuery } from "../IGraphQLQuery";
-import PetsService from "../../../services/pets/petsService";
 import { PetGraphQLType } from '../../types/pet/petType';
 import { PetModel } from "../../types/pet/petModel";
 
@@ -15,10 +14,11 @@ export class getPetById implements IGraphQLQuery {
     this.description = "Pet by id";
   }
 
-  public resolve = async (root: any, args: getPeyByIdArguments): Promise<PetModel> => {
+  public resolve = async (root: any, args: getPeyByIdArguments): Promise<PetModel | undefined> => {
     console.log(root);
     console.log(args);
     //return null;
-      return await PetsService.byId(args.id);
+    return Promise.resolve(undefined);
+      //return await PetsService.byId(args.id);
   }    
 }

@@ -1,14 +1,14 @@
-import { IOwnerEntity } from "../../services/owners/ownerEntity";
-import { IPetEntity } from "../../services/pets/petEntity";
+import { OwnerEntity } from "../../services/owners/ownerEntity";
+import { PetEntity } from "../../services/pets/petEntity";
 import PetsService from "../../services/pets/petsService";
 
 
 
 
-const getPetsByOwnerResolver = async (owner: IOwnerEntity): Promise<IPetEntity[]> => {
+const getPetsByOwnerResolver = async (owner: OwnerEntity): Promise<PetEntity[]> => {
   const allPets = await PetsService.all();
   
-  return allPets.filter((pet: IPetEntity) => {
+  return allPets.filter((pet: PetEntity) => {
     return owner.pets.indexOf(pet.id) > -1;
   });
 };

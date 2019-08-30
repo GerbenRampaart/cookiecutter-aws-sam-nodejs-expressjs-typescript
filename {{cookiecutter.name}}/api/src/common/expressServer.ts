@@ -10,31 +10,60 @@ import * as morgan from "morgan";
 import PetsController from '../controllers/pets/petsController';
 import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
-import { existsSync } from "fs";
-import { GraphQLServer } from "graphql-yoga";
-import { petsSchema } from "../graphQL/schema";
+import { existsSync, readFileSync } from "fs";
+import { ApolloServer } from "apollo-server-express";
 
 export enum Mode {
   DEV, PRD
 }
 
 class ExpressServer {
+  private app: Application;
+
   public get expressApplication(): Application {
-    return this.graphQLApplication.express;
+    return this.app;
   }
-  
-  private graphQLApplication: GraphQLServer;
 
   public controllers: IController[] = [
     new PetsController()
   ];
 
   constructor(public mode: Mode = Mode.DEV) {
+    this.app = express();
+    const typeDefs = readFileSync(join(__dirname, "../graphql/schema.graphql"), {encoding: "utf-8"});
+    
+    const server = new ApolloServer({
+      typeDefs: typeDefs,
+      resolvers: {
+          Query: {
+            owners: (root: any, tmp: any, ctx: any): any => {
+              return Promise.resolve("");
+            },
+            owner: (root: any, ctx: any, args: any) => {
+              return Promise.resolve("");
+            }
+          },
+          Owners: {
+        
+          },
+          Pets: {
+            
+          }
+        }
+      
+    });
+    
+    server.applyMiddleware({
+      app: this.expressApplication
+    });
+
     // https://github.com/prisma/graphql-yoga
+    /*
     this.graphQLApplication = new GraphQLServer(
       {
-        schema: petsSchema
-      });
+        typeDefs: schema,
+        resolvers: resolvers
+      });*/
 
     this.expressApplication.use(responseTime());
     this.expressApplication.use(bodyParsers());
@@ -74,7 +103,9 @@ class ExpressServer {
   }
 
   public listen(port: number) {
-    const basePath = "/graphql";
+    this.expressApplication.listen(port, () => console.log(`Listening on ${port}`));
+    // const basePath = "/graphql";
+    /*
     this.graphQLApplication.start({
       port: port,
       endpoint: basePath,
@@ -86,7 +117,7 @@ class ExpressServer {
       debug: (this.mode === Mode.DEV)
     }, () => {
       console.log(`App listening on port ${port}`);
-    });
+    });*/
   }
 }
 

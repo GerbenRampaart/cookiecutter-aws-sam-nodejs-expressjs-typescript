@@ -12,7 +12,8 @@
       "noUnusedLocals": true,
       "strictNullChecks": true,
       "noImplicitAny": true,
-      "resolveJsonModule": true
+      "resolveJsonModule": true,
+      "allowSyntheticDefaultImports": true
     },
     "exclude": [
       "node_modules",

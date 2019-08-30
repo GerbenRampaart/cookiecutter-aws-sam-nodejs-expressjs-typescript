@@ -1,4 +1,4 @@
-import { PetModel } from "../pet/petModel";
+import { PetModel } from "./petModel";
 
 export interface OwnerModel {
   id: string;

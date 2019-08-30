@@ -1,7 +1,8 @@
 # Cheatsheet
 # https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png
 
-# https://formidable.com/blog/2019/strong-typing/
+# TODO: maybe client-side ?
+# https://github.com/FormidableLabs/graphql-typescript-blog/tree/with-auto-generated-types/server
 
 interface Entity {
   id: ID!

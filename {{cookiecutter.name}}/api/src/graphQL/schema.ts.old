@@ -2,12 +2,11 @@ import { AllPetsQuery } from './queries/pets/allPetQuery';
 //import { SavePetMutation, ISavePetMutationArguments } from './mutations/save.mutation';
 import { GraphQLObjectType, GraphQLSchema } from 'graphql';
 import { OwnerGraphQLType } from "./types/owner/ownerType";
-import { AllOwnersQuery } from './queries/owners/allOwnersQuery';
 import { PetGraphQLType } from './types/pet/petType';
-
+import { Query } from "./codegen/types";
 // https://github.com/mateusconstanzo/express-graphql-typescript/
 
-class Query {
+/*class Query {
 
   public name = "PetsAndOwners";
   public description = "The pet registration system";
@@ -18,7 +17,7 @@ class Query {
       owners: new AllOwnersQuery()
     }
   }
-}
+}*/
 /*
 class Mutation {
 
@@ -32,8 +31,8 @@ class Mutation {
   }
 }
 */
-export const petsSchema = new GraphQLSchema({
-  query: new GraphQLObjectType(new Query()),
+export const schema = new GraphQLSchema({
+  query: new Query(),
   //mutation: new GraphQLObjectType(new Mutation()),
   types: [ 
     PetGraphQLType,

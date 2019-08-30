@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { Context } from './context';
 export type Maybe<T> = T | null;
 export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
@@ -149,64 +150,64 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
-  Pet: ResolverTypeWrapper<Pet>,
-  Entity: ResolverTypeWrapper<Entity>,
-  ID: ResolverTypeWrapper<Scalars['ID']>,
-  String: ResolverTypeWrapper<Scalars['String']>,
-  PETTYPE: Pettype,
-  Owner: ResolverTypeWrapper<Owner>,
+  Pet: ResolverTypeWrapper<any>,
+  Entity: ResolverTypeWrapper<any>,
+  ID: ResolverTypeWrapper<any>,
+  String: ResolverTypeWrapper<any>,
+  PETTYPE: ResolverTypeWrapper<any>,
+  Owner: ResolverTypeWrapper<any>,
   Mutation: ResolverTypeWrapper<{}>,
-  InputPet: InputPet,
-  InputOwner: InputOwner,
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
+  InputPet: ResolverTypeWrapper<any>,
+  InputOwner: ResolverTypeWrapper<any>,
+  Boolean: ResolverTypeWrapper<any>,
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {},
-  Pet: Pet,
-  Entity: Entity,
-  ID: Scalars['ID'],
-  String: Scalars['String'],
-  PETTYPE: Pettype,
-  Owner: Owner,
+  Pet: any,
+  Entity: any,
+  ID: any,
+  String: any,
+  PETTYPE: any,
+  Owner: any,
   Mutation: {},
-  InputPet: InputPet,
-  InputOwner: InputOwner,
-  Boolean: Scalars['Boolean'],
+  InputPet: any,
+  InputOwner: any,
+  Boolean: any,
 };
 
-export type EntityResolvers<ContextType = any, ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']> = {
+export type EntityResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Entity'] = ResolversParentTypes['Entity']> = {
   __resolveType: TypeResolveFn<'Pet' | 'Owner', ParentType, ContextType>,
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
 };
 
-export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addPet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<MutationAddPetArgs, 'pet'>>,
   addOwner?: Resolver<Maybe<ResolversTypes['Owner']>, ParentType, ContextType, RequireFields<MutationAddOwnerArgs, 'owner'>>,
 };
 
-export type OwnerResolvers<ContextType = any, ParentType extends ResolversParentTypes['Owner'] = ResolversParentTypes['Owner']> = {
+export type OwnerResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Owner'] = ResolversParentTypes['Owner']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   pets?: Resolver<Array<ResolversTypes['Pet']>, ParentType, ContextType>,
 };
 
-export type PetResolvers<ContextType = any, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = {
+export type PetResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Pet'] = ResolversParentTypes['Pet']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   petType?: Resolver<ResolversTypes['PETTYPE'], ParentType, ContextType>,
   owner?: Resolver<Maybe<ResolversTypes['Owner']>, ParentType, ContextType>,
 };
 
-export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   pets?: Resolver<Array<ResolversTypes['Pet']>, ParentType, ContextType>,
   pet?: Resolver<Maybe<ResolversTypes['Pet']>, ParentType, ContextType, RequireFields<QueryPetArgs, 'id'>>,
   owners?: Resolver<Array<ResolversTypes['Owner']>, ParentType, ContextType>,
   owner?: Resolver<Maybe<ResolversTypes['Owner']>, ParentType, ContextType, RequireFields<QueryOwnerArgs, 'id'>>,
 };
 
-export type Resolvers<ContextType = any> = {
+export type Resolvers<ContextType = Context> = {
   Entity?: EntityResolvers,
   Mutation?: MutationResolvers<ContextType>,
   Owner?: OwnerResolvers<ContextType>,
@@ -219,5 +220,5 @@ export type Resolvers<ContextType = any> = {
  * @deprecated
  * Use "Resolvers" root object instead. If you wish to get "IResolvers", add "typesPrefix: I" to your config.
 */
-export type IResolvers<ContextType = any> = Resolvers<ContextType>;
-// Generated in 2019-08-27T18:16:55+02:00
+export type IResolvers<ContextType = Context> = Resolvers<ContextType>;
+// Generated in 2019-08-30T18:07:44+02:00
