@@ -4,8 +4,9 @@
   "scripts": {
     "compile": "tsc -p .",
     "graphql": "graphql-codegen --config ./src/graphql/graphqlgen.yml",
+    "copy-schemas": "$(npm bin)/cpx ./src/**/*.graphql ./build/graphql",
     "start:express": "cd build && node app.js",
-    "start": "npm run compile && npm run start:express",
+    "start": "npm run compile && npm run copy-schemas && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint --fix . --ext .ts src",
     "test": "mocha tests/unit/"
@@ -23,7 +24,8 @@
     "serve-favicon": "*",
     "apollo-server-express": "^2.9.2",
     "graphql-import": "^0.7.1",
-    "graphql": "^14.5.4"
+    "graphql": "^14.5.4",
+    "cpx": "^1.5.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "*",

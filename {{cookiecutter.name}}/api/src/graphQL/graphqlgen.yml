@@ -3,7 +3,7 @@ schema: "./src/graphql/schema.graphql"
 
 # https://codesandbox.io/s/yv004pqnq9
 generates:
-  ./src/graphql/codegen/types.d.ts:
+  ./src/graphql/codegen/schema.ts:
     config: 
       defaultMapper: any
       contextType: ./context#Context

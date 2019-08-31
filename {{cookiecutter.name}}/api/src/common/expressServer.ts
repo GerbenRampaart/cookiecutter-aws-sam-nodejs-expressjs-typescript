@@ -12,6 +12,7 @@ import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync, readFileSync } from "fs";
 import { ApolloServer } from "apollo-server-express";
+import { context, Context } from "../graphQL/codegen/context";
 
 export enum Mode {
   DEV, PRD
@@ -34,20 +35,19 @@ class ExpressServer {
     
     const server = new ApolloServer({
       typeDefs: typeDefs,
+      context: context,
       resolvers: {
           Query: {
-            owners: (root: any, tmp: any, ctx: any): any => {
-              return Promise.resolve("");
+            owners: async (parent: any, args: any, ctx: Context): Promise<any> => {
+              console.log(typeof parent, parent);
+              console.log(typeof args, args);
+              console.log(typeof ctx, ctx);
+              return await ctx.services.ownerService.all();
+              //return Promise.resolve("");
             },
-            owner: (root: any, ctx: any, args: any) => {
+            owner: async (root: any, ctx: any, args: any) => {
               return Promise.resolve("");
             }
-          },
-          Owners: {
-        
-          },
-          Pets: {
-            
           }
         }
       
