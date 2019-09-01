@@ -13,7 +13,6 @@ import * as serveFavicon from "serve-favicon";
 import { existsSync, readFileSync } from "fs";
 import { ApolloServer } from "apollo-server-express";
 import { context, Context } from "../graphQL/codegen/context";
-import { PetModel } from "../graphQL/types/pet/petModel";
 
 export enum Mode {
   DEV, PRD
