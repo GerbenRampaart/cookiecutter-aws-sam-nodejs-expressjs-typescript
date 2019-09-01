@@ -13,6 +13,7 @@ import * as serveFavicon from "serve-favicon";
 import { existsSync, readFileSync } from "fs";
 import { ApolloServer } from "apollo-server-express";
 import { context, Context } from "../graphQL/codegen/context";
+import { PetModel } from "../graphQL/types/pet/petModel";
 
 export enum Mode {
   DEV, PRD
@@ -38,7 +39,7 @@ class ExpressServer {
       context: context,
       resolvers: {
           Query: {
-            owners: async (parent: any, args: any, ctx: Context): Promise<any> => {
+            owners: async (parent: any, args: any, ctx: Context): Promise<OwnerModel[]> => {
               console.log(typeof parent, parent);
               console.log(typeof args, args);
               console.log(typeof ctx, ctx);
