@@ -69,7 +69,7 @@ class ExpressServer {
     */
     this.expressApplication.use(errorHandler);
 
-    const typeDefs = readFileSync(join(__dirname, "../graphql/schema.graphql"), { encoding: "utf-8" });
+    const typeDefs = readFileSync(join(__dirname, "graphql", "schema.graphql"), { encoding: "utf-8" });
 
     const server = new ApolloServer({
       typeDefs: typeDefs,

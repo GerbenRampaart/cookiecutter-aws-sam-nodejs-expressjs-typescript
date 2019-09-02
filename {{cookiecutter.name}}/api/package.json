@@ -3,11 +3,14 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
-    "copy-schemas": "$(npm bin)/cpx ./src/**/*.graphql ./build/graphql",
+    "copy-schemas": "cpx ./src/**/*.graphql ./build/graphql",
     "start:express": "cd build && node app.js",
-    "start": "npm run compile && npm run copy-schemas && npm run start:express",
+    "start2": "npm run compile && npm run copy-schemas && npm run start:express",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint --fix . --ext .ts src",
+    "start": "webpack --colors && concurrently -r -n \"Webpack,Nodemon\" \"npm run webpack-watch\" \"npm run server-watch\"",
+    "webpack-watch": "webpack --watch --colors",
+    "server-watch": "nodemon --watch build/server.js build/server.js",
     "test": "mocha tests/unit/"
   },
   "dependencies": {
@@ -22,8 +25,7 @@
     "response-time": "*",
     "serve-favicon": "*",
     "apollo-server-express": "^2.9.2",
-    "graphql": "^14.5.4",
-    "cpx": "^1.5.0"
+    "graphql": "^14.5.4"
   },
   "devDependencies": {
     "@types/aws-lambda": "*",
@@ -40,11 +42,17 @@
     "@types/uuid": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
+    "concurrently": "^4.1.2",
+    "copy-webpack-plugin": "^5.0.4",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
     "jest": "*",
+    "nodemon": "^1.19.1",
     "prettier": "*",
-    "typescript": "*"
+    "ts-loader": "^6.0.4",
+    "typescript": "*",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7"
   }
 }
