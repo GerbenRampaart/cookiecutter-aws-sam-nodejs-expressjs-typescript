@@ -3,7 +3,6 @@
   "private": true,
   "scripts": {
     "compile": "tsc -p .",
-    "graphql": "graphql-codegen --config ./src/graphql/graphqlgen.yml",
     "copy-schemas": "$(npm bin)/cpx ./src/**/*.graphql ./build/graphql",
     "start:express": "cd build && node app.js",
     "start": "npm run compile && npm run copy-schemas && npm run start:express",
@@ -23,7 +22,6 @@
     "response-time": "*",
     "serve-favicon": "*",
     "apollo-server-express": "^2.9.2",
-    "graphql-import": "^0.7.1",
     "graphql": "^14.5.4",
     "cpx": "^1.5.0"
   },
@@ -33,10 +31,8 @@
     "@types/body-parser": "*",
     "@types/compression": "*",
     "@types/express": "*",
-    "@types/express-mung": "*",
     "@types/hapi__joi": "*",
     "@types/helmet": "*",
-    "@types/jest": "*",
     "@types/morgan": "*",
     "@types/node": "*",
     "@types/response-time": "*",
@@ -49,12 +45,6 @@
     "eslint-plugin-prettier": "*",
     "jest": "*",
     "prettier": "*",
-    "typescript": "*",
-    "graphql-toolkit": "^0.5.10",
-    "@graphql-codegen/cli": "^1.6.1",
-    "@graphql-codegen/typescript": "^1.6.1",
-    "@graphql-codegen/typescript-operations": "^1.6.1",
-    "@graphql-codegen/typescript-resolvers": "^1.6.1",
-    "@graphql-codegen/time": "^1.6.1"
+    "typescript": "*"
   }
 }

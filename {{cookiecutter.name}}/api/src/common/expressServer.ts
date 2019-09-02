@@ -12,7 +12,8 @@ import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync, readFileSync } from "fs";
 import { ApolloServer } from "apollo-server-express";
-import { context, Context } from "../graphQL/codegen/context";
+import { context } from "../graphQL/context";
+import { resolvers } from "../graphQL/resolvers/resolvers";
 
 export enum Mode {
   DEV, PRD
@@ -31,39 +32,6 @@ class ExpressServer {
 
   constructor(public mode: Mode = Mode.DEV) {
     this.app = express();
-    const typeDefs = readFileSync(join(__dirname, "../graphql/schema.graphql"), {encoding: "utf-8"});
-    
-    const server = new ApolloServer({
-      typeDefs: typeDefs,
-      context: context,
-      resolvers: {
-          Query: {
-            owners: async (parent: any, args: any, ctx: Context): Promise<OwnerModel[]> => {
-              console.log(typeof parent, parent);
-              console.log(typeof args, args);
-              console.log(typeof ctx, ctx);
-              return await ctx.services.ownerService.all();
-              //return Promise.resolve("");
-            },
-            owner: async (root: any, ctx: any, args: any) => {
-              return Promise.resolve("");
-            }
-          }
-        }
-      
-    });
-    
-    server.applyMiddleware({
-      app: this.expressApplication
-    });
-
-    // https://github.com/prisma/graphql-yoga
-    /*
-    this.graphQLApplication = new GraphQLServer(
-      {
-        typeDefs: schema,
-        resolvers: resolvers
-      });*/
 
     this.expressApplication.use(responseTime());
     this.expressApplication.use(bodyParsers());
@@ -87,19 +55,35 @@ class ExpressServer {
     this.controllers.forEach(c => {
       this.expressApplication.use('/api', c.router);
     });
-/*
-    this.expressApplication.use("/api/graphiql", GraphQLHTTP({
-      schema: petsSchema,
-      graphiql: true
-    }));
-
-    this.expressApplication.use("*", (req: Request, res: Response) => {
-      res.sendFile('index.html', {
-        root: webDir
-      });
-    });
-*/
+    /*
+        this.expressApplication.use("/api/graphiql", GraphQLHTTP({
+          schema: petsSchema,
+          graphiql: true
+        }));
+    
+        this.expressApplication.use("*", (req: Request, res: Response) => {
+          res.sendFile('index.html', {
+            root: webDir
+          });
+        });
+    */
     this.expressApplication.use(errorHandler);
+
+    const typeDefs = readFileSync(join(__dirname, "../graphql/schema.graphql"), { encoding: "utf-8" });
+
+    const server = new ApolloServer({
+      typeDefs: typeDefs,
+      context: context,
+      resolvers: resolvers,
+      debug: true,
+      tracing: true
+
+    });
+
+    server.applyMiddleware({
+      app: this.expressApplication
+    });
+
   }
 
   public listen(port: number) {

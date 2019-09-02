@@ -1,5 +1,6 @@
-import PetsService from "../../services/pets/petsService";
-import OwnersService from "../../services/owners/ownersService";
+import OwnersService from "../services/owners/ownersService";
+import PetsService from "../services/pets/petsService";
+
 
 export interface Context {
   services: {

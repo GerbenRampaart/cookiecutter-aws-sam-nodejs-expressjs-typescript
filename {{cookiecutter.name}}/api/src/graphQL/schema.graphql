@@ -4,11 +4,7 @@
 # TODO: maybe client-side ?
 # https://github.com/FormidableLabs/graphql-typescript-blog/tree/with-auto-generated-types/server
 
-interface Entity {
-  id: ID!
-}
-
-type Owner implements Entity {
+type Owner {
   id: ID!
   name: String!
   pets: [Pet!]!
@@ -24,10 +20,11 @@ enum PETTYPE {
   CAT
 }
 
-type Pet implements Entity {
+type Pet {
   id: ID!
   name: String!,
   petType: PETTYPE!
+  fullName: String!
   owner: Owner
 }
 
@@ -43,7 +40,5 @@ type Mutation {
 
 type Query {
   pets: [Pet!]!
-  pet(id: ID!): Pet
   owners: [Owner!]!
-  owner(id: ID!): Owner
 }

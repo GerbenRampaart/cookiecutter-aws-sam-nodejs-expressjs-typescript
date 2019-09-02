@@ -1,8 +1,7 @@
-import { GraphQLType, GraphQLNonNull, GraphQLString, GraphQLEnumType, GraphQLEnumValueConfigMap } from 'graphql';
+import { GraphQLType } from 'graphql';
 import PetsService from '../../services/pets/petsService';
 import { v1 } from 'uuid';
 import { PetType } from '../../services/pets/petEntity';
-import { PetGraphQLType } from '../types/pet/petType';
 
 export interface GraphQLMutation {
   type: GraphQLType;
@@ -13,59 +12,32 @@ export interface GraphQLMutation {
 export interface ISavePetMutationArguments {
   id: string,
   name: string,
-  petType: PetType
+  petType: PetType,
+  owner: string
 }
 
-export class SavePetMutation implements GraphQLMutation {
+/*
+Object.keys(PetType).forEach((key: string) => {
+  graphQLMap[key] = (<any>PetType)[key];
+});*/
 
-  public type = PetGraphQLType;
-  public description: string;
+export const resolve = async (args: ISavePetMutationArguments) => {
+  const existingPet = await PetsService.byId(args.id);
 
-  constructor() {
-    this.description = "Pets";
+  if (existingPet) {
+
+    existingPet.name = args.name;
+    existingPet.petType = args.petType;
+
+    return await PetsService.update(existingPet);
+  } else {
+    const newId = v1();
+    return await PetsService.create({
+      id: newId,
+      name: args.name,
+      petType: args.petType,
+      owner: args.owner
+    });
   }
-
-  public args = {
-    id: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    name: {
-      type: new GraphQLNonNull(GraphQLString)
-    },
-    petType: {
-      type: new GraphQLNonNull(new GraphQLEnumType({
-        name: "PetType",
-        values: (() => {
-          const graphQLMap: GraphQLEnumValueConfigMap = {};
-
-          Object.keys(PetType).forEach((key: string) => {
-            graphQLMap[key] = (<any>PetType)[key];
-          });
-
-          return graphQLMap;
-        })()
-      })
-      )
-    }
-  };
-
-  public resolve = async (args: ISavePetMutationArguments) => {
-    const existingPet = await PetsService.byId(args.id);
-
-    if (existingPet) {
-
-      existingPet.name = args.name;
-      existingPet.petType = args.petType;
-
-      return await PetsService.update(existingPet);
-    } else {
-      const newId = v1();
-      return await PetsService.create({
-        id: newId,
-        name: args.name,
-        petType: args.petType
-      });
-    }
-  }
-
 }
+

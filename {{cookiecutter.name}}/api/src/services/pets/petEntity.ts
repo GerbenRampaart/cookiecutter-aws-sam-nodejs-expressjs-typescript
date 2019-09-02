@@ -4,6 +4,7 @@ export interface PetEntity extends Entity {
   id: string;
   name: string;
   petType: PetType;
+  owner?: string;
 }
 
 export enum PetType {
