@@ -1,16 +1,17 @@
 import { Request, Response, NextFunction} from "express";
-import petsService from "../../../services/pets/petsService";
+import { PetsService } from "../../../services/pets/petsService";
 import { updatePetRequestParams } from "./updatePetRequestParams";
-import NotFound from "../../../exceptions/notFound";
+import { NotFound } from "../../../exceptions/notFound";
 import { updatePetRequestBody } from "./updatePetRequestBody";
-import BadRequest from "../../../exceptions/badRequest";
+import { BadRequest } from "../../../exceptions/badRequest";
 import { PetType } from "../../../services/pets/petEntity";
 import { updatePetResponseMapper } from "./updatePetResponseMapper";
 
-const updatePetOperation = async (req: Request, res: Response, next: NextFunction) => {
+export const updatePetOperation = async (req: Request, res: Response, next: NextFunction) => {
   const params: updatePetRequestParams = req.params;
   const body: updatePetRequestBody = req.body;
 
+  const petsService = new PetsService();
   const existingPet = await petsService.byId(params.id);
 
   if (!existingPet) {
@@ -34,5 +35,3 @@ const updatePetOperation = async (req: Request, res: Response, next: NextFunctio
     .location(`/api/pets/${pet!.id}`)
     .send(responseModel);
 }
-
-export default updatePetOperation;

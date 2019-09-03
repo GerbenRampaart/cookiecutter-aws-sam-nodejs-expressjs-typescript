@@ -1,9 +1,12 @@
-# Cheatsheet
-# https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png
+import { gql } from "apollo-server-core";
 
-# TODO: maybe client-side ?
-# https://github.com/FormidableLabs/graphql-typescript-blog/tree/with-auto-generated-types/server
+// Cheatsheet
+// https://raw.githubusercontent.com/sogko/graphql-shorthand-notation-cheat-sheet/master/graphql-shorthand-notation-cheat-sheet.png
 
+// TODO: maybe client-side ?
+// https://github.com/FormidableLabs/graphql-typescript-blog/tree/with-auto-generated-types/server
+
+export const typeDefs = gql(`
 type Owner {
   id: ID!
   name: String!
@@ -42,3 +45,4 @@ type Query {
   pets: [Pet!]!
   owners: [Owner!]!
 }
+`);

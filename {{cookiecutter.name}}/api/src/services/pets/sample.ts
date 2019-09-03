@@ -1,6 +1,6 @@
 import { PetEntity, PetType } from "./petEntity";
 
-const pets: PetEntity[] = [
+export const pets: PetEntity[] = [
   {
     "id": "5481c892-35a5-44d6-b422-e29be9b835b8",
     "name": "Max",
@@ -26,5 +26,3 @@ const pets: PetEntity[] = [
     "owner": "2355810e-7298-4e22-9026-f735f2e6c593"
   }
 ]
-
-export default pets;

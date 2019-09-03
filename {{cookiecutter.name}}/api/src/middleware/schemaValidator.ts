@@ -1,8 +1,8 @@
 import { ObjectSchema, validate, ValidationOptions, ValidationError, ValidationErrorItem } from "@hapi/joi";
 import { Request, Response, NextFunction } from "express";
-import BadRequest from "../exceptions/badRequest";
+import { BadRequest } from "../exceptions/badRequest";
 
-const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
+export const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
 
   const validationOptions: ValidationOptions = {
     abortEarly: false,
@@ -32,5 +32,3 @@ const schemaValidator = (schema: ObjectSchema, type: "params" | "body") => {
     });
   }
 }
-
-export default schemaValidator;

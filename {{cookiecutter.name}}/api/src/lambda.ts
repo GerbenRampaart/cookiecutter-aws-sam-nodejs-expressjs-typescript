@@ -1,7 +1,8 @@
 import { APIGatewayProxyEvent, Context } from "aws-lambda";
 import { createServer, proxy } from "aws-serverless-express";
 import { Server } from "http";
-import ExpressServer from './common/expressServer';
+import { ExpressServer } from './common/expressServer';
+import { applyApolloServer } from './common/applyApolloServer';
 
 let server: Server | undefined;
 
@@ -9,6 +10,7 @@ const getServer = () => {
   if (!server) {
     const app = new ExpressServer();
     server = createServer(app.expressApplication);
+    applyApolloServer(server);
   }
 
   return server;

@@ -60,5 +60,3 @@ export class BaseService<T extends Entity> {
     return Promise.resolve(idx);
   }
 }
-
-export default BaseService;

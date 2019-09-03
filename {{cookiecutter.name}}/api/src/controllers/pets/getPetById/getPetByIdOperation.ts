@@ -1,11 +1,12 @@
 import { Request, Response, NextFunction} from "express";
-import petsService from "../../../services/pets/petsService";
 import { getPetByIdRequestParams } from "./getPetByIdRequestParams";
-import NotFound from '../../../exceptions/notFound';
+import { NotFound } from '../../../exceptions/notFound';
 import { getPetByIdResponseMapper } from "./getPetByIdResponseMapper";
+import { PetsService } from '../../../services/pets/petsService';
 
-const getPetByIdOperation = async (req: Request, res: Response, next: NextFunction) => {
+export const getPetByIdOperation = async (req: Request, res: Response, next: NextFunction) => {
   const params: getPetByIdRequestParams = req.params;
+  const petsService = new PetsService();
   const existingPet = await petsService.byId(params.id);
 
   if (!existingPet) {
@@ -18,5 +19,3 @@ const getPetByIdOperation = async (req: Request, res: Response, next: NextFuncti
     .status(200)
     .send(responseModel);
 };
-
-export default getPetByIdOperation;

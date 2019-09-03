@@ -1,11 +1,10 @@
-import sample from "./sample";
+import { owners } from "./sample";
 import { OwnerEntity } from "./ownerEntity";
-import BaseService from "../baseService";
+import { BaseService } from "../baseService";
 
 export class OwnersService extends BaseService<OwnerEntity> {
   constructor() {
-    super(sample);
+    super(owners);
   }
 }
 
-export default new OwnersService();

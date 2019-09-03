@@ -1,10 +1,11 @@
 import { Request, Response, NextFunction} from "express";
-import petsService from "../../../services/pets/petsService";
+import { PetsService } from '../../../services/pets/petsService';
 import { deletePetRequestParams } from "./deletePetRequestParams";
-import NotFound from '../../../exceptions/notFound';
+import { NotFound } from '../../../exceptions/notFound';
 
-const deletePetOperation = async (req: Request, res: Response, next: NextFunction) => {
+export const deletePetOperation = async (req: Request, res: Response, next: NextFunction) => {
   const params: deletePetRequestParams = req.params;
+  const petsService = new PetsService();
   const existingPet = await petsService.byId(params.id);
 
   if (!existingPet) {
@@ -15,5 +16,3 @@ const deletePetOperation = async (req: Request, res: Response, next: NextFunctio
 
   res.status(200).end();
 };
-
-export default deletePetOperation;
