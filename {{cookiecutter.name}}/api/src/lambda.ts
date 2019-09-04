@@ -6,14 +6,14 @@ import { applyApolloServer } from './common/applyApolloServer';
 
 let server: Server | undefined;
 
-const getServer = () => {
+const getServer = (): Server => {
   if (!server) {
     const app = new ExpressServer();
+    applyApolloServer(app);
     server = createServer(app.expressApplication);
-    applyApolloServer(server);
   }
 
-  return server;
+  return server!;
 };
 
 const handler = async (event: APIGatewayProxyEvent, context: Context) => {

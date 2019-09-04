@@ -24,7 +24,7 @@
     "response-time": "*",
     "serve-favicon": "*",
     "apollo-server-express": "*",
-    "apollo-server-lambda": "*",
+    "aws-serverless-express": "*",
     "graphql": "*"
   },
   "devDependencies": {
