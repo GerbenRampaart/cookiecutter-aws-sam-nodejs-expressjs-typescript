@@ -1,15 +1,15 @@
 import { ApolloServer } from "apollo-server-express";
-import { context } from "../graphQL/context";
 import { resolvers } from "../graphQL/resolvers/resolvers";
 import { typeDefs } from '../graphQL/typeDefs';
 import { ExpressServer } from "./expressServer";
 import { OwnersService } from "../services/owners/ownersService";
 import { PetsService } from "../services/pets/petsService";
+import { Context } from "../graphQL/context";
 
 export const applyApolloServer = (expressServer: ExpressServer): ApolloServer => {
   const server = new ApolloServer({
     typeDefs: typeDefs,
-    context: context,
+    context: {} as Context,
     resolvers: resolvers,
     dataSources: () => {
       return {

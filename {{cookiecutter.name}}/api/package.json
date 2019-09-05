@@ -42,6 +42,7 @@
     "@types/serve-favicon": "*",
     "@types/uuid": "*",
     "@types/lodash": "*",
+    "@types/aws-serverless-express": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "concurrently": "*",

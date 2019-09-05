@@ -8,7 +8,7 @@ import { PetEntity, PetType } from "../../services/pets/petEntity";
 export const resolvers: IResolvers = {
   Query: {
     owners: async (parent: any, args: any, ctx: Context): Promise<OwnerModel[]> => {
-      const entities = await ctx.dataSources.ownerService.all();
+      const entities = await ctx.dataSources.ownersService.all();
 
       return entities.map((e: OwnerEntity) => {
         return {
@@ -18,8 +18,8 @@ export const resolvers: IResolvers = {
         }
       })
     },
-    pets: async (parent: any, args: any, ctx: Context): Promise<PetModel[]> => {
-      const entities = await ctx.dataSources.petService.all();
+    pets: async (parent: any, args: , ctx: Context): Promise<PetModel[]> => {
+      const entities = await ctx.dataSources.petsService.all();
 
       return entities.map((e: PetEntity) => {
         return {
@@ -34,7 +34,7 @@ export const resolvers: IResolvers = {
   },
   Owner: {
     pets: async (owner: OwnerModel, args: any, ctx: Context) => {
-      let pets = await ctx.dataSources.petService.all();
+      let pets = await ctx.dataSources.petsService.all();
       pets = pets.filter((pet: PetEntity) => owner.pets.indexOf(pet.id) > -1);
       return pets.map((e: PetEntity) => {
         return {
@@ -49,7 +49,7 @@ export const resolvers: IResolvers = {
   },
   Pet: {
     owner: async (pet: PetModel, args: any, ctx: Context) => {
-      const owner = await ctx.dataSources.ownerService.byId(pet.owner!);
+      const owner = await ctx.dataSources.ownersService.byId(pet.owner!);
 
       if (!owner) {
         return Promise.resolve(undefined);
