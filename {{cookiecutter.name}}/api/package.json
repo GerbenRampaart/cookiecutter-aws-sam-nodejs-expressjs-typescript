@@ -25,10 +25,13 @@
     "serve-favicon": "*",
     "apollo-server-express": "*",
     "aws-serverless-express": "*",
-    "graphql": "*"
+    "graphql": "*",
+    "apollo-datasource": "*",
+    "lodash": "*"
   },
   "devDependencies": {
     "@types/body-parser": "*",
+    "@types/aws-lambda": "*",
     "@types/compression": "*",
     "@types/express": "*",
     "@types/hapi__joi": "*",
@@ -38,6 +41,7 @@
     "@types/response-time": "*",
     "@types/serve-favicon": "*",
     "@types/uuid": "*",
+    "@types/lodash": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "concurrently": "*",

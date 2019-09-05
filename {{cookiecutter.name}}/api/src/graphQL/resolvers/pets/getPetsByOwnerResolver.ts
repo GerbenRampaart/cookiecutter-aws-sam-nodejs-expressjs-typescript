@@ -1,6 +1,6 @@
-import { OwnerEntity } from "../../services/owners/ownerEntity";
-import { PetEntity } from "../../services/pets/petEntity";
-import { PetsService } from "../../services/pets/petsService";
+import { OwnerEntity } from "../../../services/owners/ownerEntity";
+import { PetEntity } from "../../../services/pets/petEntity";
+import { PetsService } from "../../../services/pets/petsService";
 
 export const getPetsByOwnerResolver = async (owner: OwnerEntity): Promise<PetEntity[]> => {
   const petsService = new PetsService();

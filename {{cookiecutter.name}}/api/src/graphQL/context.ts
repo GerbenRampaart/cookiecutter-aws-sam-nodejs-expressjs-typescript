@@ -1,17 +1,16 @@
-import OwnersService from "../services/owners/ownersService";
-import PetsService from "../services/pets/petsService";
-
+import { OwnersService } from "../services/owners/ownersService";
+import { PetsService } from "../services/pets/petsService";
 
 export interface Context {
-  services: {
-    ownerService: typeof OwnersService;
-    petService: typeof PetsService;
+  dataSources: {
+    ownerService: OwnersService;
+    petService: PetsService;
   }
 }
 
 export const context: Context = {
-  services: {
-    ownerService: OwnersService,
-    petService: PetsService
+  dataSources: {
+    ownerService: new OwnersService(),
+    petService: new PetsService()
   }
 }

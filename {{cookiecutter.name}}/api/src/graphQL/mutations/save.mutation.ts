@@ -1,5 +1,5 @@
 import { GraphQLType } from 'graphql';
-import PetsService from '../../services/pets/petsService';
+import { PetsService } from '../../services/pets/petsService';
 import { v1 } from 'uuid';
 import { PetType } from '../../services/pets/petEntity';
 
@@ -22,17 +22,18 @@ Object.keys(PetType).forEach((key: string) => {
 });*/
 
 export const resolve = async (args: ISavePetMutationArguments) => {
-  const existingPet = await PetsService.byId(args.id);
+  const petsService = new PetsService(); 
+  const existingPet = await petsService.byId(args.id);
 
   if (existingPet) {
 
     existingPet.name = args.name;
     existingPet.petType = args.petType;
 
-    return await PetsService.update(existingPet);
+    return await petsService.update(existingPet);
   } else {
     const newId = v1();
-    return await PetsService.create({
+    return await petsService.create({
       id: newId,
       name: args.name,
       petType: args.petType,

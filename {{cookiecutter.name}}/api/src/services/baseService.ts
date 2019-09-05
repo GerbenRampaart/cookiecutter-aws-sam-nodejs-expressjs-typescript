@@ -1,9 +1,15 @@
 import { Entity } from "./entity";
+import { DataSource, DataSourceConfig } from "apollo-datasource";
 
-export class BaseService<T extends Entity> {
+export class BaseService<T extends Entity> extends DataSource {
   data: T[];
 
+  initialize(config: DataSourceConfig<any>) {
+    
+  }
+
   constructor(data: T[] = []) {
+    super();
     this.data = data;
   }
 
