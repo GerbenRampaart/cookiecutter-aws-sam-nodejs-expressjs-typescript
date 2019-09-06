@@ -5,11 +5,8 @@ import { PetModel } from "../models/petModel";
 import { PetEntity } from "../../services/pets/petEntity";
 import { mapToPetModels, mapToPetModel } from "./pets/petsMapper";
 import { mapToOwnerModels, mapToOwnerModel } from "./owners/ownersMapper";
-import { PageInfo } from "../pageInfo";
 import { throwIfUndefined } from '../exceptions/throwIfUndefined';
 import { byId } from "../arguments/byId";
-import { byPage } from '../arguments/byPage';
-import { OwnerEntity } from '../../services/owners/ownerEntity';
 import { ownersByPageArgs } from "./owners/ownersByPageArgs";
 import { OwnerOrderType } from "./owners/ownerOrderType";
 
@@ -39,20 +36,14 @@ export const resolvers: IResolvers = {
       let entities = await ctx.dataSources.ownersService.all();
       const order = page.orderType as OwnerOrderType;
 
-      if (page.orderType) {
-        if (order === OwnerOrderType.NAME_ASC) {
+      entities.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
-        } else {
-          
-        }
-
-        entities.sort((a: OwnerEntity, b: OwnerEntity) => {
-          a[order]
-        });
+      if (order === OwnerOrderType.NAME_DESC) {
+        entities.reverse();
       }
 
       if (page.offset) {
-        entities.splice(0, page.offset);
+        entities.splice(page.offset);
       }
 
       if (page.limit) {

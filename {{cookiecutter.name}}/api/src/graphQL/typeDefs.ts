@@ -49,16 +49,13 @@ enum OwnerOrder {
   NAME_ASC, NAME_DESC
 }
 
-union PetsByPage = PageInfo | [Pet!]!
-union OwnersByPage = PageInfo | [Owner!]!
-
-type Page {
-  offset: Int = 0
-  limit: Int = 10
+input Page {
+  offset: Int
+  limit: Int
 }
 
 type PageInfo {
-  totalCount: number
+  totalCount: Int
 }
 
 enum PetOrderType {
@@ -70,11 +67,9 @@ enum OwnerOrderType {
 }
 
 type Query {
-  pets: [Pet!]!
-  owners: [Owner!]!
-  pets(id: ID!): Pet
-  owners(id: ID!): Owner
-  petsByPage(page: Page, orderType: PetOrderType): PetsByPage
-  ownersByPage(page: Page, orderType: OwnerOrderType): OwnersByPage
+  pets(id: ID!): [Pet!]!
+  owners(id: ID!): [Owner!]!
+  petsByPage(page: Page, orderType: PetOrderType): [Pet!]!
+  ownersByPage(page: Page, orderType: OwnerOrderType): [Owner!]!
 }
 `);
