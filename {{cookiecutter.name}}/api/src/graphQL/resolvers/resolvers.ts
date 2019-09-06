@@ -1,68 +1,80 @@
 import { Context } from "../context";
 import { IResolvers } from "apollo-server-express";
 import { OwnerModel } from "../models/ownerModel";
-import { OwnerEntity } from "../../services/owners/ownerEntity";
 import { PetModel } from "../models/petModel";
-import { PetEntity, PetType } from "../../services/pets/petEntity";
+import { PetEntity } from "../../services/pets/petEntity";
+import { mapToPetModels, mapToPetModel } from "./pets/petsMapper";
+import { mapToOwnerModels, mapToOwnerModel } from "./owners/ownersMapper";
+import { PageInfo } from "../pageInfo";
+import { throwIfUndefined } from '../exceptions/throwIfUndefined';
+import { byId } from "../arguments/byId";
+import { byPage } from '../arguments/byPage';
+import { OwnerEntity } from '../../services/owners/ownerEntity';
+import { ownersByPageArgs } from "./owners/ownersByPageArgs";
+import { OwnerOrderType } from "./owners/ownerOrderType";
 
 export const resolvers: IResolvers = {
   Query: {
-    owners: async (parent: any, args: any, ctx: Context): Promise<OwnerModel[]> => {
-      const entities = await ctx.dataSources.ownersService.all();
-
-      return entities.map((e: OwnerEntity) => {
-        return {
-          id: e.id,
-          name: e.name,
-          pets: e.pets
-        }
-      })
+    owners: async (_, { id }, ctx: Context): Promise<OwnerModel[] | OwnerModel> => {
+      if (!id) {
+        const entities = await ctx.dataSources.ownersService.all();
+        return mapToOwnerModels(entities);
+      } else {
+        const entity = await ctx.dataSources.ownersService.byId(id);
+        throwIfUndefined(entity, 404, `${id} not found`);
+        return mapToOwnerModel(entity!);
+      }
     },
-    pets: async (parent: any, args: , ctx: Context): Promise<PetModel[]> => {
-      const entities = await ctx.dataSources.petsService.all();
+    pets: async (_, { id }: byId, ctx: Context): Promise<PetModel[] | PetModel> => {
+      if (!id) {
+        const entities = await ctx.dataSources.petsService.all();
+        return mapToPetModels(entities);
+      } else {
+        const entity = await ctx.dataSources.petsService.byId(id);
+        throwIfUndefined(entity, 404, `${id} not found`);
+        return mapToPetModel(entity!);
+      }
+    },
+    ownersByPage: async (_, page: ownersByPageArgs, ctx: Context): Promise<OwnerModel[] | OwnerModel> => {
+      let entities = await ctx.dataSources.ownersService.all();
+      const order = page.orderType as OwnerOrderType;
 
-      return entities.map((e: PetEntity) => {
-        return {
-          id: e.id,
-          name: e.name,
-          fullName: `${e.name} full`,
-          petType: PetType[e.petType],
-          owner: e.owner
+      if (page.orderType) {
+        if (order === OwnerOrderType.NAME_ASC) {
+
+        } else {
+          
         }
-      })
-    }
+
+        entities.sort((a: OwnerEntity, b: OwnerEntity) => {
+          a[order]
+        });
+      }
+
+      if (page.offset) {
+        entities.splice(0, page.offset);
+      }
+
+      if (page.limit) {
+        entities.slice(0, page.limit);
+      }
+
+      return mapToOwnerModels(entities);
+    },
+
   },
   Owner: {
-    pets: async (owner: OwnerModel, args: any, ctx: Context) => {
+    pets: async (owner: OwnerModel, { id }, ctx: Context): Promise<PetModel[]> => {
       let pets = await ctx.dataSources.petsService.all();
       pets = pets.filter((pet: PetEntity) => owner.pets.indexOf(pet.id) > -1);
-      return pets.map((e: PetEntity) => {
-        return {
-          id: e.id,
-          name: e.name,
-          fullName: `${e.name} full`,
-          petType: PetType[e.petType],
-          owner: e.owner
-        }
-      });
+      return mapToPetModels(pets);
     }
   },
   Pet: {
-    owner: async (pet: PetModel, args: any, ctx: Context) => {
+    owner: async (pet: PetModel, _, ctx: Context) => {
       const owner = await ctx.dataSources.ownersService.byId(pet.owner!);
-
-      if (!owner) {
-        return Promise.resolve(undefined);
-      } else {
-        return {
-          id: owner.id,
-          name: owner.name,
-          pets: owner.pets
-        }
-      }
+      throwIfUndefined(owner, 404, `${pet.owner} not found`);
+      return mapToOwnerModel(owner!);
     }
-
-
   }
-
-}
+};

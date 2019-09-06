@@ -18,7 +18,7 @@ input InputOwner {
   pets: [String!]
 }
 
-enum PETTYPE {
+enum PetType {
   DOG, 
   CAT
 }
@@ -26,14 +26,14 @@ enum PETTYPE {
 type Pet {
   id: ID!
   name: String!,
-  petType: PETTYPE!
+  petType: PetType!
   fullName: String!
   owner: Owner
 }
 
 input InputPet {
   name: String!
-  petType: PETTYPE!
+  petType: PetType!
 }
 
 type Mutation {
@@ -41,8 +41,40 @@ type Mutation {
   addOwner(owner: InputOwner!): Owner
 }
 
+enum PetOrder {
+  NAME_ASC, NAME_DESC
+}
+
+enum OwnerOrder {
+  NAME_ASC, NAME_DESC
+}
+
+union PetsByPage = PageInfo | [Pet!]!
+union OwnersByPage = PageInfo | [Owner!]!
+
+type Page {
+  offset: Int = 0
+  limit: Int = 10
+}
+
+type PageInfo {
+  totalCount: number
+}
+
+enum PetOrderType {
+  NAME_ASC, NAME_DESC
+}
+
+enum OwnerOrderType {
+  NAME_ASC, NAME_DESC
+}
+
 type Query {
   pets: [Pet!]!
   owners: [Owner!]!
+  pets(id: ID!): Pet
+  owners(id: ID!): Owner
+  petsByPage(page: Page, orderType: PetOrderType): PetsByPage
+  ownersByPage(page: Page, orderType: OwnerOrderType): OwnersByPage
 }
 `);
