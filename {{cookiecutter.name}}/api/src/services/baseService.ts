@@ -13,8 +13,16 @@ export class BaseService<T extends Entity> extends DataSource {
     this.data = data;
   }
 
-  async all(): Promise<T[]> {
-    return Promise.resolve<T[]>(this.data);
+  async all(id?: string): Promise<T[]> {
+    let entities = await Promise.resolve<T[]>(this.data);
+    
+    if (id) {
+      entities = entities.filter((val: T) => {
+        return val.id === id;
+      });
+    }
+
+    return entities;
   }
 
   async byId(id: string): Promise<T | undefined> {

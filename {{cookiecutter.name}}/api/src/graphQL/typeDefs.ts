@@ -10,7 +10,7 @@ export const typeDefs = gql(`
 type Owner {
   id: ID!
   name: String!
-  pets: [Pet!]!
+  pets(id: ID): [Pet!]!
 }
 
 input InputOwner {
@@ -49,11 +49,6 @@ enum OwnerOrder {
   NAME_ASC, NAME_DESC
 }
 
-input Page {
-  offset: Int
-  limit: Int
-}
-
 type PageInfo {
   totalCount: Int
 }
@@ -67,9 +62,9 @@ enum OwnerOrderType {
 }
 
 type Query {
-  pets(id: ID!): [Pet!]!
-  owners(id: ID!): [Owner!]!
-  petsByPage(page: Page, orderType: PetOrderType): [Pet!]!
-  ownersByPage(page: Page, orderType: OwnerOrderType): [Owner!]!
+  pets(id: ID): [Pet!]!
+  owners(id: ID): [Owner!]!
+  petsByPage(offset: Int = 0, limit: Int = 10, orderType: PetOrderType = NAME_ASC): [Pet!]!
+  ownersByPage(offset: Int = 0, limit: Int = 10, orderType: OwnerOrderType = NAME_ASC): [Owner!]!
 }
 `);

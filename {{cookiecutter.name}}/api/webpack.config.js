@@ -32,6 +32,6 @@ module.exports = [
       __dirname: false,
       __filename: false,
     },
-    mode: 'production'
+    mode: 'development'
   }
 ];

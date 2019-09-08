@@ -1,5 +1,5 @@
 
 export interface byPage {
-  offset?: number;
-  limit?: number;
+  offset: number;
+  limit: number;
 }
