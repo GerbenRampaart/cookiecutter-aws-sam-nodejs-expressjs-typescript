@@ -11,7 +11,7 @@ import { PetsController } from '../controllers/pets/petsController';
 import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync } from "fs";
-import { Mode } from "./mode";
+import { environment, Mode } from '../environment';
 
 export class ExpressServer {
   private app: Application;
@@ -24,14 +24,14 @@ export class ExpressServer {
     new PetsController()
   ];
 
-  constructor(public mode: Mode = Mode.DEV) {
+  constructor() {
     this.app = express();
 
     this.expressApplication.use(responseTime());
     this.expressApplication.use(bodyParsers());
     this.expressApplication.use(helmet());
 
-    if (mode === Mode.DEV) {
+    if (environment.mode === Mode.DEV) {
       this.expressApplication.use(morgan('dev'));
     } else {
       this.expressApplication.use(morgan('combined'));

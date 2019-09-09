@@ -7,3 +7,10 @@ export interface Context {
     petsService: PetsService;
   }
 }
+
+export const context: Context = {
+  dataSources: {
+    ownersService: new OwnersService(),
+    petsService: new PetsService()
+  }
+}

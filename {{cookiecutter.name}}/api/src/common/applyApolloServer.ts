@@ -1,28 +1,32 @@
 import { ApolloServer } from "apollo-server-express";
+import { environment } from '../environment';
 import { resolvers } from "../graphQL/resolvers/resolvers";
-import { typeDefs } from '../graphQL/typeDefs';
+import * as typeDefs from '../graphQL/schema.graphql';
 import { ExpressServer } from "./expressServer";
 import { OwnersService } from "../services/owners/ownersService";
 import { PetsService } from "../services/pets/petsService";
-import { Context } from "../graphQL/context";
+import { context, Context } from '../graphQL/context';
+import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 
 export const applyApolloServer = (expressServer: ExpressServer): ApolloServer => {
   const server = new ApolloServer({
-    typeDefs: typeDefs,
-    context: {} as Context,
-    resolvers: resolvers,
+    typeDefs,
+    resolvers,
+    context: (req: ExpressContext): Context => {      
+      return context;
+    },
     dataSources: () => {
       return {
         ownersService: new OwnersService(),
         petsService: new PetsService()
       }
     },
-    debug: true,
-    tracing: true,
-    playground: true,
-    introspection: true
+    debug: environment.apollo.debug,
+    tracing: environment.apollo.tracing,
+    playground: environment.apollo.playground,
+    introspection: environment.apollo.introspection
   });
-  
+
   server.applyMiddleware({
     app: expressServer.expressApplication
   });

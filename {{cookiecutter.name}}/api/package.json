@@ -2,16 +2,16 @@
   "name": "api",
   "private": true,
   "scripts": {
-    "compile": "tsc -p .",
-    "start:express": "cd build && node app.js",
-    "start2": "npm run compile && npm run copy-schemas && npm run start:express",
+    "build": "npm run build:prd",
+    "build:dev": "webpack --config webpack.development.js",
+    "build:prd": "webpack --config webpack.production.js",
+    "start": "npm run build:dev",
+    "debug:win": "SET NODE_ENV=development && npm run start",
+    "debug:mac": "NODE_ENV=development && npm run start",
+    "start:server": "node ./build/server.js",
+    "start:server:env": "node --require dotenv/config build/server.js",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
-    "lint": "eslint --fix . --ext .ts src",
-    "start": "webpack --colors && concurrently -r -n \"Webpack,Nodemon\" \"npm run webpack-watch\" \"npm run server-watch\"",
-    "webpack-watch": "webpack --watch --colors",
-    "server-watch": "nodemon --watch build/server.js build/server.js",
-    "build:prod": "webpack -p --mode=production",
-    "test": "mocha tests/unit/"
+    "lint": "eslint --fix . --ext .ts src"
   },
   "dependencies": {
     "express": "*",
@@ -43,9 +43,12 @@
     "@types/uuid": "*",
     "@types/lodash": "*",
     "@types/aws-serverless-express": "*",
+    "@types/webpack-env": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
-    "concurrently": "*",
+    "dotenv": "*",
+    "dotenv-webpack": "*",
+    "npm-run-all": "*",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
@@ -55,6 +58,10 @@
     "ts-loader": "*",
     "typescript": "*",
     "webpack": "*",
-    "webpack-cli": "*"
+    "webpack-cli": "*",
+    "webpack-merge": "*",
+    "webpack-node-externals": "*",
+    "clean-webpack-plugin": "*",
+    "graphql-import-loader": "*"
   }
 }

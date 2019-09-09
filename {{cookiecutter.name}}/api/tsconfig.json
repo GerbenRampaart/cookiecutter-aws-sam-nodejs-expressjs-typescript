@@ -12,8 +12,16 @@
       "strictNullChecks": true,
       "noImplicitAny": true,
       "resolveJsonModule": true,
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "experimentalDecorators": true,
+      "typeRoots": [
+        "node_modules/@types", 
+        "src/@types"
+      ]
     },
+    "files": [
+      "src/@types/graphql.d.ts"
+    ],
     "exclude": [
       "node_modules",
       "**/*.spec.ts"
