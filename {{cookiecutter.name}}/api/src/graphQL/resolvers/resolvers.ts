@@ -23,7 +23,8 @@ export const resolvers: IResolvers = {
 
       entities.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
-      if (page.orderType === "NAME_DESC") {
+      
+      if (String(page.orderType) == "NAME_DESC") {
         entities.reverse();
       }
 
