@@ -5,7 +5,7 @@ import * as typeDefs from '../graphQL/schema.graphql';
 import { ExpressServer } from "./expressServer";
 import { OwnersService } from "../services/owners/ownersService";
 import { PetsService } from "../services/pets/petsService";
-import { context, Context } from '../graphQL/context';
+import { Context } from '../graphQL/context';
 import { ExpressContext } from "apollo-server-express/dist/ApolloServer";
 
 export const applyApolloServer = (expressServer: ExpressServer): ApolloServer => {
@@ -13,7 +13,7 @@ export const applyApolloServer = (expressServer: ExpressServer): ApolloServer =>
     typeDefs,
     resolvers,
     context: (req: ExpressContext): Context => {      
-      return context;
+      return {} as Context;
     },
     dataSources: () => {
       return {

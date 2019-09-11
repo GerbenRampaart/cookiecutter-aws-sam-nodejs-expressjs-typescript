@@ -28,7 +28,7 @@ module.exports = {
     path: path.resolve(__dirname, "build")
   },
   resolve: {
-    extensions: [".graphql", ".ts", ".js", ".json"]
+    extensions: ['*', '.mjs', '.js', '.ts', '.json', '.gql', '.graphql']
   },
   target: "node"
 };

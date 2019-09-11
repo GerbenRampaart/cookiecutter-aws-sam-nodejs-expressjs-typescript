@@ -8,8 +8,8 @@
     "start": "npm run build:dev",
     "debug:win": "SET NODE_ENV=development && npm run start",
     "debug:mac": "NODE_ENV=development && npm run start",
-    "start:server": "node ./build/server.js",
-    "start:server:env": "node --require dotenv/config build/server.js",
+    "start:server": "nodemon ./build/server.js",
+    "start:server:env": "nodemon --require dotenv/config build/server.js",
     "prettier": "prettier --config ./.prettierrc.js --write \"src/**/*.ts\"",
     "lint": "eslint --fix . --ext .ts src"
   },

@@ -4,10 +4,9 @@ import { OwnerModel } from "../models/ownerModel";
 import { PetModel } from "../models/petModel";
 import { PetEntity } from "../../services/pets/petEntity";
 import { mapToPetModels } from "./pets/petsMapper";
-import { mapToOwnerModels } from "./owners/ownersMapper";
+import { mapToOwnerModels, mapToOwnerModel } from "./owners/ownersMapper";
 import { byId } from "../arguments/byId";
 import { ownersByPageArgs } from "./owners/ownersByPageArgs";
-import { OwnerOrderType } from "./owners/ownerOrderType";
 
 export const resolvers: IResolvers = {
   Query: {
@@ -21,23 +20,15 @@ export const resolvers: IResolvers = {
     },
     ownersByPage: async (_, page: ownersByPageArgs, ctx: Context): Promise<OwnerModel[]> => {
       let entities = await ctx.dataSources.ownersService.all();
-      const order = page.orderType as OwnerOrderType;
-console.log(order === OwnerOrderType.NAME_DESC);
+
       entities.sort((a, b) => (a.name > b.name) ? 1 : -1)
 
-      if (order === OwnerOrderType.NAME_DESC) {
-        console.log(entities);
+      if (page.orderType === "NAME_DESC") {
         entities.reverse();
-        console.log(entities)
       }
 
-      if (page.offset) {
-        entities.splice(0, page.offset);
-      }
-
-      if (page.limit) {
-        entities.slice(0, page.limit);
-      }
+      entities.splice(0, page.offset);
+      entities.splice(page.limit);
 
       return mapToOwnerModels(entities);
     },
@@ -53,7 +44,12 @@ console.log(order === OwnerOrderType.NAME_DESC);
   Pet: {
     owner: async (pet: PetModel, _, ctx: Context) => {
       const entities = await ctx.dataSources.ownersService.all(pet.owner);
-      return mapToOwnerModels(entities);
+
+      if (entities.length !== 1) {
+        return null;
+      } else {
+        return mapToOwnerModel(entities[0]);
+      }
     }
   }
 };

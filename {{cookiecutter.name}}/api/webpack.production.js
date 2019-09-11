@@ -9,9 +9,6 @@ module.exports = merge(common, {
   entry: [
     path.join(__dirname, 'src/app.ts')
   ],
-  externals: [
-    nodeExternals({})
-  ],
   mode: 'production',
   plugins: [
     new CleanWebpackPlugin()

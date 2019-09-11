@@ -12,6 +12,7 @@ import * as responseTime from "response-time";
 import * as serveFavicon from "serve-favicon";
 import { existsSync } from "fs";
 import { environment, Mode } from '../environment';
+import { Server } from "http";
 
 export class ExpressServer {
   private app: Application;
@@ -59,7 +60,7 @@ export class ExpressServer {
     this.expressApplication.use(errorHandler);
   }
 
-  public listen(port: number) {
-    this.expressApplication.listen(port, () => console.log(`Listening on ${port}`));
+  public listen(port: number): Server {
+    return this.expressApplication.listen(port, () => console.log(`Listening on ${port}`));
   }
 }

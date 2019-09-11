@@ -8,10 +8,7 @@ const common = require('./webpack.common.js');
 
 module.exports = merge.smart(common, {
   devtool: 'inline-source-map',
-  entry: [
-    'webpack/hot/poll?1000', 
-    path.join(__dirname, 'src/app.ts')
-  ],
+  entry: ['webpack/hot/poll?1000', path.join(__dirname, 'src/app.ts')],
   externals: [
     nodeExternals({
       whitelist: ['webpack/hot/poll?1000']
@@ -20,17 +17,7 @@ module.exports = merge.smart(common, {
   mode: 'development',
   plugins: [
     new CleanWebpackPlugin(), 
-    new webpack.HotModuleReplacementPlugin(),
-    {
-      apply: (compiler) => {
-        compiler.hooks.afterEmit.tap('AfterEmitPlugin', (compilation) => {
-          exec('npm run start:server', (err, stdout, stderr) => {
-            if (stdout) process.stdout.write(stdout);
-            if (stderr) process.stderr.write(stderr);
-          });
-        });
-      }
-    }
+    new webpack.HotModuleReplacementPlugin()
   ],
   watch: true
 });
