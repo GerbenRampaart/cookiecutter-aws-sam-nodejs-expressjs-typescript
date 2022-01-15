@@ -26,7 +26,7 @@
   "homepage": "https://github.com/GerbenRampaart/cookiecutter-aws-sam-nodejs-expressjs-typescript#readme",
   "devDependencies": {
     "find-up": "^4.0.0",
-    "shelljs": "^0.8.3",
+    "shelljs": "^0.8.5",
     "typescript": "^3.5.3",
     "chalk": "^2.4.2",
     "@types/node": "10.14.13",
